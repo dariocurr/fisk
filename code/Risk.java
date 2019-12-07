@@ -1,1 +1,0 @@
-Dario, Riccardo e Fici
