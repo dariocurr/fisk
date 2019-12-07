@@ -1,1 +1,1 @@
-Dario, Riccardo e la pelata di Fici
+Dario, Riccardo e Fici
