@@ -1,7 +1,7 @@
-cannon,cannon,cannon
-bishop,bishop,bishop
-knight,knight,knight
-bishop,cannon,knight
-jolly,knight,knight
-bishop,bishop,jolly
-cannon,cannon,jolly
+cannon,cannon,cannon,4
+bishop,bishop,bishop,6
+knight,knight,knight,8
+bishop,cannon,knight,10
+jolly,knight,knight,12
+bishop,bishop,jolly,12
+cannon,cannon,jolly,12

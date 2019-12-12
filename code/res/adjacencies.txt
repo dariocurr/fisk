@@ -7,9 +7,10 @@ Northwest Territory,Alaska,Greenland,Ontario,Alberta
 Ontario,Northwest Territory,Greenland,Quebec,Eastern United States,Western United States,Alberta
 Quebec,Ontario,Greenland,Eastern United States
 Western United States,Alberta,Ontario,Eastern United States,Central America
-Argentina,Venezuela,Brazil
-Brazil,Venezuela,North Africa,Argentina
-Venezuela,Central America,Brazil,Argentina
+Argentina,Peru,Brazil
+Brazil,Venezuela,North Africa,Argentina,Peru
+Venezuela,Central America,Brazil,Peru
+Peru,Venezuela,Argentina,Brazil
 Great Britain,Iceland,Scandinavia,Northern Europe,Western Europe
 Iceland,Greenland,Great Britain
 Northern Europe,Great Britain,Ukraine,Southern Europe,Western Europe
@@ -35,8 +36,7 @@ Siam,India,China,Indonesia
 Siberia,Ural,Yakutsk,Irkutsk,Mongolia,China,Afghanistan
 Ural,Ukraine,Siberia,Afghanistan
 Yakutsk,Siberia,Kamchatka,Irkutsk
-Eastern Australia,New Guinea,LotR,Western Australia
+Eastern Australia,New Guinea,Western Australia
 Indonesia,Siam,New Guinea,Western Australia
-LotR,Eastern Australia
 New Guinea,Indonesia,Eastern Australia,Western Australia
 Western Australia,Indonesia,New Guinea,Eastern Australia

@@ -9,6 +9,7 @@ Quebec
 Western United States
 Argentina
 Brazil
+Peru
 Venezuela
 Great Britain
 Iceland
@@ -37,6 +38,5 @@ Ural
 Yakutsk
 Eastern Australia
 Indonesia
-LotR
 New Guinea
 Western Australia
