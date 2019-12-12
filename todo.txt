@@ -48,3 +48,5 @@ dadi
 ecc
 
 ovvero l'insieme degli strumenti fisici del gioco, ma non animati ( come i vari player sia umani che virtuali ).
+
+La classe Game ha anche una lista di Continenti. ( Analogamente a quanto fatto per i territori e le liste di adiacenza )
