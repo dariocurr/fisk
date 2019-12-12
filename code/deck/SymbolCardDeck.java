@@ -13,8 +13,8 @@ import java.util.*;
  */
 public class SymbolCardDeck extends TerritoryCardDeck {
 
-    public SymbolCardDeck(List<Territory> territory, int numJolly) {
-        super(territory);
+    public SymbolCardDeck(List<Territory> territories, int numJolly) {
+        super(territories);
         for(int i = 0; i < numJolly; i++) {
             this.deck.add(new SymbolCard(Symbol.JOLLY));
         }

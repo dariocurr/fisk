@@ -5,10 +5,33 @@
  */
 package risk;
 
+import java.util.*;
+
 /**
  *
  * @author dario
  */
 public class Territory {
+    
+    private List<Territory> neighboringTerritories; //public o private o something else?
+    private String name;
+
+    public Territory ( String territoryName ){
+	this.name = territoryName;
+        this.neighboringTerritories = new ArrayList<>();
+    }
+
+    public String getName (){
+	return this.name;
+    }
+
+    public List<Territory> getNeighboringTerritories() {
+        return neighboringTerritories;
+    }
+
+    @Override
+    public String toString() {
+    	return this.getName();
+    }
     
 }

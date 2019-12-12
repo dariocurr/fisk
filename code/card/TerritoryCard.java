@@ -16,8 +16,6 @@ public class TerritoryCard extends SymbolCard {
     public TerritoryCard(Symbol symbol, Territory territory) {
         super(symbol);
         this.territory = territory;
-    }
-    
-    
+    }    
     
 }

@@ -11,16 +11,16 @@ import java.util.*;
  *
  * @author dario
  */
-public class TerritoryCardDeck extends Deck<TerritoryCard> {
+public class TerritoryCardDeck extends Deck {
 
-    public TerritoryCardDeck(List<Territory> territory) {
+    public TerritoryCardDeck(List<Territory> territories) {
         super();
-        for(int i = 0; i < territory.size();) {
-            this.deck.add(new TerritoryCard(Symbol.BISHOP, territory.get(i++)));
-            this.deck.add(new TerritoryCard(Symbol.CANNON, territory.get(i++)));
-            this.deck.add(new TerritoryCard(Symbol.KNIGHT, territory.get(i++)));
+        for(int i = 0; i < territories.size();) {
+            this.deck.add(new TerritoryCard(Symbol.BISHOP, territories.get(i++)));
+            this.deck.add(new TerritoryCard(Symbol.CANNON, territories.get(i++)));
+            this.deck.add(new TerritoryCard(Symbol.KNIGHT, territories.get(i++)));
         }
-        Collections.shuffle(deck);
+        Collections.shuffle(this.deck);
     }
     
 }

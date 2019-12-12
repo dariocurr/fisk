@@ -11,12 +11,12 @@ import java.util.*;
  *
  * @author dario
  */
-public abstract class Deck<T> {
+public abstract class Deck {
     
-    protected List<? super T> deck;
+    protected List<Card> deck;
 
     public Deck() {
         this.deck = new ArrayList<>();
-    } 
+    }
  
 }

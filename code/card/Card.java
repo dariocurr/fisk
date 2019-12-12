@@ -9,6 +9,6 @@ package risk;
  *
  * @author dario
  */
-public class Card{
+public abstract class Card {
     
 }
