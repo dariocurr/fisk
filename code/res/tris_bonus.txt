@@ -1,7 +1,0 @@
-ccc,4
-bbb,6
-kkk,8
-bck,10
-jkk,12
-bbj,12
-ccj,12
