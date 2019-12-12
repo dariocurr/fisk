@@ -12,7 +12,7 @@ package risk;
 public interface Main {
     
     public static void main(String... args) {
-        new Game().initGame();
+        new Game();
     }
     
 }

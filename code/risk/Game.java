@@ -21,6 +21,10 @@ public class Game {
     public final Map<Tris, Integer> TRIS_BONUS = new HashMap<>();
     public final List<Territory> territories = new ArrayList<>();
     
+    public Game() {
+        this.initGame();
+    }
+    
     public void initGame() {
         this.initTris();
         this.initTerritories();
