@@ -9,21 +9,15 @@ package risk;
  *
  * @author dario
  */
-public abstract class Card<T> {
-    
-    protected T card;
+public class numTerritoriesGoalCard extends GoalCard<Integer> {
 
-    public Card(T card) {
-        this.card = card;
+    public numTerritoriesGoalCard(Integer num) {
+        super(num);
     }
-    
-    public T getCard() {
-        return this.card;
-    }
-    
+
     @Override
     public String toString() {
-        return this.card.toString();
+        return "Number of territories to conquer: " + super.toString();
     }
     
 }

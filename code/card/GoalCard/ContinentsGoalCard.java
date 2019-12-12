@@ -11,23 +11,15 @@ import java.util.*;
  *
  * @author dario
  */
-public abstract class Deck {
-    
-    protected List<Card> deck;
+public class ContinentsGoalCard extends GoalCard<List<Continent>> {
 
-    public Deck() {
-        this.deck = new ArrayList<>();
+    public ContinentsGoalCard(List<Continent> continents) {
+        super(continents);
     }
-
+    
     @Override
     public String toString() {
-        String tmp = "[";
-        for(Card x: this.deck) {
-            tmp += x + ", ";
-        }
-        return tmp.substring(0, tmp.lastIndexOf(", ")) + "]";
+    return "Continents to conquer: " + super.toString();
     }
     
-    
- 
 }

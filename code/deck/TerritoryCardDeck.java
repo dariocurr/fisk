@@ -22,5 +22,10 @@ public class TerritoryCardDeck extends Deck {
         }
         Collections.shuffle(this.deck);
     }
+
+    @Override
+    public String toString() {
+        return "TerritoryCardDeck: " + super.toString();
+    }
     
 }

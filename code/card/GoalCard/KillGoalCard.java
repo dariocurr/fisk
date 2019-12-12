@@ -9,21 +9,15 @@ package risk;
  *
  * @author dario
  */
-public abstract class Card<T> {
-    
-    protected T card;
+public class KillGoalCard extends GoalCard<Player>{
 
-    public Card(T card) {
-        this.card = card;
-    }
-    
-    public T getCard() {
-        return this.card;
+    public KillGoalCard(Player player) {
+        super(player);
     }
     
     @Override
     public String toString() {
-        return this.card.toString();
+        return "Player to destroy: " + super.toString();
     }
     
 }

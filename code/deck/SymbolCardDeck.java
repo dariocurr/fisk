@@ -21,4 +21,9 @@ public class SymbolCardDeck extends TerritoryCardDeck {
         Collections.shuffle(this.deck);
     }
     
+    @Override
+    public String toString() {
+        return "Symbol&" + super.toString();
+    }
+    
 }
