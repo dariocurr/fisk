@@ -21,13 +21,7 @@ public abstract class Deck {
 
     @Override
     public String toString() {
-        String tmp = "Deck:\n";
-        for(Card x: this.deck) {
-            tmp += x + "\n";
-        }
-        return tmp;
+        return this.deck.toString();
     }
     
-    
- 
 }

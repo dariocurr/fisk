@@ -31,5 +31,10 @@ public class GoalDeck extends Deck {
             this.deck.add(new KillGoalCard(color));
         }
     }
+
+    @Override
+    public String toString() {
+        return "Goal Deck: " + super.toString();
+    }
     
 }
