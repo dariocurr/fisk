@@ -9,10 +9,10 @@ package risk;
  *
  * @author dario
  */
-public class KillGoalCard extends GoalCard<Player>{
+public class KillGoalCard extends GoalCard<RiskColor>{
 
-    public KillGoalCard(Player player) {
-        super(player);
+    public KillGoalCard(RiskColor riskcolor) {
+        super(riskcolor);
     }
     
     @Override

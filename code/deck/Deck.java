@@ -21,11 +21,11 @@ public abstract class Deck {
 
     @Override
     public String toString() {
-        String tmp = "[";
+        String tmp = "Deck:\n";
         for(Card x: this.deck) {
-            tmp += x + ", ";
+            tmp += x + "\n";
         }
-        return tmp.substring(0, tmp.lastIndexOf(", ")) + "]";
+        return tmp;
     }
     
     

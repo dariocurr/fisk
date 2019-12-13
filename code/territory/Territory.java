@@ -38,5 +38,16 @@ public class Territory {
     public void setContinent ( Continent continent ){
         this.continent = continent;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null) {
+            if (obj instanceof Territory) {
+                Territory otherTerritory = (Territory) obj;
+                return this.name.equalsIgnoreCase(otherTerritory.name);
+            }
+        }
+        return false;
+    }
     
 }

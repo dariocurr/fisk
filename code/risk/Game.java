@@ -26,6 +26,7 @@ public class Game {
     public final List<TerritoryButton> TERRITORY_BUTTONS = new ArrayList<>();
     public final ClassicDice[] ATTACK_DICE = new ClassicDice[3];
     public final ClassicDice[] DEFENSE_DICE = new ClassicDice[3];
+    public GoalDeck GOAL_DECK;
             
     public Game() {
         this.initGame();
@@ -46,6 +47,7 @@ public class Game {
         this.initAdjacencies();
         this.initContinents();
         this.initTerritoryButton();
+        this.GOAL_DECK = new GoalDeck(this.CONTINENTS, this.TERRITORIES);
         for(Territory t: this.TERRITORIES) {
             System.out.println(t.getName() + ": " + t.getNeighboringTerritories());
         }
@@ -55,9 +57,10 @@ public class Game {
         for ( Continent c : this.CONTINENTS ){
             System.out.println( c );
         }
-        for ( TerritoryButton t : TERRITORY_BUTTONS ){
+        for ( TerritoryButton t : this.TERRITORY_BUTTONS ){
             System.out.println( t );
         }
+        System.out.println(this.GOAL_DECK);
     }
     
     private void initTris() {

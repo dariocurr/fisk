@@ -21,4 +21,15 @@ public class Continent {
 		return (this.name + ": " + this.territories.toString());
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null) {
+            if (obj instanceof Continent) {
+                Continent otherContinent = (Continent) obj;
+                return this.name.equalsIgnoreCase(otherContinent.name);
+            }
+        }
+        return false;
+    }
+
 }
