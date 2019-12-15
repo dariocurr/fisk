@@ -5,13 +5,17 @@ import java.util.*;
 
 public class Continent {
 
-	private String name; // public o private?
-	private List<Territory> territories = new ArrayList<>(); // public o private?
+	private String name;
+	private List<Territory> territories = new ArrayList<>();
 
 	public Continent ( String continentName ){
 		this.name = continentName;
 	}
 
+    public String getName() {
+        return name;
+    }
+        
 	public List<Territory> getTerritories (){
 		return this.territories;
 	}
