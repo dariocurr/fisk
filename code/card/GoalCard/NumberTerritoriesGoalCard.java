@@ -5,23 +5,19 @@
  */
 package risk;
 
-import java.util.*;
-
 /**
  *
  * @author dario
  */
-public abstract class Deck<T> {
-    
-    protected List<T> deck;
+public class NumberTerritoriesGoalCard extends GoalCard<Integer> {
 
-    public Deck() {
-        this.deck = new ArrayList<>();
+    public NumberTerritoriesGoalCard(Integer num) {
+        super(num);
     }
 
     @Override
     public String toString() {
-        return this.deck.toString();
+        return "Number of territories to conquer: " + super.toString();
     }
     
 }

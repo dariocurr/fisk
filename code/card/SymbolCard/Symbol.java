@@ -11,6 +11,6 @@ package risk;
  */
 public enum Symbol {
     
-    BISHOP, CANNON, JOLLY, KNIGHT;
+    BISHOP, CANNON, JOKER, KNIGHT;
     
 }

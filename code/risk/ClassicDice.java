@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author dario
  */
-public abstract class ClassicDice {
+public class ClassicDice implements Comparable<ClassicDice> {
     
     private final static TreeSet<Integer> POSSIBLE_VALUES = initPossibleValues();
     
@@ -40,6 +40,11 @@ public abstract class ClassicDice {
         set.add(5);
         set.add(6);
         return set;
+    }
+
+    @Override
+    public int compareTo(ClassicDice otherClassicDice) {
+        return this.value.compareTo(otherClassicDice.value);
     }
     
 }

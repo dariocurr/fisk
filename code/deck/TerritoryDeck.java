@@ -11,7 +11,7 @@ import java.util.*;
  *
  * @author dario
  */
-public class TerritoryDeck extends Deck {
+public class TerritoryDeck extends Deck<TerritoryCard> {
 
     public TerritoryDeck(List<Territory> territories) {
         super();

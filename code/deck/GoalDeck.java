@@ -11,11 +11,11 @@ import java.util.*;
  *
  * @author dario
  */
-public class GoalDeck extends Deck {
+public class GoalDeck extends Deck<GoalCard> {
     
     public GoalDeck(List<Continent> continents, List<Territory> territories) {
-        this.deck.add(new NumTerritoriesGoalCard(territories.size() / 2));
-        this.deck.add(new NumTerritoriesGoalCard(territories.size() / 7 * 3));
+        this.deck.add(new NumberTerritoriesGoalCard(territories.size() / 2));
+        this.deck.add(new NumberTerritoriesGoalCard(territories.size() / 7 * 3));
         for(Continent continent: continents) {
             List<Continent> temp = new ArrayList<>();
             temp.add(continent);
@@ -30,6 +30,7 @@ public class GoalDeck extends Deck {
         for(RiskColor color: RiskColor.values()) {
             this.deck.add(new KillGoalCard(color));
         }
+        Collections.shuffle(this.deck);
     }
 
     @Override

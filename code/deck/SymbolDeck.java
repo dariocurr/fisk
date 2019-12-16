@@ -11,12 +11,14 @@ import java.util.*;
  *
  * @author dario
  */
-public class SymbolDeck extends TerritoryDeck {
+public class SymbolDeck extends Deck<SymbolCard> {
 
-    public SymbolDeck(List<Territory> territories, int numJolly) {
-        super(territories);
-        for(int i = 0; i < numJolly; i++) {
-            this.deck.add(new SymbolCard(Symbol.JOLLY));
+    public SymbolDeck(TerritoryDeck territoryDeck) {
+        for(TerritoryCard territoryCard: territoryDeck.deck) {
+            this.deck.add(territoryCard);
+        }
+        for(int i = 0; i < 2; i++) {
+            this.deck.add(new SymbolCard(Symbol.JOKER));
         }
         Collections.shuffle(this.deck);
     }
