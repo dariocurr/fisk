@@ -23,6 +23,7 @@ public class ConcreteGameBuilder implements GameBuilder {
     private final ClassicDice[] DEFENSE_DICE;
     private final GoalDeck GOAL_DECK;
     private final TerritoryDeck TERRITORY_DECK;
+    private final Map<RiskColor, TankPool> TANK_POOLS;
     
     public ConcreteGameBuilder() {
         this.ALL_TRIS = new ArrayList<>();
@@ -32,16 +33,23 @@ public class ConcreteGameBuilder implements GameBuilder {
         this.CONTINENTS = new ArrayList<>();
         this.ATTACK_DICE = new ClassicDice[3];
         this.DEFENSE_DICE = new ClassicDice[3];
+        for(int i = 0; i < 3; i++) {
+            this.ATTACK_DICE[i] = new ClassicDice();
+            this.DEFENSE_DICE[i] = new ClassicDice();
+        }
         this.initGame();
         this.GOAL_DECK = new GoalDeck(this.CONTINENTS, this.TERRITORIES);
         this.TERRITORY_DECK = new TerritoryDeck(this.TERRITORIES);
+        this.TANK_POOLS = new HashMap<>();
+        this.initTankPools();
     }
      
     @Override
     public Game buildGame() {
         return new Game(this.ALL_TRIS, this.TRIS_BONUS, this.CONTINENTS_BONUS,
                         this.TERRITORIES, this.CONTINENTS, this.ATTACK_DICE, 
-                        this.DEFENSE_DICE, this.GOAL_DECK, this.TERRITORY_DECK);
+                        this.DEFENSE_DICE, this.GOAL_DECK, this.TERRITORY_DECK,
+                        this.TANK_POOLS);
     }
     
     private void initGame() {
@@ -163,6 +171,12 @@ public class ConcreteGameBuilder implements GameBuilder {
             }
         }
         return null;
+    }
+    
+    private void initTankPools() {
+        for(RiskColor riskColor: RiskColor.values()) {
+            this.TANK_POOLS.put(riskColor, new TankPool(140, riskColor));
+        }
     }
     
 }

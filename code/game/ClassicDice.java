@@ -13,8 +13,6 @@ import java.util.*;
  */
 public class ClassicDice implements Comparable<ClassicDice> {
     
-    private final static TreeSet<Integer> POSSIBLE_VALUES = initPossibleValues();
-    
     private Integer value;
 
     public ClassicDice() {
@@ -26,25 +24,23 @@ public class ClassicDice implements Comparable<ClassicDice> {
     }
 
     public void setValue(Integer value) {
-        if(ClassicDice.POSSIBLE_VALUES.contains(value)) {
-            this.value = value;
-        }
-    }
-    
-    private static TreeSet<Integer> initPossibleValues() {
-        TreeSet set = new TreeSet();
-        set.add(1);
-        set.add(2);
-        set.add(3);
-        set.add(4);
-        set.add(5);
-        set.add(6);
-        return set;
+        this.value = value;
     }
 
+    public Integer roll() {
+        Random random = new Random();
+        this.value = random.nextInt(6);
+        return ++this.value;
+    }
+    
     @Override
     public int compareTo(ClassicDice otherClassicDice) {
         return this.value.compareTo(otherClassicDice.value);
+    }
+
+    @Override
+    public String toString() {
+        return " " + value;
     }
     
 }

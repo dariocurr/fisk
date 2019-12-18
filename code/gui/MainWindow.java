@@ -6,8 +6,8 @@ import javax.swing.*;
 
 public class MainWindow extends JFrame {
     
-    private final Integer WIDTH = 1500;
-    private final Integer HEIGHT = 900;
+    private static final Integer WIDTH = 1500;
+    private static final Integer HEIGHT = 900;
     private final Game game;
 
     public MainWindow (Game game) {
@@ -15,14 +15,14 @@ public class MainWindow extends JFrame {
         this.game = game;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout(0, 0));
-        contentPane.add(new PlayerPanel(this.WIDTH / 5, this.HEIGHT), BorderLayout.WEST);
+        contentPane.add(new PlayerPanel(MainWindow.WIDTH / 5, MainWindow.HEIGHT), BorderLayout.WEST);
         JPanel centerJPanel = new JPanel();
         centerJPanel.setLayout(new BorderLayout(0, 0));
-        centerJPanel.setPreferredSize(new Dimension(this.WIDTH - this.WIDTH / 5, this.HEIGHT));
+        centerJPanel.setPreferredSize(new Dimension(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT));
         contentPane.add(centerJPanel, BorderLayout.CENTER);
-        centerJPanel.add(new BoardPanel(this.WIDTH - this.WIDTH / 5, this.HEIGHT - this.HEIGHT / 6, this.game.getTERRITORIES()), BorderLayout.NORTH);
-        centerJPanel.add(new LogPanel(this.WIDTH - this.WIDTH / 5, this.HEIGHT / 6), BorderLayout.CENTER);
-        this.setSize(this.WIDTH, this.HEIGHT);
+        centerJPanel.add(new BoardPanel(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT - MainWindow.HEIGHT / 6, this.game.getTerritories()), BorderLayout.NORTH);
+        centerJPanel.add(new LogPanel(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT / 6), BorderLayout.CENTER);
+        this.setSize(MainWindow.WIDTH, MainWindow.HEIGHT);
         this.defaultOperations();
     }
 

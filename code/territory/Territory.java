@@ -17,6 +17,7 @@ public class Territory {
     private String name;
     private Continent continent;
     private List<Tank> tanks;
+    private Player ownerPlayer;
 
     public Territory ( String territoryName ){
 	this.name = territoryName;
@@ -54,6 +55,22 @@ public class Territory {
             }
         }
         return false;
+    }
+
+    public Player getOwnerPlayer() {
+        return ownerPlayer;
+    }
+
+    public void setOwnerPlayer(Player ownerPlayer) {
+        this.ownerPlayer = ownerPlayer;
+    }
+    
+    public void printNeighboringTerritories (){
+        int counter = 0;
+        for ( Territory t : this.neighboringTerritories ){
+            System.out.println( t + " " + counter );
+            counter++;
+        }
     }
     
 }

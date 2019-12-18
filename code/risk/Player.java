@@ -5,8 +5,8 @@
  */
 package risk;
 
+import java.io.*;
 import java.util.*;
-
 /**
  *
  * @author dario
@@ -30,16 +30,27 @@ public class Player {
 		this.cards = new ArrayList<>();
 	}
 
+	public void rollDice ( ClassicDice[] dices, int rolls ){
+		for ( int i = 0; i < rolls; i++ ){
+			dices[i].roll();
+		}
+		for ( int i = rolls; i < 3; i++ ){
+			dices[i].setValue( 1 );
+		}
+	}
+
 	public String getName (){
 		return this.name;
 	}
 
-	public String [] attack (){
-		/*Scanner in = new Scanner ( System.in );
-		String attackLine = in.nextLine();
-		String splittedAttack = attackLine.split(",");
-		return splittedAttack;*/
-		return null;
+	public Territory[] attack (){
+		Territory territoriesInvolvedInAttack [] = new Territory [2];
+		Scanner in = new Scanner ( System.in );
+		this.printTerritories();
+		territoriesInvolvedInAttack[0] = this.territories.get( in.nextInt() );
+		territoriesInvolvedInAttack[0].printNeighboringTerritories();
+		territoriesInvolvedInAttack[1] = territoriesInvolvedInAttack[0].getNeighboringTerritories().get( in.nextInt() );
+		return territoriesInvolvedInAttack;
 	}
 
 	public Tris exchangeTris (){
@@ -130,7 +141,7 @@ public class Player {
 	}
         
         public RiskColor getColor() {
-            return COLOR;
+            return this.COLOR;
         }
 
 }
