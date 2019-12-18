@@ -24,4 +24,16 @@ public abstract class Deck<T> {
         return this.deck.toString();
     }
     
+    public T removeCard() {
+        return this.deck.remove(0);
+    }
+    
+    public void addCard(T t) {
+        this.deck.add(t);
+    }
+    
+    public boolean isEmpty() {
+        return this.deck.isEmpty();
+    }
+    
 }

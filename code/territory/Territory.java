@@ -16,14 +16,20 @@ public class Territory {
     private List<Territory> neighboringTerritories; //public o private o something else?
     private String name;
     private Continent continent;
+    private List<Tank> tanks;
 
     public Territory ( String territoryName ){
 	this.name = territoryName;
         this.neighboringTerritories = new ArrayList<>();
+        this.tanks = new ArrayList<>();
     }
 
     public String getName (){
 	return this.name;
+    }
+
+    public List<Tank> getTanks() {
+        return tanks;
     }
 
     public List<Territory> getNeighboringTerritories() {

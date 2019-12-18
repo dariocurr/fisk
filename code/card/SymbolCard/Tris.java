@@ -6,7 +6,6 @@
  */
 package risk;
 
-import java.io.*;
 import java.util.*;
 
 /**
@@ -39,6 +38,22 @@ public class Tris {
             }
         }
         return false;
+    }
+    
+    public SymbolCard getFirstCard (){
+        return this.cards.get(0);
+    }
+
+    public SymbolCard getSecondCard (){
+        return this.cards.get(1);
+    }
+
+    public SymbolCard getThirdCard (){
+        return this.cards.get(2);
+    }
+    
+    public List<SymbolCard> getCards (){
+        return this.cards;
     }
     
     
