@@ -13,7 +13,7 @@ import java.util.*;
  * @author dario
  */
 public class Tris {
-    
+
     private final List<SymbolCard> cards;
 
     public Tris(SymbolCard firstCard, SymbolCard secondCard, SymbolCard thirdCard) {
@@ -39,23 +39,21 @@ public class Tris {
         }
         return false;
     }
-    
-    public SymbolCard getFirstCard (){
+
+    public SymbolCard getFirstCard() {
         return this.cards.get(0);
     }
 
-    public SymbolCard getSecondCard (){
+    public SymbolCard getSecondCard() {
         return this.cards.get(1);
     }
 
-    public SymbolCard getThirdCard (){
+    public SymbolCard getThirdCard() {
         return this.cards.get(2);
     }
-    
-    public List<SymbolCard> getCards (){
+
+    public List<SymbolCard> getCards() {
         return this.cards;
     }
-    
-    
-    
+
 }

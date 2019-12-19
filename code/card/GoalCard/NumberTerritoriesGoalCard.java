@@ -19,5 +19,5 @@ public class NumberTerritoriesGoalCard extends GoalCard<Integer> {
     public String toString() {
         return "Number of territories to conquer: " + super.toString();
     }
-    
+
 }

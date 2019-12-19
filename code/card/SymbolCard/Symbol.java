@@ -10,7 +10,7 @@ package risk;
  * @author dario
  */
 public enum Symbol {
-    
+
     BISHOP, CANNON, JOKER, KNIGHT;
-    
+
 }

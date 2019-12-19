@@ -12,22 +12,22 @@ import java.util.*;
  * @author dario
  */
 public class TankPool {
-    
+
     private List<Tank> tanks;
-    
+
     public TankPool(int number, RiskColor riskColor) {
         this.tanks = new ArrayList<>();
-        for(int i = 0; i < number; i++) {
+        for (int i = 0; i < number; i++) {
             tanks.add(new Tank(riskColor));
         }
     }
-    
+
     public Tank releaseTank() {
         return this.tanks.remove(0);
     }
-    
+
     public void acquireTank(Tank tank) {
         this.tanks.add(tank);
     }
-    
+
 }

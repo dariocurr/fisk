@@ -14,5 +14,5 @@ public abstract class GoalCard<T> extends Card<T> {
     public GoalCard(T goal) {
         super(goal);
     }
-    
+
 }

@@ -12,7 +12,7 @@ import java.util.*;
  * @author dario
  */
 public abstract class Deck<T> {
-    
+
     protected List<T> deck;
 
     public Deck() {
@@ -23,17 +23,17 @@ public abstract class Deck<T> {
     public String toString() {
         return this.deck.toString();
     }
-    
+
     public T removeCard() {
         return this.deck.remove(0);
     }
-    
+
     public void addCard(T t) {
         this.deck.add(t);
     }
-    
+
     public boolean isEmpty() {
         return this.deck.isEmpty();
     }
-    
+
 }

@@ -9,16 +9,12 @@ package risk;
  *
  * @author dario
  */
-public class Tank {
+public interface Main {
 
-    private RiskColor color;
-
-    public Tank(RiskColor color) {
-        this.color = color;
-    }
-
-    public RiskColor getColor() {
-        return this.color;
+    public static void main(String... args) {
+        Game game = new ConcreteGameBuilder().buildGame();
+        //new MainWindow(game);
+        new RollFrame();
     }
 
 }

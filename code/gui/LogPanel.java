@@ -8,17 +8,16 @@ package risk;
 import java.awt.*;
 import javax.swing.*;
 
-
 /**
  *
  * @author dario
  */
 public class LogPanel extends JScrollPane {
-    
+
     private final Integer WIDTH;
     private final Integer HEIGHT;
     private static final JTextArea TEXT_AREA = new JTextArea();
-    
+
     public LogPanel(int width, int height) {
         super(TEXT_AREA, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         LogPanel.TEXT_AREA.setEditable(false);
@@ -26,5 +25,5 @@ public class LogPanel extends JScrollPane {
         this.HEIGHT = height;
         this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
     }
-    
+
 }

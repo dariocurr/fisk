@@ -24,7 +24,7 @@ public class PlayerPanel extends JPanel {
     private JButton goalButton;
     private JLabel stageLabel;
     private JButton endButton;
-    
+
     public PlayerPanel(int width, int height) {
         this.WIDTH = width;
         this.HEIGHT = height;
@@ -32,14 +32,14 @@ public class PlayerPanel extends JPanel {
         this.buildGUI();
         this.addListeners();
     }
-    
+
     private void buildGUI() {
         this.setLayout(new GridBagLayout());
-        GridBagConstraints innerGBC = new GridBagConstraints ();
+        GridBagConstraints innerGBC = new GridBagConstraints();
         innerGBC.gridx = GridBagConstraints.CENTER;
         innerGBC.gridy = GridBagConstraints.RELATIVE;
         innerGBC.weighty = 0.1;
-        GridBagConstraints outerGBC = new GridBagConstraints ();
+        GridBagConstraints outerGBC = new GridBagConstraints();
         outerGBC.gridx = GridBagConstraints.CENTER;
         outerGBC.gridy = GridBagConstraints.RELATIVE;
         outerGBC.weighty = 2;
@@ -71,20 +71,20 @@ public class PlayerPanel extends JPanel {
         this.add(centerPanel, outerGBC);
         this.add(southPanel, outerGBC);
     }
-    
+
     private void addListeners() {
-       this.goalButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent ae) {
-               JOptionPane.showMessageDialog(null, "Obiettivo: ");
-           }
-       });
-       this.cardsButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent ae) {
-               new CardsFrame();
-           }
-       });
+        this.goalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                JOptionPane.showMessageDialog(null, "Obiettivo: ");
+            }
+        });
+        this.cardsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                new CardsFrame();
+            }
+        });
     }
-    
+
 }

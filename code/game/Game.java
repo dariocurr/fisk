@@ -7,12 +7,13 @@ package risk;
 
 import java.io.*;
 import java.util.*;
+
 /**
  *
  * @author dario
  */
 public class Game {
-    
+
     private final List<Tris> ALL_TRIS;
     private final Map<Tris, Integer> TRIS_BONUS;
     private final Map<Continent, Integer> CONTINENTS_BONUS;
@@ -24,11 +25,11 @@ public class Game {
     private final TerritoryDeck TERRITORY_DECK;
     private final Map<RiskColor, TankPool> TANK_POOLS;
 
-    public Game(List<Tris> ALL_TRIS, Map<Tris, Integer> TRIS_BONUS, 
-                Map<Continent, Integer> CONTINENTS_BONUS, List<Territory> TERRITORIES,
-                List<Continent> CONTINENTS, ClassicDice[] ATTACK_DICE, 
-                ClassicDice[] DEFENSE_DICE, GoalDeck GOAL_DECK, 
-                TerritoryDeck TERRITORY_DECK, Map<RiskColor, TankPool> TANK_POOLS) {
+    public Game(List<Tris> ALL_TRIS, Map<Tris, Integer> TRIS_BONUS,
+            Map<Continent, Integer> CONTINENTS_BONUS, List<Territory> TERRITORIES,
+            List<Continent> CONTINENTS, ClassicDice[] ATTACK_DICE,
+            ClassicDice[] DEFENSE_DICE, GoalDeck GOAL_DECK,
+            TerritoryDeck TERRITORY_DECK, Map<RiskColor, TankPool> TANK_POOLS) {
         this.ALL_TRIS = ALL_TRIS;
         this.TRIS_BONUS = TRIS_BONUS;
         this.CONTINENTS_BONUS = CONTINENTS_BONUS;
@@ -40,11 +41,11 @@ public class Game {
         this.TERRITORY_DECK = TERRITORY_DECK;
         this.TANK_POOLS = TANK_POOLS;
     }
-    
+
     public Integer getTrisBonus(Tris tris) {
         return this.TRIS_BONUS.get(tris);
     }
-    
+
     public Integer getContinentBonus(Continent continent) {
         return this.CONTINENTS_BONUS.get(continent);
     }
@@ -52,16 +53,16 @@ public class Game {
     public List<Territory> getTerritories() {
         return TERRITORIES;
     }
-    
-    public TerritoryDeck getTerritoryDeck (){
+
+    public TerritoryDeck getTerritoryDeck() {
         return this.TERRITORY_DECK;
     }
 
-    public GoalDeck getGoalDeck (){
+    public GoalDeck getGoalDeck() {
         return this.GOAL_DECK;
     }
 
-    public List<Tris> getAllTris (){
+    public List<Tris> getAllTris() {
         return this.ALL_TRIS;
     }
 
@@ -72,9 +73,9 @@ public class Game {
     public ClassicDice[] getDefenseDice() {
         return DEFENSE_DICE;
     }
-    
+
     public TankPool getTankPool(RiskColor riskColor) {
         return this.TANK_POOLS.get(riskColor);
     }
-    
+
 }

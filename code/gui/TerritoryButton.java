@@ -13,14 +13,14 @@ public class TerritoryButton extends JButton {
     private int height;
     private Territory territory;
 
-    public TerritoryButton ( Territory territory, int x, int y, int width, int height ){
+    public TerritoryButton(Territory territory, int x, int y, int width, int height) {
         super();
         double resize = 1.35;
         this.territory = territory;
-        this.positionX = (int)(x * resize);
-        this.positionY = (int)(y * resize);
-        this.width = (int)(width * resize);
-        this.height = (int)(height * resize);
+        this.positionX = (int) (x * resize);
+        this.positionY = (int) (y * resize);
+        this.width = (int) (width * resize);
+        this.height = (int) (height * resize);
         this.setPreferredSize(new Dimension(this.width, this.height));
         Font defaultFont = new Font("Calibri", Font.BOLD, 10);
         this.setFont(defaultFont);
@@ -53,14 +53,14 @@ public class TerritoryButton extends JButton {
     public int getHeight() {
         return height;
     }
-    
-    public Territory getTerritory (){
-            return this.territory;
+
+    public Territory getTerritory() {
+        return this.territory;
     }
 
     @Override
-    public String toString (){
-            return this.territory.getName() + " " + this.positionX + " " + this.positionY;
+    public String toString() {
+        return this.territory.getName() + " " + this.positionX + " " + this.positionY;
     }
 
 }

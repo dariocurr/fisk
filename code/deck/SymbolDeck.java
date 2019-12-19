@@ -14,18 +14,18 @@ import java.util.*;
 public class SymbolDeck extends Deck<SymbolCard> {
 
     public SymbolDeck(TerritoryDeck territoryDeck) {
-        for(TerritoryCard territoryCard: territoryDeck.deck) {
+        for (TerritoryCard territoryCard : territoryDeck.deck) {
             this.deck.add(territoryCard);
         }
-        for(int i = 0; i < 2; i++) {
+        for (int i = 0; i < 2; i++) {
             this.deck.add(new SymbolCard(Symbol.JOKER));
         }
         Collections.shuffle(this.deck);
     }
-    
+
     @Override
     public String toString() {
         return "Symbol&" + super.toString();
     }
-    
+
 }

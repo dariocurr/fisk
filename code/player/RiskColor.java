@@ -9,16 +9,8 @@ package risk;
  *
  * @author dario
  */
-public class Tank {
+public enum RiskColor {
 
-    private RiskColor color;
-
-    public Tank(RiskColor color) {
-        this.color = color;
-    }
-
-    public RiskColor getColor() {
-        return this.color;
-    }
+    RED, GREEN, BLUE, YELLOW, PURPLE, BLACK;
 
 }

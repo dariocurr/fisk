@@ -14,15 +14,17 @@ import javax.imageio.*;
  * @author dario
  */
 public class ImageLoader {
-    
+
     public static Image loadImage(String path) {
         Image temp = null;
         try {
-                temp = ImageIO.read(new File(path));
-            } catch (IOException ex) {
-                System.out.println("Image not found!");
-            }
+            temp = ImageIO.read(new File(path));
+        } catch (FileNotFoundException exx) {
+            System.out.println("Image " + path + " not found!");
+        } catch (IOException ex) {
+            System.out.println("IO Error!");
+        }
         return temp;
     }
-    
+
 }

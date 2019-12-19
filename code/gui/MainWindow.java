@@ -3,14 +3,13 @@ package risk;
 import java.awt.*;
 import javax.swing.*;
 
-
 public class MainWindow extends JFrame {
-    
+
     private static final Integer WIDTH = 1500;
     private static final Integer HEIGHT = 900;
     private final Game game;
 
-    public MainWindow (Game game) {
+    public MainWindow(Game game) {
         super();
         this.game = game;
         Container contentPane = this.getContentPane();
@@ -26,11 +25,11 @@ public class MainWindow extends JFrame {
         this.defaultOperations();
     }
 
-    private void defaultOperations (){
+    private void defaultOperations() {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        this.setVisible(true); 
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 
-}	
+}

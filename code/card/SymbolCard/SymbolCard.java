@@ -9,7 +9,7 @@ package risk;
  *
  * @author dario
  */
-public class SymbolCard extends Card<Symbol> implements Comparable<SymbolCard>{
+public class SymbolCard extends Card<Symbol> implements Comparable<SymbolCard> {
 
     public SymbolCard(Symbol symbol) {
         super(symbol);
@@ -29,6 +29,6 @@ public class SymbolCard extends Card<Symbol> implements Comparable<SymbolCard>{
     @Override
     public int compareTo(SymbolCard otherSymbolCard) {
         return this.card.compareTo(otherSymbolCard.card);
-    } 
-    
+    }
+
 }

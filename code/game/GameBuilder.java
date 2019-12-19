@@ -10,12 +10,12 @@ package risk;
  * @author dario
  */
 public interface GameBuilder {
-    
+
     static final String TRIS_BONUS_FILE = "res/tris.txt";
     static final String CONTINENTS_BONUS_FILE = "res/continents_bonus.txt";
     static final String ADJACENCIES_FILE = "res/adjacencies.txt";
     static final String CONTINENTS_FILE = "res/continents.txt";
-    
+
     public Game buildGame();
-    
+
 }

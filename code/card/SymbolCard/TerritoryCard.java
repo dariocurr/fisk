@@ -12,7 +12,7 @@ package risk;
 public class TerritoryCard extends SymbolCard {
 
     private Territory territory;
-    
+
     public TerritoryCard(Symbol symbol, Territory territory) {
         super(symbol);
         this.territory = territory;
@@ -26,5 +26,5 @@ public class TerritoryCard extends SymbolCard {
     public String toString() {
         return super.toString() + " " + this.territory;
     }
-    
+
 }

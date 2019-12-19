@@ -17,7 +17,7 @@ import java.util.*;
  * @author dario
  */
 public class BoardPanel extends JPanel {
-    
+
     private static final String TERRITORIES_BUTTON_FILE = "res/territory_button.txt";
     private static final String BACKGROUND_IMAGE_FILE = "res/background.jpg";
     private static final Image BACKGROUND_IMAGE = ImageLoader.loadImage(BACKGROUND_IMAGE_FILE);
@@ -26,7 +26,7 @@ public class BoardPanel extends JPanel {
     private final Integer WIDTH;
     private final Integer HEIGHT;
     private final List<Territory> TERRITORIES;
-    
+
     public BoardPanel(int width, int height, List<Territory> territories) {
         super();
         this.WIDTH = width;
@@ -38,47 +38,46 @@ public class BoardPanel extends JPanel {
         this.initTerritoryButtons();
         this.setLayout(null);
         for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
-            territoryButton.setBounds(territoryButton.getPositionX(), 
-                                      territoryButton.getPositionY(),
-                                      territoryButton.getWidth(),
-                                      territoryButton.getHeight());
+            territoryButton.setBounds(territoryButton.getPositionX(),
+                    territoryButton.getPositionY(),
+                    territoryButton.getWidth(),
+                    territoryButton.getHeight());
             this.add(territoryButton);
         }
     }
-    
-    private void initTerritoryButtons (){
+
+    private void initTerritoryButtons() {
         try {
-            Scanner in = new Scanner ( new File( TERRITORIES_BUTTON_FILE ) );
-            while ( in.hasNextLine() ){
+            Scanner in = new Scanner(new File(TERRITORIES_BUTTON_FILE));
+            while (in.hasNextLine()) {
                 String line = in.nextLine();
-                String [] splitted_line = line.split(",");
-                TerritoryButton t = new TerritoryButton( 
-                    this.fromStringToTerritory(splitted_line[0].trim()), 
-                    Integer.parseInt(splitted_line[1].trim()), 
-                    Integer.parseInt(splitted_line[2].trim()), 
-                    Integer.parseInt(splitted_line[3].trim()), 
-                    Integer.parseInt(splitted_line[4].trim()));
-                this.TERRITORY_BUTTONS.add( t );
+                String[] splitted_line = line.split(",");
+                TerritoryButton t = new TerritoryButton(
+                        this.fromStringToTerritory(splitted_line[0].trim()),
+                        Integer.parseInt(splitted_line[1].trim()),
+                        Integer.parseInt(splitted_line[2].trim()),
+                        Integer.parseInt(splitted_line[3].trim()),
+                        Integer.parseInt(splitted_line[4].trim()));
+                this.TERRITORY_BUTTONS.add(t);
             }
-        }
-        catch( FileNotFoundException e ){
+        } catch (FileNotFoundException e) {
             System.out.println("File " + TERRITORIES_BUTTON_FILE + " not found!");
         }
     }
-    
-    private Territory fromStringToTerritory (String territoryName) {
-        for (Territory territory: this.TERRITORIES) {
+
+    private Territory fromStringToTerritory(String territoryName) {
+        for (Territory territory : this.TERRITORIES) {
             if (territory.getName().equalsIgnoreCase(territoryName.trim())) {
                 return territory;
             }
         }
         return null;
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(SCALED_IMAGE, 0, 0, null);
     }
-    
+
 }

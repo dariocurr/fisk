@@ -12,7 +12,7 @@ import java.util.*;
  * @author dario
  */
 public class ClassicDice implements Comparable<ClassicDice> {
-    
+
     private Integer value;
 
     public ClassicDice() {
@@ -32,7 +32,7 @@ public class ClassicDice implements Comparable<ClassicDice> {
         this.value = random.nextInt(6);
         return ++this.value;
     }
-    
+
     @Override
     public int compareTo(ClassicDice otherClassicDice) {
         return this.value.compareTo(otherClassicDice.value);
@@ -42,5 +42,5 @@ public class ClassicDice implements Comparable<ClassicDice> {
     public String toString() {
         return " " + value;
     }
-    
+
 }

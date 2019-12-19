@@ -9,16 +9,6 @@ package risk;
  *
  * @author dario
  */
-public class Tank {
-
-    private RiskColor color;
-
-    public Tank(RiskColor color) {
-        this.color = color;
-    }
-
-    public RiskColor getColor() {
-        return this.color;
-    }
-
+public class BashMediator {
+    
 }

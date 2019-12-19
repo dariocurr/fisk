@@ -12,21 +12,21 @@ import java.util.*;
  * @author dario
  */
 public class Territory {
-    
+
     private List<Territory> neighboringTerritories; //public o private o something else?
     private String name;
     private Continent continent;
     private List<Tank> tanks;
     private Player ownerPlayer;
 
-    public Territory ( String territoryName ){
-	this.name = territoryName;
+    public Territory(String territoryName) {
+        this.name = territoryName;
         this.neighboringTerritories = new ArrayList<>();
         this.tanks = new ArrayList<>();
     }
 
-    public String getName (){
-	return this.name;
+    public String getName() {
+        return this.name;
     }
 
     public List<Tank> getTanks() {
@@ -39,10 +39,10 @@ public class Territory {
 
     @Override
     public String toString() {
-    	return this.getName();
+        return this.getName();
     }
-    
-    public void setContinent ( Continent continent ){
+
+    public void setContinent(Continent continent) {
         this.continent = continent;
     }
 
@@ -64,13 +64,13 @@ public class Territory {
     public void setOwnerPlayer(Player ownerPlayer) {
         this.ownerPlayer = ownerPlayer;
     }
-    
-    public void printNeighboringTerritories (){
+
+    public void printNeighboringTerritories() {
         int counter = 0;
-        for ( Territory t : this.neighboringTerritories ){
-            System.out.println( t + " " + counter );
+        for (Territory t : this.neighboringTerritories) {
+            System.out.println(t + " " + counter);
             counter++;
         }
     }
-    
+
 }
