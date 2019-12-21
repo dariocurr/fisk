@@ -8,6 +8,7 @@ package risk;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.*;
 import javax.swing.*;
 import java.io.*;
 import java.util.*;
@@ -26,11 +27,13 @@ public class BoardPanel extends JPanel {
     private final Integer WIDTH;
     private final Integer HEIGHT;
     private final List<Territory> TERRITORIES;
+    private final Facade facade;
 
-    public BoardPanel(int width, int height, List<Territory> territories) {
+    public BoardPanel(int width, int height, List<Territory> territories, Facade facade) {
         super();
         this.WIDTH = width;
         this.HEIGHT = height;
+        this.facade = facade;
         this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         this.SCALED_IMAGE = BoardPanel.BACKGROUND_IMAGE.getScaledInstance(this.WIDTH, this.HEIGHT, 0);
         this.TERRITORIES = territories;
@@ -44,6 +47,7 @@ public class BoardPanel extends JPanel {
                     territoryButton.getHeight());
             this.add(territoryButton);
         }
+        this.addListeners();
     }
 
     private void initTerritoryButtons() {
@@ -78,6 +82,38 @@ public class BoardPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(SCALED_IMAGE, 0, 0, null);
+    }
+    
+    private void addListeners() {
+        for(TerritoryButton territoryButton: TERRITORY_BUTTONS) {
+            territoryButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    Territory clickedTerritory = territoryButton.getTerritory();
+                    List<Territory> involvedTerritories = facade.addClickedTerritory(clickedTerritory);
+                    disableButtons(involvedTerritories);
+                    
+                }
+            });
+        }
+    }
+    
+    private void disableButtons(List<Territory> involvedTerritories) {
+        if (involvedTerritories == null) {
+            for(TerritoryButton territoryButton: TERRITORY_BUTTONS) {
+                territoryButton.setEnabled(true);
+            }
+        } else {
+            for(TerritoryButton territoryButton: TERRITORY_BUTTONS) {
+                if(involvedTerritories.contains(territoryButton.getTerritory())) {
+                    territoryButton.setEnabled(true);
+                } else {
+                    territoryButton.setEnabled(false);
+                }
+            }
+        }
+        
+        
     }
 
 }

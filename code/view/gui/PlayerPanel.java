@@ -24,13 +24,16 @@ public class PlayerPanel extends JPanel {
     private JButton goalButton;
     private JLabel stageLabel;
     private JButton endButton;
+    private final Facade facade;
 
-    public PlayerPanel(int width, int height) {
+    public PlayerPanel(int width, int height, Facade facade) {
+        this.facade = facade;
         this.WIDTH = width;
         this.HEIGHT = height;
         this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         this.buildGUI();
-        this.addListeners();
+        this.updateLabels();
+        this.addListenersToButtons();
     }
 
     private void buildGUI() {
@@ -52,13 +55,14 @@ public class PlayerPanel extends JPanel {
         JPanel southPanel = new JPanel();
         southPanel.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT / 5));
         southPanel.setLayout(new GridBagLayout());
-        this.nameColorLabel = new JLabel("Nome Human Player and Color", SwingConstants.CENTER);
-        this.nameColorLabel.setForeground(Color.red);
-        this.numberTerritoriesLabel = new JLabel("Number of territories:", SwingConstants.CENTER);
-        this.freeTanksLabel = new JLabel("Tanks to locate:", SwingConstants.CENTER);
+        this.nameColorLabel = new JLabel(this.facade.getPlayerName(), SwingConstants.CENTER);
+        this.nameColorLabel.setForeground(this.facade.getPlayerColor());
+        this.nameColorLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+        this.numberTerritoriesLabel = new JLabel("", SwingConstants.CENTER);
+        this.freeTanksLabel = new JLabel("", SwingConstants.CENTER);
         this.cardsButton = new JButton("Cards");
         this.goalButton = new JButton("Goal");
-        this.stageLabel = new JLabel("Stage:", SwingConstants.CENTER);
+        this.stageLabel = new JLabel("Stage: " , SwingConstants.CENTER);
         this.endButton = new JButton("End stage");
         northPanel.add(nameColorLabel, innerGBC);
         northPanel.add(numberTerritoriesLabel, innerGBC);
@@ -72,19 +76,25 @@ public class PlayerPanel extends JPanel {
         this.add(southPanel, outerGBC);
     }
 
-    private void addListeners() {
+    private void addListenersToButtons() {
         this.goalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                JOptionPane.showMessageDialog(null, "Obiettivo: ");
+                JOptionPane.showMessageDialog(null, "Obiettivo: " + facade.getPlayerGoal());
             }
         });
         this.cardsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                new CardsFrame();
+                new CardsFrame(facade);
             }
         });
+    }
+    
+    public void updateLabels() {
+        this.numberTerritoriesLabel.setText("Number of territories: " + this.facade.getPlayerNumberOfTerritories());
+        this.freeTanksLabel.setText("Tanks to locate: " + this.facade.getPlayerNumberOfFreeTanks());
+        this.stageLabel.setText("Stage: " + this.facade.getCurrentStage());
     }
 
 }

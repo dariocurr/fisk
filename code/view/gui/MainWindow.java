@@ -7,20 +7,23 @@ public class MainWindow extends JFrame {
 
     private static final Integer WIDTH = 1500;
     private static final Integer HEIGHT = 900;
-    private final Game game;
+    private final Facade facade;
 
-    public MainWindow(Game game) {
+    public MainWindow(Facade facade) {
         super();
-        this.game = game;
+        this.facade = facade;
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout(0, 0));
-        contentPane.add(new PlayerPanel(MainWindow.WIDTH / 5, MainWindow.HEIGHT), BorderLayout.WEST);
+        PlayerPanel playerPanel = new PlayerPanel(MainWindow.WIDTH / 5, MainWindow.HEIGHT, facade);
+        contentPane.add(playerPanel, BorderLayout.WEST);
         JPanel centerJPanel = new JPanel();
         centerJPanel.setLayout(new BorderLayout(0, 0));
         centerJPanel.setPreferredSize(new Dimension(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT));
         contentPane.add(centerJPanel, BorderLayout.CENTER);
-        centerJPanel.add(new BoardPanel(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT - MainWindow.HEIGHT / 6, this.game.getTerritories()), BorderLayout.NORTH);
-        centerJPanel.add(new LogPanel(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT / 6), BorderLayout.CENTER);
+        BoardPanel boardPanel = new BoardPanel(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT - MainWindow.HEIGHT / 6, this.facade.getTerritories(), facade);
+        centerJPanel.add(boardPanel, BorderLayout.NORTH);
+        LogPanel logPanel = new LogPanel(MainWindow.WIDTH - MainWindow.WIDTH / 5, MainWindow.HEIGHT / 6);
+        centerJPanel.add(logPanel, BorderLayout.CENTER);
         this.setSize(MainWindow.WIDTH, MainWindow.HEIGHT);
         this.defaultOperations();
     }

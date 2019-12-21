@@ -5,7 +5,6 @@
  */
 package risk;
 
-import java.io.*;
 import java.util.*;
 
 /**
@@ -16,11 +15,11 @@ public class Player {
 
     private String name;
     private final RiskColor COLOR;
-    private List<Territory> territories;
-    private List<Continent> continents;
-    private List<Tank> freeTanks;
+    private final List<Territory> territories;
+    private final List<Continent> continents;
+    private final List<Tank> freeTanks;
     private GoalCard goal;
-    private List<SymbolCard> cards;
+    private final List<SymbolCard> cards;
 
     public Player(String name, RiskColor COLOR) {
         this.name = name;
@@ -93,7 +92,7 @@ public class Player {
 
     }
 
-    private void printTerritories() {
+    public void printTerritories() {
         int counter = 0;
         for (Territory t : this.territories) {
             System.out.println(t + " : " + counter);

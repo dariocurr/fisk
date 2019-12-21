@@ -23,7 +23,11 @@ public class TankPool {
     }
 
     public Tank releaseTank() {
-        return this.tanks.remove(0);
+        if (this.tanks.size() > 0) {
+            return this.tanks.remove(0);
+        } else {
+            return null;
+        }
     }
 
     public void acquireTank(Tank tank) {

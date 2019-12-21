@@ -20,12 +20,12 @@ public class RollFrame extends JFrame {
     private static final Integer HEIGHT = 300;
     private final JButton rollButton;
     private final JButton exitButton;
-    private final ClassicDice[] ATTACK_DICE;
-    private final ClassicDice[] DEFENSE_DICE;
     private final JLabel[] ATTACK_LABEL;
     private final JLabel[] DEFENSE_LABEL;
+    private final Facade facade;
 
-    public RollFrame() {
+    public RollFrame(Facade facade) {
+        this.facade = facade;
         this.setLayout(new GridLayout(3, 1));
         int hgap = RollFrame.WIDTH / 10;
         int vgap = RollFrame.HEIGHT / 15;
@@ -35,17 +35,13 @@ public class RollFrame extends JFrame {
         centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, hgap, vgap));
         JPanel downPanel = new JPanel();
         downPanel.setLayout(new FlowLayout(FlowLayout.CENTER, hgap * 2, vgap * 2));
-        this.ATTACK_DICE = new ClassicDice[3];
-        this.DEFENSE_DICE = new ClassicDice[3];
         this.ATTACK_LABEL = new JLabel[3];
         this.DEFENSE_LABEL = new JLabel[3];
         for (int i = 0; i < this.ATTACK_LABEL.length; i++) {
-            this.ATTACK_DICE[i] = new ClassicDice();
             this.ATTACK_LABEL[i] = new JLabel();
             topPanel.add(this.ATTACK_LABEL[i]);
         }
         for (int i = 0; i < this.DEFENSE_LABEL.length; i++) {
-            this.DEFENSE_DICE[i] = new ClassicDice();
             this.DEFENSE_LABEL[i] = new JLabel();
             centerPanel.add(this.DEFENSE_LABEL[i]);
         }
@@ -72,26 +68,19 @@ public class RollFrame extends JFrame {
         this.rollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                for (ClassicDice dice : ATTACK_DICE) {
-                    dice.roll();
-                }
-                for (ClassicDice dice : DEFENSE_DICE) {
-                    dice.roll();
-                }
-                updateFrame();
             }
         });
     }
 
-    private void updateFrame() {
-        Arrays.sort(this.ATTACK_DICE, Collections.reverseOrder());
-        Arrays.sort(this.DEFENSE_DICE, Collections.reverseOrder());
-        for (int i = 0; i < this.ATTACK_DICE.length; i++) {
-            this.ATTACK_LABEL[i].setIcon(new ImageIcon(this.getAttackDice(this.ATTACK_DICE[i].getValue())));
+    private void updateFrame(Integer[] diceValues) {
+        for (int i = 0; i < diceValues.length; i++) {
+            this.ATTACK_LABEL[i].setIcon(new ImageIcon(this.getAttackDice(diceValues[i])));
         }
+        /*
         for (int i = 0; i < this.DEFENSE_DICE.length; i++) {
             this.DEFENSE_LABEL[i].setIcon(new ImageIcon(this.getDefenseDice(this.DEFENSE_DICE[i].getValue())));
         }
+        */
     }
 
     private Image getAttackDice(Integer value) {

@@ -7,12 +7,13 @@ public class TerritoryButton extends JButton {
 
     private static final String TANK_IMAGE_FILE = "res/tank.png";
     private final static Image TANK_IMAGE = ImageLoader.loadImage(TANK_IMAGE_FILE);
-    private int positionX;
-    private int positionY;
-    private int width;
-    private int height;
-    private Territory territory;
-
+    private final int positionX;
+    private final int positionY;
+    private final int width;
+    private final int height;
+    private final Territory territory;
+    private final JLabel numberTanks;
+    
     public TerritoryButton(Territory territory, int x, int y, int width, int height) {
         super();
         double resize = 1.35;
@@ -22,18 +23,15 @@ public class TerritoryButton extends JButton {
         this.width = (int) (width * resize);
         this.height = (int) (height * resize);
         this.setPreferredSize(new Dimension(this.width, this.height));
-        Font defaultFont = new Font("Calibri", Font.BOLD, 10);
-        this.setFont(defaultFont);
         this.setForeground(Color.WHITE);
         Image scaledImage = TerritoryButton.TANK_IMAGE.getScaledInstance(15, 15, 0);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JLabel tank = new JLabel(new ImageIcon(scaledImage));
-        JLabel numberTanks = new JLabel(" " + this.territory.getTanks().size());
-        numberTanks.setForeground(Color.WHITE);
-        numberTanks.setFont(defaultFont);
+        this.setLayout(new BorderLayout());
+        this.numberTanks = new JLabel(new ImageIcon(scaledImage));
+        this.numberTanks.setForeground(Color.WHITE);
+        this.numberTanks.setFont(new Font("Dialog", Font.BOLD, 12));
         this.setToolTipText(this.territory.getName());
-        this.add(tank);
-        this.add(numberTanks);
+        this.add(numberTanks, BorderLayout.CENTER);
+        this.updateNumberTanksLabel();
     }
 
     public int getPositionX() {
@@ -61,6 +59,10 @@ public class TerritoryButton extends JButton {
     @Override
     public String toString() {
         return this.territory.getName() + " " + this.positionX + " " + this.positionY;
+    }
+    
+    public void updateNumberTanksLabel() {
+        this.numberTanks.setText(" " + this.territory.getTanks().size());
     }
 
 }
