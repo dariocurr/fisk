@@ -30,7 +30,7 @@ public class TerritoryButton extends JButton {
         this.numberTanks.setForeground(Color.WHITE);
         this.numberTanks.setFont(new Font("Dialog", Font.BOLD, 12));
         this.setToolTipText(this.territory.getName());
-        this.add(numberTanks, BorderLayout.CENTER);
+        this.add(this.numberTanks, BorderLayout.CENTER);
         this.updateNumberTanksLabel();
     }
 

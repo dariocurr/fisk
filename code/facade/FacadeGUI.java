@@ -18,15 +18,10 @@ public class FacadeGUI implements Facade {
     private Mediator mediator;
     private Player player;
     private Integer numberOfVirtualPlayer;
-    //private final GUI gui;
+    private RiskGUI gui;
     
     public FacadeGUI() {
         this.clickedTerritories = new ArrayList<>();
-    }
-    
-    @Override
-    public void setMediator(Mediator mediator) {
-        this.mediator = mediator;
     }
 
     @Override
@@ -38,8 +33,7 @@ public class FacadeGUI implements Facade {
 
     @Override
     public List<Territory> getTerritories() {
-        // return this.mediator.getTerritories();
-        return null;
+        return this.mediator.getTerritories();
     }
     
     @Override
@@ -78,12 +72,6 @@ public class FacadeGUI implements Facade {
     @Override
     public String getPlayerName() {
         return this.player.getName();
-    }
-    
-    @Override
-    public boolean updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
-        //TODO
-        return true;
     }
     
     @Override
@@ -132,13 +120,28 @@ public class FacadeGUI implements Facade {
         }
         players.add(this.player);
         Collections.shuffle(players);
-        new Mediator(players, new ConcreteGameBuilder().buildGame());
-        new MainWindow(this);
+        this.mediator = new Mediator(players, new ConcreteGameBuilder().buildGame());
+        this.gui = new RiskGUI(this);
     }
 
     @Override
     public void askMatch() {
         new StartWindow(this);
+    }
+    
+    @Override
+    public void updateLog(String string) {
+        this.gui.updateLogPanel(string);
+    }
+    
+    @Override
+    public void updateBoard(List<Territory> territories) {
+        this.gui.updateBoardPanel(territories);
+    }
+    
+    @Override
+    public void updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
+        this.gui.updatePlayerPanel(numberOfTerritories, numberOfFreeTanks, currentStage);
     }
     
     

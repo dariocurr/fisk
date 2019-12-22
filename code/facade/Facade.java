@@ -23,14 +23,17 @@ public interface Facade {
     public boolean changeTris(Tris tris);
     public Color getPlayerColor();
     public String getPlayerName();
-    public boolean updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage);
+    
     public void askMatch();
     public void askDice();
     public void askNumberOfTanks(Territory territory, Integer max);
+    public void startMatch();
     
-    public void setMediator(Mediator mediator);
     public boolean setHumanPlayer(Player player);
     public boolean setNumberOfVirtualPlayer(Integer num);
-    public void startMatch();
+    
+    public void updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage);
+    public void updateLog(String string);
+    public void updateBoard(List<Territory> territories);
     
 }

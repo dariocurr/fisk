@@ -35,7 +35,6 @@ public class CardsFrame extends JFrame {
             this.checkBoxes.put(cb, symbolCard);
             this.add(cb);
         }
-        System.out.println("sono qui");
         this.addListenersToCheckBoxes();
         this.status = new JLabel("You must select 3 cards", SwingConstants.CENTER);
         this.status.setForeground(Color.RED);

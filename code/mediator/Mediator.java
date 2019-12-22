@@ -84,6 +84,10 @@ public class Mediator {
     public void setFacade(Facade facade) {
         this.facade = facade;
     }
+    
+    public List<Territory> getTerritories() {
+        return this.game.getTerritories();
+    }
 
 }
 

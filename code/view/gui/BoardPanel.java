@@ -112,8 +112,14 @@ public class BoardPanel extends JPanel {
                 }
             }
         }
-        
-        
+    }
+    
+    public void updateLabels(List<Territory> territories) {
+        for (TerritoryButton territoryButton: this.TERRITORY_BUTTONS) {
+            if (territories.contains(territoryButton.getTerritory())) {
+                territoryButton.updateNumberTanksLabel();
+            }
+        }
     }
 
 }
