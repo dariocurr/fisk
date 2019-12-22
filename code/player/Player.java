@@ -127,12 +127,7 @@ public class Player {
 
     @Override
     public String toString() {
-        System.out.println(this.name + "\n\n");
-        System.out.println(this.goal + "\n\n");
-        System.out.println(this.territories.size() + "\n\n");
-        System.out.println(this.freeTanks.size() + "\n\n");
-        System.out.println(this.cards);
-        return "";
+        return this.name;
     }
 
     public RiskColor getColor() {

@@ -32,7 +32,6 @@ public class PlayerPanel extends JPanel {
         this.HEIGHT = height;
         this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         this.buildGUI();
-        this.updateLabels();
         this.addListenersToButtons();
     }
 
@@ -91,10 +90,10 @@ public class PlayerPanel extends JPanel {
         });
     }
     
-    public void updateLabels() {
-        this.numberTerritoriesLabel.setText("Number of territories: " + this.facade.getPlayerNumberOfTerritories());
-        this.freeTanksLabel.setText("Tanks to locate: " + this.facade.getPlayerNumberOfFreeTanks());
-        this.stageLabel.setText("Stage: " + this.facade.getCurrentStage());
+    public void updateLabels(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
+        this.numberTerritoriesLabel.setText("Number of territories: " + numberOfTerritories);
+        this.freeTanksLabel.setText("Tanks to locate: " + numberOfFreeTanks);
+        this.stageLabel.setText("Stage: " + currentStage);
     }
 
 }

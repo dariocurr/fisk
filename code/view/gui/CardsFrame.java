@@ -19,7 +19,6 @@ import javax.swing.*;
 public class CardsFrame extends JFrame {
 
     private static final Integer WIDTH = 200;
-    private static final Integer HEIGHT = 400;
     private final Map<JCheckBox, SymbolCard> checkBoxes;
     private final JButton changeTris;
     private final JLabel status;
@@ -44,7 +43,7 @@ public class CardsFrame extends JFrame {
         this.changeTris = new JButton("Change tris");
         this.changeTris.setEnabled(false);
         this.add(this.changeTris);
-        this.setSize(200, 100 + this.checkBoxes.size() * 50);
+        this.setSize(CardsFrame.WIDTH, 100 + this.checkBoxes.size() * 50);
         this.defaultOperations();
     }
 
