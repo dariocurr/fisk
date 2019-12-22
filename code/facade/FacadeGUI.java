@@ -16,7 +16,7 @@ public class FacadeGUI implements Facade {
     
     private final List<Territory> clickedTerritories;
     private Mediator mediator;
-    private Player player;
+    private Player humanPlayer;
     private Integer numberOfVirtualPlayer;
     private RiskGUI gui;
     
@@ -44,12 +44,12 @@ public class FacadeGUI implements Facade {
     
     @Override
     public GoalCard getPlayerGoal() {
-        return this.player.getGoal();
+        return this.humanPlayer.getGoal();
     }
     
     @Override
     public List<SymbolCard> getPlayerCards() {
-        return this.player.getCards();
+        return this.humanPlayer.getCards();
     }
     
     @Override
@@ -66,12 +66,12 @@ public class FacadeGUI implements Facade {
 
     @Override
     public Color getPlayerColor() {
-        return this.player.getColor().getColor();
+        return this.humanPlayer.getColor().getColor();
     }
 
     @Override
     public String getPlayerName() {
-        return this.player.getName();
+        return this.humanPlayer.getName();
     }
     
     @Override
@@ -86,8 +86,8 @@ public class FacadeGUI implements Facade {
     
     @Override
     public boolean setHumanPlayer(Player player) {
-        if (this.player == null) {
-            this.player = player;
+        if (this.humanPlayer == null) {
+            this.humanPlayer = player;
             return true;
         } else {
             return false;
@@ -108,17 +108,17 @@ public class FacadeGUI implements Facade {
     @Override
     public void startMatch() {
         List<Player> players = new ArrayList<>();
-        AIPlayer.NAMES_SET.remove(this.player.getName());
+        AIPlayer.NAMES_SET.remove(this.humanPlayer.getName());
         List<RiskColor>  freeColors = new ArrayList<>();
         for(RiskColor color: RiskColor.values()) {
-            if(!color.equals(this.player.getColor())) {
+            if(!color.equals(this.humanPlayer.getColor())) {
                 freeColors.add(color);
             }
         }
         for(int i = 0; i < this.numberOfVirtualPlayer; i++) {
             players.add(new Player((String) AIPlayer.NAMES_SET.toArray()[i], freeColors.get(i)));
         }
-        players.add(this.player);
+        players.add(this.humanPlayer);
         Collections.shuffle(players);
         this.mediator = new Mediator(players, new ConcreteGameBuilder().buildGame());
         this.gui = new RiskGUI(this);
