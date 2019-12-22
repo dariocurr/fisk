@@ -25,13 +25,13 @@ public enum RiskColor {
                 case GREEN:
                     return Color.GREEN;
                 case BLUE:
-                    return Color.GREEN;
+                    return Color.BLUE;
                 case YELLOW:
-                    return Color.GREEN;
+                    return Color.YELLOW;
                 case PURPLE:
-                    return Color.GREEN;
+                    return Color.MAGENTA;
                 case BLACK:
-                    return Color.GREEN;
+                    return Color.BLACK;
                 default:
                     return null;
             }
