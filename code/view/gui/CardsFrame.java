@@ -7,6 +7,7 @@ package risk;
 
 import java.awt.GridLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -27,10 +28,9 @@ public class CardsFrame extends JFrame {
 
     public CardsFrame(Facade facade) {
         this.facade = facade;
-        List<SymbolCard> cards = facade.getPlayerCards();
         this.checkBoxes = new HashMap<>();
-        this.setLayout(new GridLayout(cards.size() + 3, 0));
-        for (SymbolCard symbolCard : cards) {
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 30));
+        for (SymbolCard symbolCard : facade.getPlayerCards()) {
             JCheckBox cb = new JCheckBox(symbolCard.toString() + ", ");
             this.checkBoxes.put(cb, symbolCard);
             this.add(cb);
@@ -42,7 +42,7 @@ public class CardsFrame extends JFrame {
         this.changeTris = new JButton("Change tris");
         this.changeTris.setEnabled(false);
         this.add(this.changeTris);
-        this.setSize(CardsFrame.WIDTH, 100 + this.checkBoxes.size() * 50);
+        this.setSize(CardsFrame.WIDTH, 150 + this.checkBoxes.size() * 55);
         this.defaultOperations();
     }
 

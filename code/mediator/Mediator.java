@@ -186,7 +186,7 @@ class PreparationStage {
                 Player playerToKill = null;
                 RiskColor colorToKill = (RiskColor) player.getGoal().card;
                 for (int i = 0; i < this.mediator.getPlayers().size() && !found; i++) {
-                    if (this.mediator.getPlayers().get(i).getColor() == colorToKill) {
+                    if (this.mediator.getPlayers().get(i).getColor().equals(colorToKill)) {
                         playerToKill = this.mediator.getPlayers().get(i);
                         found = true;
                     }
@@ -307,21 +307,17 @@ class AttackStage implements Stage {
             GoalCard temp = player.getGoal();
             if (temp instanceof ContinentsGoalCard) {
                 ContinentsGoalCard goalCard = (ContinentsGoalCard) temp;
-                return player.getContinents().containsAll(goalCard.card);
+                return player.getContinents().containsAll(goalCard.getCard());
             } else if (temp instanceof NumberTerritoriesGoalCard) {
                 NumberTerritoriesGoalCard goalCard = (NumberTerritoriesGoalCard) temp;
-                return (player.getTerritories().size() >= goalCard.card);
+                return (player.getTerritories().size() >= goalCard.getCard());
             } else if (temp instanceof KillGoalCard) {
                 KillGoalCard goalCard = (KillGoalCard) temp;
-                boolean found = false;
-                Integer indexPlayerToKill = null;
-                for (int i = 0; i < this.mediator.getPlayers().size() && !found; i++) {
-                    if (this.mediator.getPlayers().get(i).getColor() == goalCard.card) {
-                        found = true;
-                        indexPlayerToKill = i;
+                for(Player p: this.mediator.getPlayers()) {
+                    if(p.getColor().equals(goalCard.getCard())) {
+                        return p.getTerritories().isEmpty();
                     }
                 }
-                return (this.mediator.getPlayers().get(indexPlayerToKill).getTerritories().isEmpty());
             }
         }
         return false;

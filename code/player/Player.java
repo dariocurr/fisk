@@ -13,13 +13,13 @@ import java.util.*;
  */
 public class Player {
 
-    private String name;
-    private final RiskColor COLOR;
-    private final List<Territory> territories;
-    private final List<Continent> continents;
-    private final List<Tank> freeTanks;
-    private GoalCard goal;
-    private final List<SymbolCard> cards;
+    protected String name;
+    protected final RiskColor COLOR;
+    protected final List<Territory> territories;
+    protected final List<Continent> continents;
+    protected final List<Tank> freeTanks;
+    protected GoalCard goal;
+    protected final List<SymbolCard> cards;
 
     public Player(String name, RiskColor COLOR) {
         this.name = name;
