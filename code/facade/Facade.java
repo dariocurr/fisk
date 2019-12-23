@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package risk;
 
 import java.awt.Color;
@@ -29,11 +30,23 @@ public interface Facade {
     public void askNumberOfTanks(Territory territory, Integer max);
     public void startMatch();
     
-    public boolean setHumanPlayer(Player player);
-    public boolean setNumberOfVirtualPlayer(Integer num);
+    public void setHumanPlayer(Player player);
+    public void setVirtualPlayersStrategies(List<RiskStrategy> strategies);
     
     public void updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage);
     public void updateLog(String string);
     public void updateBoard(List<Territory> territories);
-    
+
+    public void setMediator( Mediator mediator );
+    public void setPlayer ( Player player );
+    public void setGui ( RiskGUI riskGui );
+    public void initPlayerData ();
+    public Mediator getMediator ();
+
+    public void showDice ();
+    public int getNumberOfTanks ();
+    public void setClickableTerritories( List<Territory> territories );
+    public void showGui();
+    public void clearClickedTerritories ();
+
 }

@@ -5,11 +5,11 @@
  */
 package risk;
 
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.event.*;
+import java.util.*;
 
 /**
  *
@@ -21,7 +21,8 @@ public class StartWindow extends JFrame {
     private static final Integer HEIGHT = 220;
     private final JTextField nameTextField;
     private final JComboBox<RiskColor> playerColorList;
-    private final JComboBox<Integer> numberOfPlayersList;
+    private final JComboBox<Integer> numberOfVirtualPlayersList;
+    private final Map<JLabel, JComboBox<RiskStrategy>> virtualPlayers;
     private final JButton startButton;
     private final Facade facade;
 
@@ -37,7 +38,7 @@ public class StartWindow extends JFrame {
             numberOfPlayers[i] = i + 2; 
         }
         JLabel playersListLabel = new JLabel("How many virtual player?");
-        this.numberOfPlayersList = new JComboBox<>(numberOfPlayers);
+        this.numberOfVirtualPlayersList = new JComboBox<>(numberOfPlayers);
         this.startButton = new JButton("Start");
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
         this.add(playerNameLabel);
@@ -45,12 +46,18 @@ public class StartWindow extends JFrame {
         this.add(playerColorLabel);
         this.add(this.playerColorList);
         this.add(playersListLabel);
-        this.add(this.numberOfPlayersList);
+        this.add(this.numberOfVirtualPlayersList);
         this.add(this.startButton);
         this.startButton.setEnabled(false);
-        this.setSize(StartWindow.WIDTH, StartWindow.HEIGHT);
         this.defaultOperations();
         this.addListeners();
+        this.virtualPlayers = new TreeMap<>(new Comparator<JLabel>() {
+            @Override
+            public int compare(JLabel label1, JLabel label2) {
+                return label1.getText().compareToIgnoreCase(label2.getText());
+            }
+        });
+        this.updateFrame((Integer)this.numberOfVirtualPlayersList.getSelectedItem());
     }
     
     private void defaultOperations() {
@@ -85,11 +92,48 @@ public class StartWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 facade.setHumanPlayer(new Player(nameTextField.getText(), (RiskColor) playerColorList.getSelectedItem()));
-                facade.setNumberOfVirtualPlayer((Integer) numberOfPlayersList.getSelectedItem());
+                List<RiskStrategy> virtualPlayersStrategies = new ArrayList<>();
+                for(JLabel label: virtualPlayers.keySet()) {
+                    virtualPlayersStrategies.add((RiskStrategy) virtualPlayers.get(label).getSelectedItem());
+                }
+                facade.setVirtualPlayersStrategies(virtualPlayersStrategies);
                 facade.startMatch();
                 dispose();
             }
         });
+        this.numberOfVirtualPlayersList.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                updateFrame((Integer)numberOfVirtualPlayersList.getSelectedItem());
+            }
+        });
     }
     
+    private void updateFrame(Integer numberOfVirtualPlayers) {
+        this.remove(this.startButton);
+        for(JLabel label: this.virtualPlayers.keySet()) {
+            this.remove(label);
+            this.remove(this.virtualPlayers.get(label));
+        }
+        this.virtualPlayers.clear();
+        for(int i = 0; i < numberOfVirtualPlayers; i++) {
+            JLabel virtualPlayerLabel = new JLabel((i + 1) + "° virtual player");
+            JComboBox<RiskStrategy> virtualPlayerStrategiesList = this.getRiskStrategyComboBox();
+            this.virtualPlayers.put(virtualPlayerLabel, virtualPlayerStrategiesList);
+        }
+        for(JLabel label: this.virtualPlayers.keySet()) {
+            this.add(label);
+            this.add(this.virtualPlayers.get(label));
+        }
+        this.add(this.startButton);
+        this.setSize(StartWindow.WIDTH, StartWindow.HEIGHT + numberOfVirtualPlayers * 45);
+    }
+    
+    
+    private JComboBox<RiskStrategy> getRiskStrategyComboBox() {
+        JComboBox<RiskStrategy> temp = new JComboBox<>(AIPlayer.ALL_POSSIBLE_STRATEGIES);
+        temp.setSelectedIndex(1);
+        return temp;
+    }
+            
 }
