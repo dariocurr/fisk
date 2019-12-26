@@ -14,8 +14,8 @@ import java.util.*;
 public class GoalDeck extends Deck<GoalCard> {
 
     public GoalDeck(List<Continent> continents, List<Territory> territories) {
-        this.deck.add(new NumberTerritoriesGoalCard(territories.size() / 2));
-        this.deck.add(new NumberTerritoriesGoalCard(territories.size() / 7 * 3));
+        this.deck.add(new NumberOfTerritoriesGoalCard(territories.size() / 2));
+        this.deck.add(new NumberOfTerritoriesGoalCard(territories.size() / 7 * 3));
         for (Continent continent : continents) {
             List<Continent> temp = new ArrayList<>();
             temp.add(continent);
@@ -35,7 +35,7 @@ public class GoalDeck extends Deck<GoalCard> {
 
     @Override
     public String toString() {
-        return "Goal Deck: " + super.toString();
+        return "Goal " + super.toString();
     }
 
 }

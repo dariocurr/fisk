@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
-/**
- *
- * @author dario
- */
 public interface Main {
 
     public static void main(String... args) {
         //new FacadeGUI().askMatch();
-        new AIPlayer("Dario", RiskColor.BLUE, new BalancedRiskStrategy()).changeTris();
+        //new AIPlayer("Dario", RiskColor.BLUE, new BalancedRiskStrategy()).changeTris();
     }
 
 }

@@ -73,7 +73,7 @@ public class CardsFrame extends JFrame {
                             }
                         }
                         Tris tris = new Tris(temp.get(0), temp.get(1), temp.get(2));
-                        if(facade.checkTris(tris)) {
+                        if (facade.checkTris(tris)) {
                             changeTris.setEnabled(true);
                             status.setText("Press to change Tris!");
                             status.setForeground(Color.GREEN);
@@ -89,16 +89,16 @@ public class CardsFrame extends JFrame {
 
         }
     }
-    
+
     private void addListenerToButton() {
         this.changeTris.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (currentTris != null ) {
+                if (currentTris != null) {
                     if (!facade.changeTris(currentTris)) {
                         JOptionPane.showMessageDialog(null, "You reached the maximum number of tanks");
                     }
-                } 
+                }
             }
         });
     }

@@ -13,7 +13,7 @@ public class TerritoryButton extends JButton {
     private final int height;
     private final Territory territory;
     private final JLabel numberTanks;
-    
+
     public TerritoryButton(Territory territory, int x, int y, int width, int height) {
         super();
         double resize = 1.35;
@@ -27,11 +27,11 @@ public class TerritoryButton extends JButton {
         Image scaledImage = TerritoryButton.TANK_IMAGE.getScaledInstance(15, 15, 0);
         this.setLayout(new BorderLayout());
         this.numberTanks = new JLabel(new ImageIcon(scaledImage));
+        this.numberTanks.setText(" " + this.territory.getTanks().size());
         this.numberTanks.setForeground(Color.WHITE);
         this.numberTanks.setFont(new Font("Dialog", Font.BOLD, 12));
         this.setToolTipText(this.territory.getName());
         this.add(this.numberTanks, BorderLayout.CENTER);
-        this.updateNumberTanksLabel();
     }
 
     public int getPositionX() {
@@ -60,9 +60,13 @@ public class TerritoryButton extends JButton {
     public String toString() {
         return this.territory.getName() + " " + this.positionX + " " + this.positionY;
     }
-    
+
     public void updateNumberTanksLabel() {
         this.numberTanks.setText(" " + this.territory.getTanks().size());
+    }
+
+    public void updateColor() {
+        this.setBackground(this.territory.getOwnerPlayer().getColor().getColor());
     }
 
 }

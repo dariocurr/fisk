@@ -25,7 +25,7 @@ public class LogPanel extends JScrollPane {
         this.HEIGHT = height;
         this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
     }
-    
+
     public void append(String string) {
         LogPanel.TEXT_AREA.append(string);
     }

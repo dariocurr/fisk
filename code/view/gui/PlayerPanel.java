@@ -61,7 +61,7 @@ public class PlayerPanel extends JPanel {
         this.freeTanksLabel = new JLabel("Tanks to locate: ", SwingConstants.CENTER);
         this.cardsButton = new JButton("Cards");
         this.goalButton = new JButton("Goal");
-        this.stageLabel = new JLabel("Stage: " , SwingConstants.CENTER);
+        this.stageLabel = new JLabel("Stage: ", SwingConstants.CENTER);
         this.endButton = new JButton("End stage");
         northPanel.add(this.nameColorLabel, innerGBC);
         northPanel.add(this.numberTerritoriesLabel, innerGBC);
@@ -89,7 +89,7 @@ public class PlayerPanel extends JPanel {
             }
         });
     }
-    
+
     public void updateLabels(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
         this.numberTerritoriesLabel.setText("Number of territories: " + numberOfTerritories);
         this.freeTanksLabel.setText("Tanks to locate: " + numberOfFreeTanks);

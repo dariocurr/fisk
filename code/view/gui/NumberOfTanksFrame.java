@@ -15,19 +15,19 @@ import java.util.*;
  * @author dario
  */
 public class NumberOfTanksFrame extends JFrame {
-    
+
     private static final Integer HEIGHT = 220;
     private final JButton moveButton;
     private final JSlider numberOfTanksSlider;
     private final Facade facade;
-    
+
     public NumberOfTanksFrame(Facade facade, String territory, Integer max) {
         this.setTitle("Moving");
         this.facade = facade;
         JLabel request = new JLabel("How many tanks do you want to move to: " + territory, SwingConstants.CENTER);
-        this.numberOfTanksSlider = new JSlider(JSlider.HORIZONTAL, 1, max, max/2);
+        this.numberOfTanksSlider = new JSlider(JSlider.HORIZONTAL, 1, max, max / 2);
         Dictionary<Integer, JLabel> labels = new Hashtable<>();
-        for(int i = 1; i <= max; i++) {
+        for (int i = 1; i <= max; i++) {
             labels.put(i, new JLabel("" + i));
         }
         Integer componentMaxWidth = Math.max(request.getText().length() * 8, max * 20);
@@ -39,18 +39,18 @@ public class NumberOfTanksFrame extends JFrame {
         this.add(request);
         this.add(this.numberOfTanksSlider);
         this.add(this.moveButton);
-        this.setSize(componentMaxWidth +  50, NumberOfTanksFrame.HEIGHT);
+        this.setSize(componentMaxWidth + 50, NumberOfTanksFrame.HEIGHT);
         this.defaultOperations();
         this.addButtonListener();
     }
-    
+
     private void defaultOperations() {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
-    
+
     private void addButtonListener() {
         this.moveButton.addActionListener(new ActionListener() {
             @Override
@@ -59,5 +59,5 @@ public class NumberOfTanksFrame extends JFrame {
             }
         });
     }
-    
+
 }

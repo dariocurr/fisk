@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
 import java.util.*;
 
-/**
- *
- * @author dario
- */
 public class ClassicDice implements Comparable<ClassicDice> {
 
-    private Integer value;
+    protected Integer value;
 
     public ClassicDice() {
         this.value = null;
@@ -40,7 +31,7 @@ public class ClassicDice implements Comparable<ClassicDice> {
 
     @Override
     public String toString() {
-        return " " + value;
+        return "Dice value: " + this.value;
     }
 
 }

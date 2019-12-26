@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
 import java.util.*;
 
-/**
- *
- * @author dario
- */
 public class TerritoryDeck extends Deck<TerritoryCard> {
 
     public TerritoryDeck(List<Territory> territories) {
@@ -25,7 +16,7 @@ public class TerritoryDeck extends Deck<TerritoryCard> {
 
     @Override
     public String toString() {
-        return "TerritoryCardDeck: " + super.toString();
+        return "Territory " + super.toString();
     }
 
 }

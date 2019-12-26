@@ -1,20 +1,12 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-/**
- *
- * @author dario
- */
 public class Tris {
 
-    private final List<SymbolCard> cards;
+    protected final List<SymbolCard> cards;
 
     public Tris(SymbolCard firstCard, SymbolCard secondCard, SymbolCard thirdCard) {
         this.cards = new ArrayList<>(3);
@@ -38,18 +30,6 @@ public class Tris {
             }
         }
         return false;
-    }
-
-    public SymbolCard getFirstCard() {
-        return this.cards.get(0);
-    }
-
-    public SymbolCard getSecondCard() {
-        return this.cards.get(1);
-    }
-
-    public SymbolCard getThirdCard() {
-        return this.cards.get(2);
     }
 
     public List<SymbolCard> getCards() {

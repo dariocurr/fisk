@@ -1,23 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author dario
- */
 public class Territory {
 
-    private List<Territory> neighboringTerritories; //public o private o something else?
-    private String name;
-    private Continent continent;
-    private List<Tank> tanks;
-    private Player ownerPlayer;
+    protected final List<Territory> neighboringTerritories;
+    protected final String name;
+    protected final List<Tank> tanks;
+    protected Continent continent;
+    protected Player ownerPlayer;
 
     public Territory(String territoryName) {
         this.name = territoryName;
@@ -39,7 +31,7 @@ public class Territory {
 
     @Override
     public String toString() {
-        return this.getName();
+        return "Territory: " + this.getName();
     }
 
     public void setContinent(Continent continent) {
@@ -63,14 +55,6 @@ public class Territory {
 
     public void setOwnerPlayer(Player ownerPlayer) {
         this.ownerPlayer = ownerPlayer;
-    }
-
-    public void printNeighboringTerritories() {
-        int counter = 0;
-        for (Territory t : this.neighboringTerritories) {
-            System.out.println(t + " " + counter);
-            counter++;
-        }
     }
 
 }

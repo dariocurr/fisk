@@ -10,5 +10,5 @@ package risk;
  * @author dario
  */
 public class GUIMediator {
-    
+
 }

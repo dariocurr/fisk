@@ -1,29 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**
- *
- * @author dario
- */
 public class ConcreteGameBuilder implements GameBuilder {
 
-    private final List<Tris> ALL_TRIS;
-    private final Map<Tris, Integer> TRIS_BONUS;
-    private final Map<Continent, Integer> CONTINENTS_BONUS;
-    private final List<Territory> TERRITORIES;
-    private final List<Continent> CONTINENTS;
-    private final ClassicDice[] ATTACK_DICE;
-    private final ClassicDice[] DEFENSE_DICE;
-    private final GoalDeck GOAL_DECK;
-    private final TerritoryDeck TERRITORY_DECK;
-    private final Map<RiskColor, TankPool> TANK_POOLS;
+    protected final List<Tris> ALL_TRIS;
+    protected final Map<Tris, Integer> TRIS_BONUS;
+    protected final Map<Continent, Integer> CONTINENTS_BONUS;
+    protected final List<Territory> TERRITORIES;
+    protected final List<Continent> CONTINENTS;
+    protected final ClassicDice[] ATTACK_DICE;
+    protected final ClassicDice[] DEFENSE_DICE;
+    protected final GoalDeck GOAL_DECK;
+    protected final TerritoryDeck TERRITORY_DECK;
+    protected final Map<RiskColor, TankPool> TANK_POOLS;
 
     public ConcreteGameBuilder() {
         this.ALL_TRIS = new ArrayList<>();
@@ -52,14 +49,14 @@ public class ConcreteGameBuilder implements GameBuilder {
                 this.TANK_POOLS);
     }
 
-    private void initGame() {
+    protected void initGame() {
         this.addTrisAndBonus();
         this.addContinentsAndTerritories();
         this.addAdjacencies();
         this.addContinentsBonus();
     }
 
-    private void addTrisAndBonus() {
+    protected void addTrisAndBonus() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.TRIS_BONUS_FILE));
             String line = reader.readLine();
@@ -81,51 +78,58 @@ public class ConcreteGameBuilder implements GameBuilder {
         }
     }
 
-    private void addAdjacencies() {
+    protected void addAdjacencies() {
         try {
-            File neighboringTerritories = new File(GameBuilder.ADJACENCIES_FILE);
-            Scanner in = new Scanner(neighboringTerritories);
-            while (in.hasNextLine()) {
-                String line = in.nextLine();
+            BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.ADJACENCIES_FILE));
+            String line = reader.readLine();
+            while (line != null) {
                 String[] splitted_line = line.split(",");
                 String territoryName = splitted_line[0];
                 Territory t = this.fromStringToTerritory(territoryName.trim());
                 this.addNeighboringTerritories(t, splitted_line);
+                line = reader.readLine();
             }
         } catch (FileNotFoundException ex) {
             System.out.println("File " + GameBuilder.ADJACENCIES_FILE + " not found!");
+        } catch (IOException ex) {
+            System.out.println("IO error!");
         }
     }
 
-    private void addNeighboringTerritories(Territory t, String[] neighboring) {
+    protected void addNeighboringTerritories(Territory t, String[] neighboring) {
         for (int i = 1; i < neighboring.length; i++) {
             t.getNeighboringTerritories().add(this.fromStringToTerritory(neighboring[i].trim()));
         }
     }
 
-    private void addContinentsAndTerritories() {
+    protected void addContinentsAndTerritories() {
         try {
-            File continentsFile = new File(GameBuilder.CONTINENTS_FILE);
-            Scanner in = new Scanner(continentsFile);
-            while (in.hasNextLine()) {
-                String line = in.nextLine();
+            BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.CONTINENTS_FILE));
+            String line = reader.readLine();
+            while (line != null) {
                 String[] splitted_line = line.split(",");
                 String continentName = splitted_line[0];
-                Continent continent = new Continent(continentName);
-                this.CONTINENTS.add(continent);
+                List<Territory> continentTerritories = new ArrayList<>();
                 for (int i = 1; i < splitted_line.length; i++) {
                     Territory territory = new Territory(splitted_line[i].trim());
-                    territory.setContinent(continent);
+                    continentTerritories.add(territory);
                     this.TERRITORIES.add(territory);
-                    continent.getTerritories().add(territory);
                 }
+                Continent continent = new Continent(continentName, continentTerritories);
+                for (Territory territory: continentTerritories) {
+                    territory.setContinent(continent);
+                }
+                this.CONTINENTS.add(continent);
+                line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
             System.out.println("File " + GameBuilder.CONTINENTS_FILE + " not found!");
+        } catch (IOException ex) {
+            System.out.println("IO error!");
         }
     }
 
-    private void addContinentsBonus() {
+    protected void addContinentsBonus() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.CONTINENTS_BONUS_FILE));
             String line = reader.readLine();
@@ -141,7 +145,7 @@ public class ConcreteGameBuilder implements GameBuilder {
         }
     }
 
-    private Territory fromStringToTerritory(String territoryName) {
+    protected Territory fromStringToTerritory(String territoryName) {
         for (Territory territory : this.TERRITORIES) {
             if (territory.getName().equalsIgnoreCase(territoryName.trim())) {
                 return territory;
@@ -150,7 +154,7 @@ public class ConcreteGameBuilder implements GameBuilder {
         return null;
     }
 
-    private SymbolCard fromStringToSymbolCard(String symbol) {
+    protected SymbolCard fromStringToSymbolCard(String symbol) {
         if (symbol.equalsIgnoreCase("cannon")) {
             return new SymbolCard(Symbol.CANNON);
         } else if (symbol.equalsIgnoreCase("bishop")) {
@@ -163,7 +167,7 @@ public class ConcreteGameBuilder implements GameBuilder {
         return null;
     }
 
-    private Continent fromStringToContinent(String continentName) {
+    protected Continent fromStringToContinent(String continentName) {
         for (Continent continent : this.CONTINENTS) {
             if (continent.getName().equalsIgnoreCase(continentName.trim())) {
                 return continent;
@@ -172,7 +176,7 @@ public class ConcreteGameBuilder implements GameBuilder {
         return null;
     }
 
-    private void initTankPools() {
+    protected void initTankPools() {
         for (RiskColor riskColor : RiskColor.values()) {
             this.TANK_POOLS.put(riskColor, new TankPool(140, riskColor));
         }

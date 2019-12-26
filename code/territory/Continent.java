@@ -1,15 +1,15 @@
 package risk;
 
-import java.io.*;
-import java.util.*;
+import java.util.List;
 
 public class Continent {
 
-    private String name;
-    private List<Territory> territories = new ArrayList<>();
+    protected final String name;
+    protected final List<Territory> territories;
 
-    public Continent(String continentName) {
+    public Continent(String continentName, List<Territory> territories) {
         this.name = continentName;
+        this.territories = territories;
     }
 
     public String getName() {
@@ -22,7 +22,7 @@ public class Continent {
 
     @Override
     public String toString() {
-        return (this.name + ": " + this.territories.toString());
+        return "Continent: " + this.name;
     }
 
     @Override

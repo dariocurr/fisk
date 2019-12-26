@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package risk;
 
 import java.awt.Color;
@@ -14,40 +13,35 @@ import java.util.*;
  * @author dario
  */
 public class FacadeGUI implements Facade {
-    
+
     private final List<Territory> clickedTerritories;
     private Mediator mediator;
-    private Player player;
+    private Player humanPlayer;
     private RiskGUI gui;
     private List<RiskStrategy> virtualPlayersStrategies;
-    
+    private Integer numberOfTanksToMove;
+
     public FacadeGUI() {
         this.clickedTerritories = new ArrayList<>();
     }
 
     @Override
-    public void setMediator ( Mediator mediator ){
+    public void setMediator(Mediator mediator) {
         this.mediator = mediator;
     }
 
-    public Mediator getMediator (){
+    public Mediator getMediator() {
         return this.mediator;
     }
 
     @Override
-    public void setPlayer ( Player player ){
-        this.player = player;
+    public void setPlayer(Player player) {
+        this.humanPlayer = player;
     }
 
     @Override
-    public void setGui ( RiskGUI gui ){
+    public void setGui(RiskGUI gui) {
         this.gui = gui;
-    }
-    
-    @Override
-    public void initPlayerData (){
-        this.updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString() );
-        //this.setClickableTerritories( this.mediator.getCurrentStage().setClickableTerritories() );
     }
 
     @Override
@@ -61,28 +55,28 @@ public class FacadeGUI implements Facade {
     public List<Territory> getTerritories() {
         return this.mediator.getTerritories();
     }
-    
+
     @Override
     public void update() {
-        //this.mediator.play( this.clickedTerritories );
+        this.mediator.play(this.clickedTerritories);
     }
-    
+
     @Override
     public GoalCard getPlayerGoal() {
-        return this.player.getGoal();
+        return this.humanPlayer.getGoal();
     }
-    
+
     @Override
     public List<SymbolCard> getPlayerCards() {
-        return this.player.getCards();
+        return this.humanPlayer.getCards();
     }
-    
+
     @Override
     public boolean checkTris(Tris tris) {
         //return this.mediator.checkTris(tris);
         return false;
     }
-    
+
     @Override
     public boolean changeTris(Tris tris) {
         //return this.mediator.changeTris(null, tris);
@@ -91,29 +85,29 @@ public class FacadeGUI implements Facade {
 
     @Override
     public Color getPlayerColor() {
-        return this.player.getColor().getColor();
+        return this.humanPlayer.getColor().getColor();
     }
 
     @Override
     public String getPlayerName() {
-        return this.player.getName();
+        return this.humanPlayer.getName();
     }
-    
+
     @Override
-    public void askDice (){
-    	new RollFrame(this);
+    public void askDice() {
+        new RollFrame(this);
     }
-    
+
     @Override
-    public void askNumberOfTanks (Territory territory, Integer max) {
+    public void askNumberOfTanks(Territory territory, Integer max) {
         new NumberOfTanksFrame(this, "" + territory, max);
     }
-    
+
     @Override
     public void setHumanPlayer(Player player) {
-            this.player = player;
+        this.humanPlayer = player;
     }
-    
+
     @Override
     public void setVirtualPlayersStrategies(List<RiskStrategy> strategies) {
         this.virtualPlayersStrategies = strategies;
@@ -121,11 +115,12 @@ public class FacadeGUI implements Facade {
 
     @Override
     public void startMatch() {
+        /*
         List<Player> players = new ArrayList<>();
-        AIPlayer.NAMES_SET.remove(this.player.getName());
+        AIPlayer.NAMES_SET.remove(this.humanPlayer.getName());
         List<RiskColor>  freeColors = new ArrayList<>();
         for(RiskColor color: RiskColor.values()) {
-            if(!color.equals(this.player.getColor())) {
+            if(!color.equals(this.humanPlayer.getColor())) {
                 freeColors.add(color);
             }
         }
@@ -133,56 +128,92 @@ public class FacadeGUI implements Facade {
             String name = (String) AIPlayer.NAMES_SET.toArray()[i];
             players.add(new AIPlayer(name, freeColors.get(i), this.virtualPlayersStrategies.get(i)));
         }
-        players.add(this.player);
+        players.add(this.humanPlayer);
         Collections.shuffle(players);
         this.mediator = new Mediator(players, new ConcreteGameBuilder().buildGame());
         PreparationStage ps = new PreparationStage( this.mediator );
         ps.init();
         this.gui = new RiskGUI(this);
+         */
     }
 
     @Override
     public void askMatch() {
         new StartWindow(this);
     }
-    
+
     @Override
     public void updateLog(String string) {
         this.gui.updateLogPanel(string);
     }
-    
+
     @Override
     public void updateBoard(List<Territory> territories) {
         this.gui.updateBoardPanel(territories);
     }
-    
+
     @Override
     public void updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
         this.gui.updatePlayerPanel(numberOfTerritories, numberOfFreeTanks, currentStage);
     }
 
-    public void showDice (){
-        System.out.println( "Work in progress" );
+    public void showDice() {
+        System.out.println("Work in progress");
     }
-    
-    public int getNumberOfTanks(){
-        System.out.println(  "Work in progress" );
+
+    public int getNumberOfTanks() {
+        System.out.println("Work in progress");
         return 0;
     }
 
     @Override
-    public void setClickableTerritories( List<Territory> territories ){
+    public void setClickableTerritories(List<Territory> territories) {
         //this.gui.setClickableTerritories( territories );
     }
 
     @Override
-    public void showGui(){
+    public void showGui() {
         //this.gui.showGui();
+    }
+
+    @Override
+    public void clearClickedTerritories() {
+        this.clickedTerritories.clear();
+    }
+
+    public void setNumberOfTanksToMove(Integer v) {
+        System.out.println(v);
+        this.numberOfTanksToMove = v;
+    }
+
+    public Integer getNumberOfTanksToMove() {
+        return this.numberOfTanksToMove;
+    }
+
+    @Override
+    public Player getCurrentPlayer() {
+        return this.mediator.getCurrentPlayer();
+    }
+
+    public void initPlayerData() {
+        this.updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
+        this.setClickableTerritories(this.mediator.getCurrentStage().setClickableTerritories());
+    }
+
+    @Override
+    public void end() {
+        this.mediator.end();
+    }
+
+    @Override
+    public void updateColorTerritoryButton() {
+        this.gui.updateColorTerritoryButton();
     }
     
     @Override
-    public void clearClickedTerritories (){
-        this.clickedTerritories.clear();
+    public Map<Continent, Integer> getContinentBonus() {
+        //return this.mediator.getContinentBonus();
+        return null;
     }
 
 }

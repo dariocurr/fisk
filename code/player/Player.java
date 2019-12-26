@@ -1,25 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author dario
- */
 public class Player {
 
-    protected String name;
+    protected final String name;
     protected final RiskColor COLOR;
     protected final List<Territory> territories;
     protected final List<Continent> continents;
     protected final List<Tank> freeTanks;
-    protected GoalCard goal;
     protected final List<SymbolCard> cards;
+    protected GoalCard goal;
 
     public Player(String name, RiskColor COLOR) {
         this.name = name;
@@ -43,61 +35,8 @@ public class Player {
         return this.name;
     }
 
-    public Territory[] attack() {
-        Territory territoriesInvolvedInAttack[] = new Territory[2];
-        Scanner in = new Scanner(System.in);
-        this.printTerritories();
-        territoriesInvolvedInAttack[0] = this.territories.get(in.nextInt());
-        territoriesInvolvedInAttack[0].printNeighboringTerritories();
-        territoriesInvolvedInAttack[1] = territoriesInvolvedInAttack[0].getNeighboringTerritories().get(in.nextInt());
-        return territoriesInvolvedInAttack;
-    }
-
-    public Tris exchangeTris() {
-        this.printGoalCards();
-
-        Scanner in = new Scanner(System.in);
-        String trisLine = in.nextLine();
-
-        if (trisLine.trim().equals("null")) {
-            return null;
-        }
-
-        String[] trisSplitter = trisLine.split(",");
-        // se uno o più dei territori presi in input non appartiene alla lista delle cards allora sarà passato null e il mediator farà il controllo di coerenza del tris
-        return new Tris(this.cards.get(Integer.valueOf(trisSplitter[0])), this.cards.get(Integer.valueOf(trisSplitter[1])), this.cards.get(Integer.valueOf(trisSplitter[2])));
-
-    }
-
-    private void printGoalCards() {
-        int counter = 0;
-        for (SymbolCard c : this.cards) {
-            System.out.println(c + " " + counter);
-            counter++;
-        }
-    }
-
     public List<SymbolCard> getCards() {
         return this.cards;
-    }
-
-    public Territory addTank() {
-
-        this.printTerritories();
-
-        Scanner in = new Scanner(System.in);
-        int territoryIndex = in.nextInt();
-
-        return this.territories.get(territoryIndex);
-
-    }
-
-    public void printTerritories() {
-        int counter = 0;
-        for (Territory t : this.territories) {
-            System.out.println(t + " : " + counter);
-            counter++;
-        }
     }
 
     public List<Territory> getTerritories() {

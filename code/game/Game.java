@@ -1,28 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
-/**
- *
- * @author dario
- */
 public class Game {
 
-    private final List<Tris> ALL_TRIS;
-    private final Map<Tris, Integer> TRIS_BONUS;
-    private final Map<Continent, Integer> CONTINENTS_BONUS;
-    private final List<Territory> TERRITORIES;
-    private final List<Continent> CONTINENTS;
-    private final ClassicDice[] ATTACK_DICE;
-    private final ClassicDice[] DEFENSE_DICE;
-    private final GoalDeck GOAL_DECK;
-    private final TerritoryDeck TERRITORY_DECK;
-    private final Map<RiskColor, TankPool> TANK_POOLS;
+    protected final List<Tris> ALL_TRIS;
+    protected final Map<Tris, Integer> TRIS_BONUS;
+    protected final Map<Continent, Integer> CONTINENTS_BONUS;
+    protected final List<Territory> TERRITORIES;
+    protected final List<Continent> CONTINENTS;
+    protected final ClassicDice[] ATTACK_DICE;
+    protected final ClassicDice[] DEFENSE_DICE;
+    protected final GoalDeck GOAL_DECK;
+    protected final TerritoryDeck TERRITORY_DECK;
+    protected final Map<RiskColor, TankPool> TANK_POOLS;
 
     public Game(List<Tris> ALL_TRIS, Map<Tris, Integer> TRIS_BONUS,
             Map<Continent, Integer> CONTINENTS_BONUS, List<Territory> TERRITORIES,

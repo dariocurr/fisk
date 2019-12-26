@@ -1,16 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- *
- * @author dario
- */
 public abstract class Deck<T> {
 
     protected List<T> deck;
@@ -21,15 +13,15 @@ public abstract class Deck<T> {
 
     @Override
     public String toString() {
-        return this.deck.toString();
+        return "card deck: " + this.deck.toString();
     }
 
     public T removeCard() {
         return this.deck.remove(0);
     }
 
-    public void addCard(T t) {
-        this.deck.add(t);
+    public void addCard(T card) {
+        this.deck.add(card);
     }
 
     public boolean isEmpty() {

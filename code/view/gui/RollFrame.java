@@ -80,7 +80,7 @@ public class RollFrame extends JFrame {
         for (int i = 0; i < this.DEFENSE_DICE.length; i++) {
             this.DEFENSE_LABEL[i].setIcon(new ImageIcon(this.getDefenseDice(this.DEFENSE_DICE[i].getValue())));
         }
-        */
+         */
     }
 
     private Image getAttackDice(Integer value) {
