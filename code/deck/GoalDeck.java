@@ -16,7 +16,7 @@ public class GoalDeck extends Deck<GoalCard> {
     public GoalDeck(List<Continent> continents, List<Territory> territories) {
         this.deck.add(new NumberOfTerritoriesGoalCard(territories.size() / 2));
         this.deck.add(new NumberOfTerritoriesGoalCard(territories.size() / 7 * 3));
-        for (Continent continent : continents) {
+        continents.stream().map((continent) -> {
             List<Continent> temp = new ArrayList<>();
             temp.add(continent);
             Random random = new Random();
@@ -25,8 +25,10 @@ public class GoalDeck extends Deck<GoalCard> {
                 otherContinent = continents.get(random.nextInt(continents.size()));
             }
             temp.add(otherContinent);
+            return temp;
+        }).forEachOrdered((temp) -> {
             this.deck.add(new ContinentsGoalCard(temp));
-        }
+        });
         for (RiskColor color : RiskColor.values()) {
             this.deck.add(new KillGoalCard(color));
         }

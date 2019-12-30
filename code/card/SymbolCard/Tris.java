@@ -2,9 +2,10 @@ package risk;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-public class Tris {
+public class Tris implements Iterable<SymbolCard> {
 
     protected final List<SymbolCard> cards;
 
@@ -34,6 +35,11 @@ public class Tris {
 
     public List<SymbolCard> getCards() {
         return this.cards;
+    }
+
+    @Override
+    public Iterator<SymbolCard> iterator() {
+        return this.cards.iterator();
     }
 
 }

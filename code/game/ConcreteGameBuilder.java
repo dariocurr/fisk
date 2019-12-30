@@ -11,42 +11,42 @@ import java.util.Map;
 
 public class ConcreteGameBuilder implements GameBuilder {
 
-    protected final List<Tris> ALL_TRIS;
-    protected final Map<Tris, Integer> TRIS_BONUS;
-    protected final Map<Continent, Integer> CONTINENTS_BONUS;
-    protected final List<Territory> TERRITORIES;
-    protected final List<Continent> CONTINENTS;
-    protected final ClassicDice[] ATTACK_DICE;
-    protected final ClassicDice[] DEFENSE_DICE;
-    protected final GoalDeck GOAL_DECK;
-    protected final TerritoryDeck TERRITORY_DECK;
-    protected final Map<RiskColor, TankPool> TANK_POOLS;
+    protected final List<Tris> allTris;
+    protected final Map<Tris, Integer> trisBonus;
+    protected final Map<Continent, Integer> continentsBonus;
+    protected final List<Territory> territories;
+    protected final List<Continent> continents;
+    protected final ClassicDice[] attackDice;
+    protected final ClassicDice[] defenseDice;
+    protected final GoalDeck goalsDeck;
+    protected final TerritoryDeck territoriesDeck;
+    protected final Map<RiskColor, TankPool> tanksPolls;
 
     public ConcreteGameBuilder() {
-        this.ALL_TRIS = new ArrayList<>();
-        this.TRIS_BONUS = new HashMap<>();
-        this.CONTINENTS_BONUS = new HashMap<>();
-        this.TERRITORIES = new ArrayList<>();
-        this.CONTINENTS = new ArrayList<>();
-        this.ATTACK_DICE = new ClassicDice[3];
-        this.DEFENSE_DICE = new ClassicDice[3];
+        this.allTris = new ArrayList<>();
+        this.trisBonus = new HashMap<>();
+        this.continentsBonus = new HashMap<>();
+        this.territories = new ArrayList<>();
+        this.continents = new ArrayList<>();
+        this.attackDice = new ClassicDice[3];
+        this.defenseDice = new ClassicDice[3];
         for (int i = 0; i < 3; i++) {
-            this.ATTACK_DICE[i] = new ClassicDice();
-            this.DEFENSE_DICE[i] = new ClassicDice();
+            this.attackDice[i] = new ClassicDice();
+            this.defenseDice[i] = new ClassicDice();
         }
         this.initGame();
-        this.GOAL_DECK = new GoalDeck(this.CONTINENTS, this.TERRITORIES);
-        this.TERRITORY_DECK = new TerritoryDeck(this.TERRITORIES);
-        this.TANK_POOLS = new HashMap<>();
+        this.goalsDeck = new GoalDeck(this.continents, this.territories);
+        this.territoriesDeck = new TerritoryDeck(this.territories);
+        this.tanksPolls = new HashMap<>();
         this.initTankPools();
     }
 
     @Override
     public Game buildGame() {
-        return new Game(this.ALL_TRIS, this.TRIS_BONUS, this.CONTINENTS_BONUS,
-                this.TERRITORIES, this.CONTINENTS, this.ATTACK_DICE,
-                this.DEFENSE_DICE, this.GOAL_DECK, this.TERRITORY_DECK,
-                this.TANK_POOLS);
+        return new Game(this.allTris, this.trisBonus, this.continentsBonus,
+                this.territories, this.continents, this.attackDice,
+                this.defenseDice, this.goalsDeck, this.territoriesDeck,
+                this.tanksPolls);
     }
 
     protected void initGame() {
@@ -67,10 +67,10 @@ public class ConcreteGameBuilder implements GameBuilder {
                 symbolCards.add(fromStringToSymbolCard(splitted_line[1]));
                 symbolCards.add(fromStringToSymbolCard(splitted_line[2]));
                 Tris tris = new Tris(symbolCards.get(0), symbolCards.get(1), symbolCards.get(2));
-                this.TRIS_BONUS.put(tris, Integer.valueOf(splitted_line[3]));
+                this.trisBonus.put(tris, Integer.valueOf(splitted_line[3]));
                 line = reader.readLine();
             }
-            this.ALL_TRIS.addAll(this.TRIS_BONUS.keySet());
+            this.allTris.addAll(this.trisBonus.keySet());
         } catch (FileNotFoundException ex) {
             System.out.println("File " + GameBuilder.TRIS_BONUS_FILE + " not found!");
         } catch (IOException ex) {
@@ -113,13 +113,13 @@ public class ConcreteGameBuilder implements GameBuilder {
                 for (int i = 1; i < splitted_line.length; i++) {
                     Territory territory = new Territory(splitted_line[i].trim());
                     continentTerritories.add(territory);
-                    this.TERRITORIES.add(territory);
+                    this.territories.add(territory);
                 }
                 Continent continent = new Continent(continentName, continentTerritories);
                 for (Territory territory: continentTerritories) {
                     territory.setContinent(continent);
                 }
-                this.CONTINENTS.add(continent);
+                this.continents.add(continent);
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -135,7 +135,7 @@ public class ConcreteGameBuilder implements GameBuilder {
             String line = reader.readLine();
             while (line != null) {
                 String[] splitted_line = line.split(",");
-                this.CONTINENTS_BONUS.put(this.fromStringToContinent(splitted_line[0]), Integer.valueOf(splitted_line[1]));
+                this.continentsBonus.put(this.fromStringToContinent(splitted_line[0]), Integer.valueOf(splitted_line[1]));
                 line = reader.readLine();
             }
         } catch (FileNotFoundException ex) {
@@ -146,7 +146,7 @@ public class ConcreteGameBuilder implements GameBuilder {
     }
 
     protected Territory fromStringToTerritory(String territoryName) {
-        for (Territory territory : this.TERRITORIES) {
+        for (Territory territory : this.territories) {
             if (territory.getName().equalsIgnoreCase(territoryName.trim())) {
                 return territory;
             }
@@ -168,7 +168,7 @@ public class ConcreteGameBuilder implements GameBuilder {
     }
 
     protected Continent fromStringToContinent(String continentName) {
-        for (Continent continent : this.CONTINENTS) {
+        for (Continent continent : this.continents) {
             if (continent.getName().equalsIgnoreCase(continentName.trim())) {
                 return continent;
             }
@@ -178,7 +178,7 @@ public class ConcreteGameBuilder implements GameBuilder {
 
     protected void initTankPools() {
         for (RiskColor riskColor : RiskColor.values()) {
-            this.TANK_POOLS.put(riskColor, new TankPool(140, riskColor));
+            this.tanksPolls.put(riskColor, new TankPool(140, riskColor));
         }
     }
 

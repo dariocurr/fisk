@@ -100,14 +100,14 @@ public abstract class RiskStrategy {
         Territory territoriesInvolvedAttack[] = new Territory[2];
         if (goal instanceof ContinentsGoalCard) {
             ContinentsGoalCard goalCard = (ContinentsGoalCard) goal;
-            for (Entry<Territory, Territory> entry : bestAttacks.entrySet()) {
+            bestAttacks.entrySet().forEach((entry) -> {
                 for (Continent continent : goalCard.getCard()) {
                     if (continent.getTerritories().contains(entry.getValue())) {
                         territoriesInvolvedAttack[0] = entry.getKey();
                         territoriesInvolvedAttack[1] = entry.getValue();
                     }
                 }
-            }
+            });
         } else if (goal instanceof KillGoalCard) {
             KillGoalCard goalCard = (KillGoalCard) goal;
             for (Entry<Territory, Territory> entry : bestAttacks.entrySet()) {
@@ -168,14 +168,14 @@ public abstract class RiskStrategy {
         Territory territoriesInvolvedMoving[] = new Territory[2];
         if (goal instanceof ContinentsGoalCard) {
             ContinentsGoalCard goalCard = (ContinentsGoalCard) goal;
-            for (Entry<Territory, Territory> entry : bestMovings.entrySet()) {
+            bestMovings.entrySet().forEach((entry) -> {
                 for (Continent continent : goalCard.getCard()) {
                     if (continent.getTerritories().contains(entry.getValue())) {
                         territoriesInvolvedMoving[0] = entry.getKey();
                         territoriesInvolvedMoving[1] = entry.getValue();
                     }
                 }
-            }
+            });
         } else {
             Entry<Territory, Territory>[] entries = (Entry<Territory, Territory>[]) bestMovings.entrySet().toArray();
             territoriesInvolvedMoving[0] = entries[0].getKey();

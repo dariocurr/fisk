@@ -1,13 +1,11 @@
 package risk;
 
-import java.util.*;
+import java.util.Collections;
 
 public class SymbolDeck extends Deck<SymbolCard> {
 
     public SymbolDeck(TerritoryDeck territoryDeck) {
-        for (TerritoryCard territoryCard : territoryDeck.deck) {
-            this.deck.add(territoryCard);
-        }
+        territoryDeck.deck.forEach((territoryCard) -> this.deck.add(territoryCard));
         for (int i = 0; i < 2; i++) {
             this.deck.add(new SymbolCard(Symbol.JOKER));
         }

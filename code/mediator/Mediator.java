@@ -161,7 +161,7 @@ public class Mediator {
     }
 
     public void createNewSymbolDeck() {
-        this.symbolDeck = new SymbolDeck(this.game.getTerritoryDeck());
+        this.symbolDeck = new SymbolDeck(this.game.getTerritoriesDeck());
     }
 
     public void setFirstPlayer() {
@@ -251,9 +251,9 @@ class PreparationStage {
 
     private void releaseTerritory() {
         TerritoryCard drawCard;
-        while (!this.mediator.getGame().getTerritoryDeck().isEmpty()) {
+        while (!this.mediator.getGame().getTerritoriesDeck().isEmpty()) {
             for (Player p : this.mediator.getPlayers()) {
-                drawCard = this.mediator.getGame().getTerritoryDeck().removeCard();
+                drawCard = this.mediator.getGame().getTerritoriesDeck().removeCard();
                 p.getTerritories().add(drawCard.getTerritory());
                 drawCard.getTerritory().setOwnerPlayer(p);
             }
@@ -262,7 +262,7 @@ class PreparationStage {
 
     private void releaseGoal() {
         for (Player p : this.mediator.getPlayers()) {
-            p.setGoal(this.mediator.getGame().getGoalDeck().removeCard());
+            p.setGoal(this.mediator.getGame().getGoalsDeck().removeCard());
         }
     }
 

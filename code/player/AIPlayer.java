@@ -51,11 +51,10 @@ public class AIPlayer extends Player {
         } else {
             List<Tris> allCombinationsOfCards = this.generateAllCombinationsOfCards();
             List<Tris> allPossibleTris = this.generateAllCombinationsOfCards();
-            for (Tris tris : allCombinationsOfCards) {
-                if (AIPlayer.TRIS_BONUS.keySet().contains(tris)) {
-                    allPossibleTris.add(tris);
-                }
-            }
+            allCombinationsOfCards
+                    .stream()
+                    .filter((tris) -> (AIPlayer.TRIS_BONUS.keySet().contains(tris)))
+                    .forEachOrdered(allPossibleTris::add);
             if (allPossibleTris.isEmpty()) {
                 return null;
             } else if (allPossibleTris.size() == 1) {
@@ -65,14 +64,21 @@ public class AIPlayer extends Player {
                 Tris bestTris = null;
                 for (Tris tris : allPossibleTris) {
                     Integer bonus = AIPlayer.TRIS_BONUS.get(tris);
-                    for (SymbolCard symbolCard : tris.getCards()) {
+                    /*for (SymbolCard symbolCard : tris.getCards()) {
                         if (symbolCard instanceof TerritoryCard) {
-                            TerritoryCard territoryCard = (TerritoryCard) symbolCard;
-                            if (this.territories.contains(territoryCard.getTerritory())) {
-                                bonus += 2;
-                            }
+                        TerritoryCard territoryCard = (TerritoryCard) symbolCard;
+                        if (this.territories.contains(territoryCard.getTerritory())) {
+                            bonus += 2;
                         }
                     }
+                    }*/
+                    bonus = tris.getCards()
+                            .stream()
+                            .filter((symbolCard) -> (symbolCard instanceof TerritoryCard))
+                            .map((symbolCard) -> (TerritoryCard) symbolCard)
+                            .filter((territoryCard) -> (this.territories.contains(territoryCard.getTerritory())))
+                            .mapToInt((territory) -> 2)
+                            .sum();
                     if (bonus > maxBonus) {
                         bestTris = tris;
                     }

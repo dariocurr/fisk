@@ -1,5 +1,6 @@
 package risk;
 
+@FunctionalInterface
 public interface GameBuilder {
 
     public static final String TRIS_BONUS_FILE = "res/tris.txt";

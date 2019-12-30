@@ -1,9 +1,10 @@
 package risk;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public abstract class Deck<T> {
+public abstract class Deck<T> implements Iterable<T> {
 
     protected List<T> deck;
 
@@ -26,6 +27,11 @@ public abstract class Deck<T> {
 
     public boolean isEmpty() {
         return this.deck.isEmpty();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return this.deck.iterator();
     }
 
 }
