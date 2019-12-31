@@ -79,13 +79,19 @@ public class PlayerPanel extends JPanel {
         this.goalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                JOptionPane.showMessageDialog(null, "Obiettivo: " + facade.getPlayerGoal());
+                JOptionPane.showMessageDialog(null, facade.getPlayerGoal(), "Your goal", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         this.cardsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 new CardsFrame(facade);
+            }
+        });
+        this.endButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                facade.endStage();
             }
         });
     }

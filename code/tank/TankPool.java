@@ -8,12 +8,9 @@ public class TankPool implements Iterable<Tank> {
     
     protected TankFactory tankFactory;
     protected List<Tank> tanks;
-
-    public TankPool() {
-        this.tankFactory = ConcreteTankFactory.getTankFactory();
-    }
     
     public TankPool(int number, RiskColor riskColor) {
+        this.tankFactory = ConcreteTankFactory.getTankFactory();
         this.tanks = new ArrayList<>();
         for (int i = 0; i < number; i++) {
             this.tanks.add(this.tankFactory.createTank(riskColor));

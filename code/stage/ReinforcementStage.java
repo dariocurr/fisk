@@ -3,18 +3,17 @@ package risk;
 import java.util.*;
 import java.io.*;
 
-class ReinforcementStage implements Stage {
-
-    private Mediator mediator;
+class ReinforcementStage extends Stage {
 
     public ReinforcementStage(Mediator mediator) {
-        this.mediator = mediator;
+        super(mediator);
     }
 
     public void play(List<Territory> clickedTerritories) {
         if (this.mediator.getCurrentPlayer().getFreeTanks().size() > 0 && clickedTerritories.size() == 1) {
             clickedTerritories.get(0).getTanks().add(this.mediator.getCurrentPlayer().getFreeTanks().remove(0));
-            this.mediator.getFacade().updateLog("Tank posto nel territorio " + clickedTerritories.get(0) + "; " + this.mediator.getCurrentPlayer().getFreeTanks().size() + " rimanenti.");
+            this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer() + " places a tank in " + clickedTerritories.get(0).getName() + 
+                                                ", " + this.mediator.getCurrentPlayer().getFreeTanks().size() + " still to place");
             this.mediator.getFacade().updateBoard(clickedTerritories);
             this.mediator.getFacade().clearClickedTerritories();
             this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
@@ -40,12 +39,12 @@ class ReinforcementStage implements Stage {
 
     @Override
     public String toString() {
-        return "Fase di Rinforzo";
+        return "Reinforcement " + super.toString();
     }
 
     @Override
     public boolean checkEndStage() {
-        if (this.mediator.getCurrentPlayer().getFreeTanks().size() == 0) {
+        if (this.mediator.getCurrentPlayer().getFreeTanks().isEmpty()) {
             return true;
         } else {
             this.mediator.getFacade().updateLog("Posizionare tutti i tank disponibili");

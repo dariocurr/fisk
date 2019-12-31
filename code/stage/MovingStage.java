@@ -3,12 +3,10 @@ package risk;
 import java.util.*;
 import java.io.*;
 
-class MovingStage implements Stage {
-
-    private Mediator mediator;
+class MovingStage extends Stage {
 
     public MovingStage(Mediator mediator) {
-        this.mediator = mediator;
+        super(mediator);
     }
 
     public void play(List<Territory> clickedTerritories, Integer numberOfTanksToMove) {
@@ -23,9 +21,8 @@ class MovingStage implements Stage {
 
                     this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
                     this.mediator.updateColorTerritoryButton();
-                    this.mediator.updateLabelTerritoryButton(null);
+                    this.mediator.updateLabelTerritoryButton(clickedTerritories);
                     this.mediator.getFacade().clearClickedTerritories();
-                    this.mediator.getFacade().setNumberOfTanksToMove(null);
                     this.mediator.nextStage();
 
                 } else {
@@ -36,7 +33,6 @@ class MovingStage implements Stage {
                 this.mediator.getFacade().updateLog("I territori cliccati devono essere confinanti.");
                 this.mediator.getFacade().clearClickedTerritories();
                 this.mediator.getFacade().setNumberOfTanksToMove(null);
-                return;
             }
         }
     }
@@ -63,7 +59,7 @@ class MovingStage implements Stage {
      */
     @Override
     public String toString() {
-        return "Fase di Spostamento";
+        return "Moving " + super.toString();
     }
 
     public List<Territory> setClickableTerritories() {
@@ -76,7 +72,6 @@ class MovingStage implements Stage {
             if (this.mediator.getCurrentPlayerWinsTerritory()) {
                 SymbolCard draw = this.mediator.getSymbolDeck().removeCard();
                 this.mediator.getCurrentPlayer().getCards().add(draw);
-                System.out.println("E' stata estratta la carta" + draw);
             }
             if (this.mediator.getSymbolDeck().isEmpty()) {
                 for (Player s : this.mediator.getPlayers()) {

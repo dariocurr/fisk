@@ -15,7 +15,7 @@ public class TerritoryCard extends SymbolCard {
 
     @Override
     public String toString() {
-        return "Territory " + super.toString() + " " + this.territory.toString();
+        return super.toString() + " " + this.territory.getName();
     }
 
 }

@@ -19,7 +19,7 @@ import javax.swing.*;
  */
 public class CardsFrame extends JFrame {
 
-    private static final Integer WIDTH = 200;
+    private static final Integer WIDTH = 400;
     private final Map<JCheckBox, SymbolCard> checkBoxes;
     private final JButton changeTris;
     private final JLabel status;
@@ -27,11 +27,12 @@ public class CardsFrame extends JFrame {
     private Tris currentTris;
 
     public CardsFrame(Facade facade) {
+        this.setTitle("Your cards");
         this.facade = facade;
         this.checkBoxes = new HashMap<>();
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 30));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 30));
         for (SymbolCard symbolCard : facade.getPlayerCards()) {
-            JCheckBox cb = new JCheckBox(symbolCard.toString() + ", ");
+            JCheckBox cb = new JCheckBox(symbolCard.toString());
             this.checkBoxes.put(cb, symbolCard);
             this.add(cb);
         }

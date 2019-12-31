@@ -5,6 +5,7 @@
  */
 package risk;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -50,7 +51,8 @@ public class BoardPanel extends JPanel {
                     territoryButton.getHeight());
             this.add(territoryButton);
         }
-        this.add(this.getContinentBonusPanel());
+        this.addContinentsBonusPanel();
+        this.updateColorTerritoryButton();
         this.addListeners();
     }
 
@@ -88,7 +90,7 @@ public class BoardPanel extends JPanel {
         g.drawImage(this.SCALED_IMAGE, 0, 0, null);
     }
     
-    protected JPanel getContinentBonusPanel() {
+    protected void addContinentsBonusPanel() {
         JPanel continentBonusPanel = new JPanel();
         Integer numberOfContinents = this.CONTINENT_BONUS.keySet().size();
         if (numberOfContinents % 2 == 0) {
@@ -99,7 +101,10 @@ public class BoardPanel extends JPanel {
         for (Continent continent: this.CONTINENT_BONUS.keySet()) {
             continentBonusPanel.add(new JLabel(continent.getName() + "\t" + this.CONTINENT_BONUS.get(continent)));
         }
-        return continentBonusPanel;
+        continentBonusPanel.setPreferredSize(new Dimension(400, 200));
+        System.out.println(continentBonusPanel.getX() + "  " + continentBonusPanel.getY());
+        continentBonusPanel.setBackground(Color.GRAY);
+        this.add(continentBonusPanel);
     }
 
     private void addListeners() {
@@ -108,9 +113,7 @@ public class BoardPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     Territory clickedTerritory = territoryButton.getTerritory();
-                    List<Territory> involvedTerritories = facade.addClickedTerritory(clickedTerritory);
-                    setClickableTerritories(involvedTerritories);
-
+                    facade.addClickedTerritory(clickedTerritory);
                 }
             });
         }

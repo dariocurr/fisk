@@ -94,14 +94,12 @@ public class StartWindow extends JFrame {
         this.startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                facade.setHumanPlayer(new Player(nameTextField.getText(), (RiskColor) playerColorList.getSelectedItem()));
                 List<RiskStrategy> virtualPlayersStrategies = new ArrayList<>();
                 for (JLabel label : virtualPlayers.keySet()) {
                     virtualPlayersStrategies.add((RiskStrategy) virtualPlayers.get(label).getSelectedItem());
                 }
-                facade.setVirtualPlayersStrategies(virtualPlayersStrategies);
-                facade.startMatch();
                 dispose();
+                facade.prepareGame(nameTextField.getText(), (RiskColor) playerColorList.getSelectedItem(), virtualPlayersStrategies);
             }
         });
         this.numberOfVirtualPlayersList.addActionListener(new ActionListener() {

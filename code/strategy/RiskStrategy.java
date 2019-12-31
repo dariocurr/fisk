@@ -1,5 +1,6 @@
 package risk;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,15 +59,16 @@ public abstract class RiskStrategy {
         return territoriesWithMinimumTanks.get(0);
     }
 
-    public Territory[] attack(Player player) {
-        Territory territoriesInvolvedAttack[] = new Territory[2];
+    public List<Territory> attack(Player player) {
+        List<Territory> territoriesInvolvedAttack = new ArrayList<>();
         Map<Territory, Territory> bestAttacks = this.getPossibleBestAttacks(player.getTerritories());
-        Entry<Territory, Territory>[] entries = (Entry<Territory, Territory>[]) bestAttacks.entrySet().toArray();
-        int delta = entries[0].getKey().getTanks().size() - entries[0].getValue().getTanks().size();
-        if (this.wantToAttack(delta, entries[0].getValue().getTanks().size())) {
+        List<Entry<Territory, Territory>> entries = new ArrayList<>();
+        entries.addAll(bestAttacks.entrySet());
+        int delta = entries.get(0).getKey().getTanks().size() - entries.get(0).getValue().getTanks().size();
+        if (this.wantToAttack(delta, entries.get(0).getValue().getTanks().size())) {
             if (bestAttacks.size() == 1) {
-                territoriesInvolvedAttack[0] = entries[0].getKey();
-                territoriesInvolvedAttack[1] = entries[0].getValue();
+                territoriesInvolvedAttack.add(entries.get(0).getKey());
+                territoriesInvolvedAttack.add(entries.get(0).getValue());
             } else {
                 return this.attackByGoal(player.getGoal(), bestAttacks);
             }
@@ -96,56 +98,65 @@ public abstract class RiskStrategy {
         return bestAttacks;
     }
 
-    protected Territory[] attackByGoal(GoalCard goal, Map<Territory, Territory> bestAttacks) {
-        Territory territoriesInvolvedAttack[] = new Territory[2];
+    protected List<Territory> attackByGoal(GoalCard goal, Map<Territory, Territory> bestAttacks) {
+        List<Territory> territoriesInvolvedAttack = new ArrayList<>();
+        boolean found = false;
         if (goal instanceof ContinentsGoalCard) {
             ContinentsGoalCard goalCard = (ContinentsGoalCard) goal;
-            bestAttacks.entrySet().forEach((entry) -> {
+            for(Entry<Territory, Territory> entry: bestAttacks.entrySet()) {
                 for (Continent continent : goalCard.getCard()) {
                     if (continent.getTerritories().contains(entry.getValue())) {
-                        territoriesInvolvedAttack[0] = entry.getKey();
-                        territoriesInvolvedAttack[1] = entry.getValue();
+                        territoriesInvolvedAttack.clear();
+                        territoriesInvolvedAttack.add(entry.getKey());
+                        territoriesInvolvedAttack.add(entry.getValue());
+                        found = true;
                     }
                 }
-            });
+            }
         } else if (goal instanceof KillGoalCard) {
             KillGoalCard goalCard = (KillGoalCard) goal;
             for (Entry<Territory, Territory> entry : bestAttacks.entrySet()) {
                 if (entry.getValue().getOwnerPlayer().getColor().equals(goalCard.getCard())) {
-                    territoriesInvolvedAttack[0] = entry.getKey();
-                    territoriesInvolvedAttack[1] = entry.getValue();
+                    territoriesInvolvedAttack.clear();
+                    territoriesInvolvedAttack.add(entry.getKey());
+                    territoriesInvolvedAttack.add(entry.getValue());
+                    found = true;
                 }
             }
-        } else {
-            Entry<Territory, Territory>[] entries = (Entry<Territory, Territory>[]) bestAttacks.entrySet().toArray();
-            territoriesInvolvedAttack[0] = entries[0].getKey();
-            territoriesInvolvedAttack[1] = entries[0].getValue();
+        } 
+        if (!found) {
+            List<Entry<Territory, Territory>> entries = new ArrayList<>();
+            entries.addAll(bestAttacks.entrySet());
+            territoriesInvolvedAttack.clear();
+            territoriesInvolvedAttack.add(entries.get(0).getKey());
+            territoriesInvolvedAttack.add(entries.get(0).getValue());
         }
         return territoriesInvolvedAttack;
     }
 
     protected abstract boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack);
 
-    public Territory[] moveTank(Player player) {
-        Territory territoriesInvolvedMoving[] = new Territory[2];
+    public Entry<List<Territory>, Integer> moveTanks(Player player) {
+        List<Territory> territoriesInvolvedMoving = new ArrayList<>();
         Map<Territory, Territory> bestMovings = this.getPossibleBestMovings(player.getTerritories());
-        Entry<Territory, Territory>[] entries = (Entry<Territory, Territory>[]) bestMovings.entrySet().toArray();
-        int delta = entries[0].getKey().getTanks().size() - entries[0].getValue().getTanks().size();
+        List<Entry<Territory, Territory>> entries = new ArrayList<>();
+        entries.addAll(bestMovings.entrySet());
+        int delta = entries.get(0).getKey().getTanks().size() - entries.get(0).getValue().getTanks().size();
         if (delta > 1) {
             if (bestMovings.size() == 1) {
-                territoriesInvolvedMoving[0] = entries[0].getKey();
-                territoriesInvolvedMoving[1] = entries[0].getValue();
+                territoriesInvolvedMoving.add(entries.get(0).getKey());
+                territoriesInvolvedMoving.add(entries.get(0).getValue());
             } else {
-                return this.moveByGoal(player.getGoal(), bestMovings);
+                return new SimpleEntry<>(this.moveByGoal(player.getGoal(), bestMovings), delta / 2);
             }
-            return territoriesInvolvedMoving;
+            return new SimpleEntry<>(territoriesInvolvedMoving, delta / 2);
         } else {
             return null;
         }
     }
 
     protected Map<Territory, Territory> getPossibleBestMovings(List<Territory> territories) {
-        int maxDelta = Integer.MIN_VALUE;
+        Integer maxDelta = Integer.MIN_VALUE;
         Map<Territory, Territory> bestMovings = new HashMap<>();
         for (Territory fromTerritory : territories) {
             for (Territory toTerritory : fromTerritory.getNeighboringTerritories()) {
@@ -164,22 +175,28 @@ public abstract class RiskStrategy {
         return bestMovings;
     }
 
-    protected Territory[] moveByGoal(GoalCard goal, Map<Territory, Territory> bestMovings) {
-        Territory territoriesInvolvedMoving[] = new Territory[2];
+    protected List<Territory> moveByGoal(GoalCard goal, Map<Territory, Territory> bestMovings) {
+        List<Territory> territoriesInvolvedMoving = new ArrayList<>();
+        boolean found = false;
         if (goal instanceof ContinentsGoalCard) {
             ContinentsGoalCard goalCard = (ContinentsGoalCard) goal;
-            bestMovings.entrySet().forEach((entry) -> {
+            for(Entry<Territory, Territory> entry: bestMovings.entrySet()) {
                 for (Continent continent : goalCard.getCard()) {
                     if (continent.getTerritories().contains(entry.getValue())) {
-                        territoriesInvolvedMoving[0] = entry.getKey();
-                        territoriesInvolvedMoving[1] = entry.getValue();
+                        territoriesInvolvedMoving.clear();
+                        territoriesInvolvedMoving.add(entry.getKey());
+                        territoriesInvolvedMoving.add(entry.getValue());
+                        found = true;
                     }
                 }
-            });
-        } else {
-            Entry<Territory, Territory>[] entries = (Entry<Territory, Territory>[]) bestMovings.entrySet().toArray();
-            territoriesInvolvedMoving[0] = entries[0].getKey();
-            territoriesInvolvedMoving[1] = entries[0].getValue();
+            }
+        }
+        if (!found) {
+            List<Entry<Territory, Territory>> entries = new ArrayList<>();
+            entries.addAll(bestMovings.entrySet());
+            territoriesInvolvedMoving.clear();
+            territoriesInvolvedMoving.add(entries.get(0).getKey());
+            territoriesInvolvedMoving.add(entries.get(0).getValue());
         }
         return territoriesInvolvedMoving;
     }

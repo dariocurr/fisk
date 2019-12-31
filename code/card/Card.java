@@ -14,7 +14,7 @@ public abstract class Card<T> {
 
     @Override
     public String toString() {
-        return "card: " + this.card.toString();
+        return this.card.toString();
     }
 
 }

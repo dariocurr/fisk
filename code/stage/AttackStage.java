@@ -3,12 +3,10 @@ package risk;
 import java.util.*;
 import java.io.*;
 
-class AttackStage implements Stage {
-
-    private Mediator mediator;
+class AttackStage extends Stage {
 
     public AttackStage(Mediator mediator) {
-        this.mediator = mediator;
+        super(mediator);
     }
 
     public void play(List<Territory> clickedTerritories) {
@@ -16,57 +14,47 @@ class AttackStage implements Stage {
             Territory[] involvedTerritory = new Territory[2];
             involvedTerritory[0] = clickedTerritories.get(0);
             involvedTerritory[1] = clickedTerritories.get(1);
-            this.mediator.getFacade().updateLog("" + clickedTerritories.get(0).toString() + " attacca " + clickedTerritories.get(1).toString());
+            this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer().getName() + " attack " + involvedTerritory[1].getOwnerPlayer().getName() + 
+                                                " from " + involvedTerritory[0].getName() + " to " + involvedTerritory[1].getName());
             if (this.checkTerritoriesForAttack(this.mediator.getCurrentPlayer(), involvedTerritory)) {
                 Player attackedPlayer = involvedTerritory[1].getOwnerPlayer();
                 int numberOfRollAttackingPlayer = Math.max(Math.min(involvedTerritory[0].getTanks().size() - 1, 3), 1);
-                this.mediator.getFacade().updateLog("Numero di tank dell' attancante " + numberOfRollAttackingPlayer);
+                this.mediator.getFacade().updateLog("Number of dice attacking " + numberOfRollAttackingPlayer);
                 int numberOfRollAttackedPlayer = Math.min(involvedTerritory[1].getTanks().size(), 3);
-                this.mediator.getFacade().updateLog("Numero di tank del difensore " + numberOfRollAttackedPlayer);
+                this.mediator.getFacade().updateLog("Number of dice defensing " + numberOfRollAttackedPlayer);
                 this.mediator.getCurrentPlayer().rollDice(this.mediator.getGame().getAttackDice(), numberOfRollAttackingPlayer);
                 attackedPlayer.rollDice(this.mediator.getGame().getDefenseDice(), numberOfRollAttackedPlayer);
                 this.mediator.getFacade().showDice();
                 Arrays.sort(this.mediator.getGame().getAttackDice(), Collections.reverseOrder());
                 Arrays.sort(this.mediator.getGame().getDefenseDice(), Collections.reverseOrder());
                 int numberOfComparison = Math.min(numberOfRollAttackedPlayer, numberOfRollAttackingPlayer);
-                this.mediator.getFacade().updateLog("Numero di scontri " + numberOfComparison);
+                //this.mediator.getFacade().updateLog("Numero di scontri " + numberOfComparison);
                 int[] result = this.diceComparison(numberOfComparison);
-                this.mediator.getFacade().updateLog("Esito scontro:");
-                this.mediator.getFacade().updateLog("Numero armate perse da " + involvedTerritory[0].getOwnerPlayer().getName() + ": " + result[0]);
-                this.mediator.getFacade().updateLog("Numero armate perse da " + involvedTerritory[1].getOwnerPlayer().getName() + ": " + result[1]);
+                this.mediator.getFacade().updateLog("Result of the clash: " + this.mediator.getCurrentPlayer().getName() + " lost " + result[0] + " tank(s), " +
+                                                    involvedTerritory[1].getOwnerPlayer().getName() + " " + result[1]);
+                //this.mediator.getFacade().updateLog("Numero armate perse da " + involvedTerritory[0].getOwnerPlayer().getName() + ": " + result[0]);
+                //this.mediator.getFacade().updateLog("Numero armate perse da " + involvedTerritory[1].getOwnerPlayer().getName() + ": " + result[1]);
                 this.removeTanksFromTerritory(involvedTerritory, result);
-                if (involvedTerritory[1].getTanks().size() == 0) {
+                if (involvedTerritory[1].getTanks().isEmpty()) {
                     this.mediator.getCurrentPlayer().getTerritories().add(involvedTerritory[1]);
                     for (int i = 0; i < numberOfComparison; i++) {
                         involvedTerritory[1].getTanks().add(involvedTerritory[0].getTanks().remove(0));
                     }
                     involvedTerritory[1].setOwnerPlayer(this.mediator.getCurrentPlayer());
+                    this.mediator.getCurrentPlayer().getTerritories().add(involvedTerritory[1]);
                     this.mediator.setCurrentPlayerWinsTerritory(true);
-                    this.mediator.getFacade().updateLog("" + involvedTerritory[0].getOwnerPlayer().getName() + " vince " + involvedTerritory[1].toString());
+                    this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer().getName() + " wins " + involvedTerritory[1].toString());
                 }
                 this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(),
-                        this.mediator.getCurrentPlayer().getFreeTanks().size(),
-                        this.mediator.getCurrentStage().toString());
+                                                            this.mediator.getCurrentPlayer().getFreeTanks().size(),
+                                                            this.mediator.getCurrentStage().toString());
                 this.mediator.updateColorTerritoryButton();
-                this.mediator.updateLabelTerritoryButton(null);
-                this.mediator.getFacade().clearClickedTerritories();
-            } else {
-                this.mediator.getFacade().clearClickedTerritories();
+                this.mediator.updateLabelTerritoryButton(clickedTerritories);
             }
+            this.mediator.getFacade().clearClickedTerritories();
         } else if (clickedTerritories.size() > 2) {
             this.mediator.getFacade().clearClickedTerritories();
         }
-
-        return;
-
-        /*
-	
-		************************************************************************************************************************************************************
-		IMPORTANTE
-		I System.out.println("") vanno sostituiti con dei messageDialog nella gui
-		************************************************************************************************************************************************************
-
-         */
     }
 
     private boolean checkEnd() {
@@ -125,7 +113,7 @@ class AttackStage implements Stage {
         }
         if (p.getTerritories().contains(involvedTerritory[0])) {
             if (involvedTerritory[0].getNeighboringTerritories().contains(involvedTerritory[1])) {
-                if (p.getTerritories().contains(involvedTerritory[0]) && !p.getTerritories().contains(involvedTerritory[1])) {
+                if (!p.getTerritories().contains(involvedTerritory[1])) {
                     if (involvedTerritory[0].getTanks().size() > 1) {
                         return true;
                     } else {
@@ -149,7 +137,7 @@ class AttackStage implements Stage {
 
     @Override
     public String toString() {
-        return "Fase di Attacco";
+        return "attack " + super.toString();
     }
 
     public List<Territory> setClickableTerritories() {

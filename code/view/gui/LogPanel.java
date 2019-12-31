@@ -27,7 +27,7 @@ public class LogPanel extends JScrollPane {
     }
 
     public void append(String string) {
-        LogPanel.TEXT_AREA.append(string);
+        LogPanel.TEXT_AREA.append(string + "\n");
     }
 
 }

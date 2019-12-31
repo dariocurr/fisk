@@ -19,7 +19,7 @@ public class SymbolCard extends Card<Symbol> implements Comparable<SymbolCard> {
 
     @Override
     public String toString() {
-        return "Symbol " + super.toString();
+        return super.toString();
     }
 
     @Override

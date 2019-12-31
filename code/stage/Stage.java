@@ -1,14 +1,25 @@
 package risk;
 
-import java.util.*;
-import java.io.*;
+import java.util.List;
 
-interface Stage {
+public abstract class Stage {
 
+    protected Mediator mediator;
+    
+    public Stage(Mediator mediator) {
+        this.mediator = mediator;
+    }
+    
     public abstract void play(List<Territory> clickedTerritories);
 
     public abstract List<Territory> setClickableTerritories();
 
     public abstract boolean checkEndStage();
+
+    @Override
+    public String toString() {
+        return "stage";
+    }
+    
 
 }

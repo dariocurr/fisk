@@ -55,7 +55,8 @@ public class NumberOfTanksFrame extends JFrame {
         this.moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println(numberOfTanksSlider.getValue());
+                facade.setNumberOfTanksToMove(numberOfTanksSlider.getValue());
+                facade.update();
             }
         });
     }

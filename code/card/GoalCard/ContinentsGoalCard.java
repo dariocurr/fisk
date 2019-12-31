@@ -10,7 +10,9 @@ public class ContinentsGoalCard extends GoalCard<List<Continent>> {
 
     @Override
     public String toString() {
-        return "Continents to conquer " + super.toString();
+        String goal = "Continents to conquer goal card: ";
+        goal = this.card.stream().map((continent) -> continent.getName() + ", ").reduce(goal, String::concat);
+        return goal.substring(0, goal.lastIndexOf(","));
     }
 
 }

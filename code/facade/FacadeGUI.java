@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
 import java.awt.Color;
 import java.util.*;
 
-/**
- *
- * @author dario
- */
 public class FacadeGUI implements Facade {
 
     private final List<Territory> clickedTerritories;
     private Mediator mediator;
-    private Player humanPlayer;
     private RiskGUI gui;
-    private List<RiskStrategy> virtualPlayersStrategies;
     private Integer numberOfTanksToMove;
 
     public FacadeGUI() {
@@ -35,20 +24,9 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public void setPlayer(Player player) {
-        this.humanPlayer = player;
-    }
-
-    @Override
-    public void setGui(RiskGUI gui) {
-        this.gui = gui;
-    }
-
-    @Override
-    public List<Territory> addClickedTerritory(Territory territory) {
+    public void addClickedTerritory(Territory territory) {
         this.clickedTerritories.add(territory);
         this.update();
-        return null;
     }
 
     @Override
@@ -63,12 +41,12 @@ public class FacadeGUI implements Facade {
 
     @Override
     public GoalCard getPlayerGoal() {
-        return this.humanPlayer.getGoal();
+        return this.mediator.getHumanPlayer().getGoal();
     }
 
     @Override
     public List<SymbolCard> getPlayerCards() {
-        return this.humanPlayer.getCards();
+        return this.mediator.getHumanPlayer().getCards();
     }
 
     @Override
@@ -85,12 +63,12 @@ public class FacadeGUI implements Facade {
 
     @Override
     public Color getPlayerColor() {
-        return this.humanPlayer.getColor().getColor();
+        return this.mediator.getHumanPlayer().getColor().getColor();
     }
 
     @Override
     public String getPlayerName() {
-        return this.humanPlayer.getName();
+        return this.mediator.getHumanPlayer().getName();
     }
 
     @Override
@@ -104,37 +82,8 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public void setHumanPlayer(Player player) {
-        this.humanPlayer = player;
-    }
-
-    @Override
-    public void setVirtualPlayersStrategies(List<RiskStrategy> strategies) {
-        this.virtualPlayersStrategies = strategies;
-    }
-
-    @Override
-    public void startMatch() {
-        /*
-        List<Player> players = new ArrayList<>();
-        AIPlayer.NAMES_SET.remove(this.humanPlayer.getName());
-        List<RiskColor>  freeColors = new ArrayList<>();
-        for(RiskColor color: RiskColor.values()) {
-            if(!color.equals(this.humanPlayer.getColor())) {
-                freeColors.add(color);
-            }
-        }
-        for(int i = 0; i < this.virtualPlayersStrategies.size(); i++) {
-            String name = (String) AIPlayer.NAMES_SET.toArray()[i];
-            players.add(new AIPlayer(name, freeColors.get(i), this.virtualPlayersStrategies.get(i)));
-        }
-        players.add(this.humanPlayer);
-        Collections.shuffle(players);
-        this.mediator = new Mediator(players, new ConcreteGameBuilder().buildGame());
-        PreparationStage ps = new PreparationStage( this.mediator );
-        ps.init();
-        this.gui = new RiskGUI(this);
-         */
+    public void prepareGame(String humanPlayerName, RiskColor humanPlayerColor, List<RiskStrategy> virtualPlayersStrategies) {
+        this.mediator.prepareGame(humanPlayerName, humanPlayerColor, virtualPlayersStrategies);
     }
 
     @Override
@@ -168,12 +117,12 @@ public class FacadeGUI implements Facade {
 
     @Override
     public void setClickableTerritories(List<Territory> territories) {
-        //this.gui.setClickableTerritories( territories );
+        this.gui.setClickableTerritories( territories );
     }
 
     @Override
-    public void showGui() {
-        //this.gui.showGui();
+    public void createRiskInterface() {
+        this.gui = new RiskGUI(this);
     }
 
     @Override
@@ -195,14 +144,9 @@ public class FacadeGUI implements Facade {
         return this.mediator.getCurrentPlayer();
     }
 
-    public void initPlayerData() {
-        this.updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
-        this.setClickableTerritories(this.mediator.getCurrentStage().setClickableTerritories());
-    }
-
     @Override
-    public void end() {
-        this.mediator.end();
+    public void endStage() {
+        this.mediator.endStage();
     }
 
     @Override
@@ -211,9 +155,8 @@ public class FacadeGUI implements Facade {
     }
     
     @Override
-    public Map<Continent, Integer> getContinentBonus() {
-        //return this.mediator.getContinentBonus();
-        return null;
+    public Map<Continent, Integer> getAllContinentsBonus() {
+        return this.mediator.getAllContinentsBonus();
     }
 
 }

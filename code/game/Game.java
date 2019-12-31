@@ -56,6 +56,10 @@ public class Game {
     public List<Tris> getAllTris() {
         return this.allTris;
     }
+    
+    public Map<Continent, Integer> getAllContinentsBonus() {
+        return this.continentsBonus;
+    }
 
     public ClassicDice[] getAttackDice() {
         return this.attackDice;

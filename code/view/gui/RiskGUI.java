@@ -22,7 +22,7 @@ public class RiskGUI extends JFrame {
         this.boardPanel = new BoardPanel(RiskGUI.WIDTH - RiskGUI.WIDTH / 5, 
                                          RiskGUI.HEIGHT - RiskGUI.HEIGHT / 6, 
                                          this.facade.getTerritories(), 
-                                         this.facade.getContinentBonus(), facade);
+                                         this.facade.getAllContinentsBonus(), facade);
         this.logPanel = new LogPanel(RiskGUI.WIDTH - RiskGUI.WIDTH / 5, RiskGUI.HEIGHT / 6);
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout(0, 0));
