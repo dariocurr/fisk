@@ -1,7 +1,6 @@
 package risk;
 
 import java.util.*;
-import java.io.*;
 
 public class AttackStage extends Stage {
 
@@ -36,7 +35,6 @@ public class AttackStage extends Stage {
                 //this.mediator.getFacade().updateLog("Numero armate perse da " + involvedTerritory[1].getOwnerPlayer().getName() + ": " + result[1]);
                 this.removeTanksFromTerritory(involvedTerritory, result);
                 if (involvedTerritory[1].getTanks().isEmpty()) {
-                    this.mediator.getCurrentPlayer().getTerritories().add(involvedTerritory[1]);
                     for (int i = 0; i < numberOfComparison; i++) {
                         involvedTerritory[1].getTanks().add(involvedTerritory[0].getTanks().remove(0));
                     }
@@ -53,8 +51,17 @@ public class AttackStage extends Stage {
                 this.mediator.getFacade().updateLabelsTerritories(clickedTerritories);
             }
             this.mediator.getFacade().clearClickedTerritories();
+            this.mediator.getFacade().setClickableTerritories(this.setClickableTerritories());
         } else if (clickedTerritories.size() > 2) {
             this.mediator.getFacade().clearClickedTerritories();
+        } else if (clickedTerritories.size() == 1) {
+            List<Territory> clickableTerritories = new ArrayList<>();
+            for(Territory neighboringTerritory: clickedTerritories.get(0).getNeighboringTerritories()) {
+                if(!this.mediator.getCurrentPlayer().getColor().equals(neighboringTerritory.getOwnerPlayer().getColor())) {
+                    clickableTerritories.add(neighboringTerritory);
+                }
+            }
+            this.mediator.getFacade().setClickableTerritories(clickableTerritories);
         }
     }
 
@@ -84,12 +91,8 @@ public class AttackStage extends Stage {
     }
 
     private void removeTanksFromTerritory(Territory[] involvedTerritory, int[] result) {
-        for (int i = 0; i < result[0]; i++) {
-            involvedTerritory[0].getTanks().remove(0);
-        }
-        for (int i = 0; i < result[1]; i++) {
-            involvedTerritory[1].getTanks().remove(0);
-        }
+        this.mediator.removeTanks(involvedTerritory[0], result[0]);
+        this.mediator.removeTanks(involvedTerritory[1], result[1]);
     }
 
     private int[] diceComparison(int numberOfComparison) {
@@ -138,7 +141,7 @@ public class AttackStage extends Stage {
 
     @Override
     public String toString() {
-        return "attack " + super.toString();
+        return "Attack " + super.toString();
     }
 
     public List<Territory> setClickableTerritories() {

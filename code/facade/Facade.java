@@ -17,7 +17,7 @@ public interface Facade {
 
     public boolean checkTris(Tris tris);
 
-    public boolean changeTris(Tris tris);
+    public void exchangeTris(Tris tris);
 
     public Color getPlayerColor();
 
@@ -40,8 +40,6 @@ public interface Facade {
     public void updateColorsTerritories(List<Territory> territories);
 
     public void setMediator(Mediator mediator);
-
-    public Mediator getMediator();
 
     public void showDice();
 
@@ -70,5 +68,7 @@ public interface Facade {
     public void disableEndStage();
     
     public void enableEndStage();
+    
+    public void notifyError(String error);
 
 }

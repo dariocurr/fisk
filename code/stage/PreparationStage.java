@@ -29,7 +29,7 @@ public class PreparationStage extends Stage {
 
     @Override 
     public boolean checkEndStage (){
-        return (counter == 3) || (this.mediator.getCurrentPlayer().getFreeTanks().size() == 0);
+        return (counter == 3) || (this.mediator.getCurrentPlayer().getFreeTanks().isEmpty());
     }
 
     @Override

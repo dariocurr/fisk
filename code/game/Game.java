@@ -14,13 +14,15 @@ public class Game {
     protected final ClassicDice[] defenseDice;
     protected final GoalDeck goalsDeck;
     protected final TerritoryDeck territoriesDeck;
+    protected final SymbolDeck symbolDeck;
     protected final Map<RiskColor, TankPool> tanksPolls;
 
     public Game(List<Tris> allTris, Map<Tris, Integer> trisBonus,
             Map<Continent, Integer> continentsBonus, List<Territory> territories,
             List<Continent> continents, ClassicDice[] attackDice,
             ClassicDice[] defenseDice, GoalDeck goaslDeck,
-            TerritoryDeck territoriesDeck, Map<RiskColor, TankPool> tanksPools) {
+            TerritoryDeck territoriesDeck, SymbolDeck symbolDeck,
+            Map<RiskColor, TankPool> tanksPools) {
         this.allTris = allTris;
         this.trisBonus = trisBonus;
         this.continentsBonus = continentsBonus;
@@ -30,15 +32,26 @@ public class Game {
         this.defenseDice = defenseDice;
         this.goalsDeck = goaslDeck;
         this.territoriesDeck = territoriesDeck;
+        this.symbolDeck = symbolDeck;
         this.tanksPolls = tanksPools;
     }
 
     public Integer getTrisBonus(Tris tris) {
-        return this.trisBonus.get(tris);
+        for (Tris validTris: this.trisBonus.keySet()) {
+            if (validTris.equals(tris)) {
+                return this.trisBonus.get(validTris);
+            }
+        }
+        return null;
     }
 
     public Integer getContinentBonus(Continent continent) {
-        return this.continentsBonus.get(continent);
+        for (Continent c: this.continentsBonus.keySet()) {
+            if (c.equals(continent)) {
+                return this.continentsBonus.get(c);
+            }
+        }
+        return null;
     }
 
     public List<Territory> getTerritories() {
@@ -53,8 +66,8 @@ public class Game {
         return this.goalsDeck;
     }
 
-    public List<Tris> getAllTris() {
-        return this.allTris;
+    public Map<Tris, Integer> getAllTrisBonus() {
+        return this.trisBonus;
     }
     
     public Map<Continent, Integer> getAllContinentsBonus() {
@@ -73,4 +86,8 @@ public class Game {
         return this.tanksPolls.get(riskColor);
     }
 
+    public SymbolDeck getSymbolDeck() {
+        return symbolDeck;
+    }
+    
 }

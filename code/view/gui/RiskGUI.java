@@ -80,5 +80,9 @@ public class RiskGUI extends JFrame {
     public void disableEndStageButton() {
         this.playerPanel.disableEndStageButton();
     }
+    
+    public void showError(String error) {
+        JOptionPane.showMessageDialog(this, error);
+    }
 
 }

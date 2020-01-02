@@ -1,7 +1,6 @@
 package risk;
 
 import java.util.*;
-import java.io.*;
 
 public class ReinforcementStage extends Stage {
 
@@ -15,24 +14,15 @@ public class ReinforcementStage extends Stage {
             this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer() + " places a tank in " + clickedTerritories.get(0).getName() + 
                                                 ", " + this.mediator.getCurrentPlayer().getFreeTanks().size() + " still to place");
             this.mediator.getFacade().updateLabelsTerritories(clickedTerritories);
-            this.mediator.getFacade().clearClickedTerritories();
             this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
+            this.mediator.getFacade().clearClickedTerritories();
+            if (this.checkEndStage()) {
+                this.mediator.nextStage();
+            }
         }
     }
 
-    // scambiare un tris play ( Tris )
-    public void play(Tris t) {
-    }
-
-    /*
-
-	************************************************************************************************************************************************************
-	IMPORTANTE
-	Questo metodo permette di scambiare i tris:
-	lo devo implementare qui o da facade chiami direttamente il metodo changeTris in mediator?
-	************************************************************************************************************************************************************
-
-     */
+    @Override
     public List<Territory> setClickableTerritories() {
         return this.mediator.getCurrentPlayer().getTerritories();
     }
@@ -47,7 +37,6 @@ public class ReinforcementStage extends Stage {
         if (this.mediator.getCurrentPlayer().getFreeTanks().isEmpty()) {
             return true;
         } else {
-            this.mediator.getFacade().updateLog("You have to places all the free tanks");
             return false;
         }
     }
