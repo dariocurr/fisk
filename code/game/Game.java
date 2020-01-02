@@ -15,7 +15,7 @@ public class Game {
     protected final GoalDeck goalsDeck;
     protected final TerritoryDeck territoriesDeck;
     protected final SymbolDeck symbolDeck;
-    protected final Map<RiskColor, TankPool> tanksPolls;
+    protected final Map<RiskColor, TankPool> tanksPools;
 
     public Game(List<Tris> allTris, Map<Tris, Integer> trisBonus,
             Map<Continent, Integer> continentsBonus, List<Territory> territories,
@@ -33,7 +33,7 @@ public class Game {
         this.goalsDeck = goaslDeck;
         this.territoriesDeck = territoriesDeck;
         this.symbolDeck = symbolDeck;
-        this.tanksPolls = tanksPools;
+        this.tanksPools = tanksPools;
     }
 
     public Integer getTrisBonus(Tris tris) {
@@ -82,12 +82,14 @@ public class Game {
         return this.defenseDice;
     }
 
-    public TankPool getTanksPools(RiskColor riskColor) {
-        return this.tanksPolls.get(riskColor);
+    public TankPool getTanksPool(RiskColor riskColor) {
+        return this.tanksPools.get(riskColor);
     }
 
     public SymbolDeck getSymbolDeck() {
         return symbolDeck;
     }
+    
+    
     
 }

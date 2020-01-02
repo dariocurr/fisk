@@ -203,7 +203,7 @@ public class Mediator {
             numberOfTanks += this.game.getContinentBonus(continent);
         }
         for(int i = 0; i < numberOfTanks; i++) {
-            this.currentPlayer.getFreeTanks().add(this.game.getTanksPools(this.currentPlayer.getColor()).releaseTank());
+            this.currentPlayer.getFreeTanks().add(this.game.getTanksPool(this.currentPlayer.getColor()).releaseTank());
         }
     }
 
@@ -283,7 +283,7 @@ public class Mediator {
             }
             this.facade.updateLog(this.currentPlayer.getName() + " change " + tris + " and obtain " + bonus + " more tanks");
             for(int i = 0; i < bonus; i++) {
-                this.currentPlayer.getFreeTanks().add(this.game.getTanksPools(this.currentPlayer.getColor()).releaseTank());
+                this.currentPlayer.getFreeTanks().add(this.game.getTanksPool(this.currentPlayer.getColor()).releaseTank());
             }
             if(this.currentPlayer.equals(this.humanPlayer)) {
                 this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.freeTanks.size(), this.currentStage.toString());
@@ -305,7 +305,7 @@ public class Mediator {
     }
     
     public void removeTanks(Territory territory, Integer num) {
-        TankPool pool = this.game.getTanksPools(territory.getOwnerPlayer().getColor());
+        TankPool pool = this.game.getTanksPool(territory.getOwnerPlayer().getColor());
         for (int i = 0; i < num; i++) {
             pool.acquireTank(territory.getTanks().remove(0));
         }

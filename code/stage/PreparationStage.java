@@ -76,7 +76,7 @@ public class PreparationStage extends Stage {
 
     private void releaseTanksToPlayer(Player p, Integer numberOfTanks) {
         for (int i = 0; i < numberOfTanks; i++) {
-            p.getFreeTanks().add(this.mediator.getGame().getTanksPools(p.getColor()).releaseTank());
+            p.getFreeTanks().add(this.mediator.getGame().getTanksPool(p.getColor()).releaseTank());
         }
     }
 
