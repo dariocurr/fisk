@@ -69,12 +69,10 @@ public class MovingStage extends Stage {
     @Override
     public boolean checkEndStage() {
         if (this.mediator.getCurrentPlayerWinsTerritory()) {
-            if (this.mediator.getCurrentPlayerWinsTerritory()) {
-                if (!this.mediator.getSymbolDeck().isEmpty()) {
-                    SymbolCard draw = this.mediator.getSymbolDeck().removeCard();
-                    this.mediator.getCurrentPlayer().getCards().add(draw);
-                }            
-            }
+            if (!this.mediator.getSymbolDeck().isEmpty()) {
+                SymbolCard draw = this.mediator.getSymbolDeck().removeCard();
+                this.mediator.getCurrentPlayer().getCards().add(draw);
+            }            
         }
         return true;
     }

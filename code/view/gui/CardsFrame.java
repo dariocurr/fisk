@@ -7,10 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 
-/**
- *
- * @author dario
- */
 public class CardsFrame extends JFrame {
 
     private static final Integer WIDTH = 400;
@@ -85,7 +81,6 @@ public class CardsFrame extends JFrame {
         this.changeTrisButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println(currentTris);
                 if (currentTris != null) {
                     facade.exchangeTris(currentTris);
                     dispose();

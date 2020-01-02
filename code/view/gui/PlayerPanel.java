@@ -32,7 +32,7 @@ public class PlayerPanel extends JPanel {
         this.HEIGHT = height;
         this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
         this.buildGUI();
-        this.addListenersToButtons();
+        this.addListeners();
     }
 
     private void buildGUI() {
@@ -75,7 +75,7 @@ public class PlayerPanel extends JPanel {
         this.add(southPanel, outerGBC);
     }
 
-    private void addListenersToButtons() {
+    private void addListeners() {
         this.goalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

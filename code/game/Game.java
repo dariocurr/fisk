@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class Game {
 
-    protected final List<Tris> allTris;
     protected final Map<Tris, Integer> trisBonus;
     protected final Map<Continent, Integer> continentsBonus;
     protected final List<Territory> territories;
@@ -23,7 +22,6 @@ public class Game {
             ClassicDice[] defenseDice, GoalDeck goaslDeck,
             TerritoryDeck territoriesDeck, SymbolDeck symbolDeck,
             Map<RiskColor, TankPool> tanksPools) {
-        this.allTris = allTris;
         this.trisBonus = trisBonus;
         this.continentsBonus = continentsBonus;
         this.territories = territories;
@@ -37,7 +35,7 @@ public class Game {
     }
 
     public Integer getTrisBonus(Tris tris) {
-        for (Tris validTris: this.trisBonus.keySet()) {
+        for (Tris validTris : this.trisBonus.keySet()) {
             if (validTris.equals(tris)) {
                 return this.trisBonus.get(validTris);
             }
@@ -46,7 +44,7 @@ public class Game {
     }
 
     public Integer getContinentBonus(Continent continent) {
-        for (Continent c: this.continentsBonus.keySet()) {
+        for (Continent c : this.continentsBonus.keySet()) {
             if (c.equals(continent)) {
                 return this.continentsBonus.get(c);
             }
@@ -55,7 +53,7 @@ public class Game {
     }
 
     public List<Territory> getTerritories() {
-        return territories;
+        return this.territories;
     }
 
     public TerritoryDeck getTerritoriesDeck() {
@@ -69,7 +67,7 @@ public class Game {
     public Map<Tris, Integer> getAllTrisBonus() {
         return this.trisBonus;
     }
-    
+
     public Map<Continent, Integer> getAllContinentsBonus() {
         return this.continentsBonus;
     }
@@ -87,9 +85,7 @@ public class Game {
     }
 
     public SymbolDeck getSymbolDeck() {
-        return symbolDeck;
+        return this.symbolDeck;
     }
-    
-    
-    
+
 }
