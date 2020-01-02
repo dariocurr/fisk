@@ -57,6 +57,7 @@ public class NumberOfTanksFrame extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                 facade.setNumberOfTanksToMove(numberOfTanksSlider.getValue());
                 facade.update();
+                dispose();
             }
         });
     }

@@ -3,7 +3,7 @@ package risk;
 import java.util.*;
 import java.io.*;
 
-class AttackStage extends Stage {
+public class AttackStage extends Stage {
 
     public AttackStage(Mediator mediator) {
         super(mediator);
@@ -40,6 +40,7 @@ class AttackStage extends Stage {
                     for (int i = 0; i < numberOfComparison; i++) {
                         involvedTerritory[1].getTanks().add(involvedTerritory[0].getTanks().remove(0));
                     }
+                    involvedTerritory[1].getOwnerPlayer().getTerritories().remove(involvedTerritory[1]);
                     involvedTerritory[1].setOwnerPlayer(this.mediator.getCurrentPlayer());
                     this.mediator.getCurrentPlayer().getTerritories().add(involvedTerritory[1]);
                     this.mediator.setCurrentPlayerWinsTerritory(true);
@@ -48,8 +49,8 @@ class AttackStage extends Stage {
                 this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(),
                                                             this.mediator.getCurrentPlayer().getFreeTanks().size(),
                                                             this.mediator.getCurrentStage().toString());
-                this.mediator.updateColorTerritoryButton();
-                this.mediator.updateLabelTerritoryButton(clickedTerritories);
+                this.mediator.getFacade().updateColorsTerritories(clickedTerritories);
+                this.mediator.getFacade().updateLabelsTerritories(clickedTerritories);
             }
             this.mediator.getFacade().clearClickedTerritories();
         } else if (clickedTerritories.size() > 2) {

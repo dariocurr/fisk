@@ -7,8 +7,8 @@ package risk;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.*;
 import javax.swing.*;
@@ -51,8 +51,7 @@ public class BoardPanel extends JPanel {
                     territoryButton.getHeight());
             this.add(territoryButton);
         }
-        this.addContinentsBonusPanel();
-        this.updateColorTerritoryButton();
+        this.addContinentsBonusLabels();
         this.addListeners();
     }
 
@@ -90,21 +89,26 @@ public class BoardPanel extends JPanel {
         g.drawImage(this.SCALED_IMAGE, 0, 0, null);
     }
     
-    protected void addContinentsBonusPanel() {
-        JPanel continentBonusPanel = new JPanel();
+    protected void addContinentsBonusLabels() {
+        Integer counter = 0;
+        Integer x = this.WIDTH - (this.WIDTH * 5 / 16);
+        Integer y = (this.HEIGHT * 73 / 72) - this.HEIGHT / 5;
         Integer numberOfContinents = this.CONTINENT_BONUS.keySet().size();
-        if (numberOfContinents % 2 == 0) {
-            continentBonusPanel.setLayout(new GridLayout(numberOfContinents / 2, 2));
-        } else {
-            continentBonusPanel.setLayout(new GridLayout((numberOfContinents + 1) / 2, 2));
-        }
+        Font font = new Font("", Font.ITALIC + Font.BOLD, 14);
+        Color brownColor = new Color(68, 48, 34);
         for (Continent continent: this.CONTINENT_BONUS.keySet()) {
-            continentBonusPanel.add(new JLabel(continent.getName() + "\t" + this.CONTINENT_BONUS.get(continent)));
+            JLabel nameContinentLabel = new JLabel(continent.getName());
+            nameContinentLabel.setFont(font);
+            nameContinentLabel.setForeground(brownColor);
+            nameContinentLabel.setBounds(x, y + 20 * counter, 150, 20);
+            JLabel bonusContinentLabel = new JLabel(this.CONTINENT_BONUS.get(continent).toString());
+            bonusContinentLabel.setFont(font);
+            bonusContinentLabel.setForeground(brownColor);
+            bonusContinentLabel.setBounds(x + 150, y + 20 * counter, 30, 20);
+            this.add(nameContinentLabel);
+            this.add(bonusContinentLabel);
+            counter++;
         }
-        continentBonusPanel.setPreferredSize(new Dimension(400, 200));
-        System.out.println(continentBonusPanel.getX() + "  " + continentBonusPanel.getY());
-        continentBonusPanel.setBackground(Color.GRAY);
-        this.add(continentBonusPanel);
     }
 
     private void addListeners() {
@@ -137,9 +141,11 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    public void updateColorTerritoryButton() {
-        for (TerritoryButton t : this.TERRITORY_BUTTONS) {
-            t.updateColor();
+    public void updateColors(List<Territory> territories) {
+        for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
+            if (territories.contains(territoryButton.getTerritory())) {
+                territoryButton.updateColor();
+            }
         }
     }
 

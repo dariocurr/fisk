@@ -101,5 +101,21 @@ public class PlayerPanel extends JPanel {
         this.freeTanksLabel.setText("Tanks to locate: " + numberOfFreeTanks);
         this.stageLabel.setText("Stage: " + currentStage);
     }
+    
+    public void enableCardsButton() {
+        this.cardsButton.setEnabled(true);
+    }
+    
+    public void enableEndStageButton() {
+        this.endButton.setEnabled(true);
+    }
+    
+    public void disableCardsButton() {
+        this.cardsButton.setEnabled(false);
+    }
+    
+    public void disableEndStageButton() {
+        this.endButton.setEnabled(false);
+    }
 
 }

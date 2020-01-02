@@ -136,7 +136,7 @@ public abstract class RiskStrategy {
 
     protected abstract boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack);
 
-    public Entry<List<Territory>, Integer> moveTanks(Player player) {
+    public List<Territory> moveTanks(Player player) {
         List<Territory> territoriesInvolvedMoving = new ArrayList<>();
         Map<Territory, Territory> bestMovings = this.getPossibleBestMovings(player.getTerritories());
         List<Entry<Territory, Territory>> entries = new ArrayList<>();
@@ -147,9 +147,9 @@ public abstract class RiskStrategy {
                 territoriesInvolvedMoving.add(entries.get(0).getKey());
                 territoriesInvolvedMoving.add(entries.get(0).getValue());
             } else {
-                return new SimpleEntry<>(this.moveByGoal(player.getGoal(), bestMovings), delta / 2);
+                return this.moveByGoal(player.getGoal(), bestMovings);
             }
-            return new SimpleEntry<>(territoriesInvolvedMoving, delta / 2);
+            return territoriesInvolvedMoving;
         } else {
             return null;
         }
@@ -199,6 +199,14 @@ public abstract class RiskStrategy {
             territoriesInvolvedMoving.add(entries.get(0).getValue());
         }
         return territoriesInvolvedMoving;
+    }
+    
+    public Integer getNumberOfTanksToMove(List<Territory> territories) {
+        if (territories.size() == 2) {
+            return (territories.get(0).getTanks().size() - territories.get(1).getTanks().size()) / 2;
+        } else {
+            return null;
+        }
     }
 
     @Override

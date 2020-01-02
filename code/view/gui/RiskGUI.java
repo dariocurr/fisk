@@ -23,6 +23,7 @@ public class RiskGUI extends JFrame {
                                          RiskGUI.HEIGHT - RiskGUI.HEIGHT / 6, 
                                          this.facade.getTerritories(), 
                                          this.facade.getAllContinentsBonus(), facade);
+        this.boardPanel.updateColors(this.facade.getTerritories());
         this.logPanel = new LogPanel(RiskGUI.WIDTH - RiskGUI.WIDTH / 5, RiskGUI.HEIGHT / 6);
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -52,7 +53,7 @@ public class RiskGUI extends JFrame {
         this.playerPanel.updateLabels(numberOfTerritories, numberOfFreeTanks, currentStage);
     }
 
-    public void updateBoardPanel(List<Territory> territories) {
+    public void updateLabelsTerritoriesButtons(List<Territory> territories) {
         this.boardPanel.updateLabels(territories);
     }
 
@@ -60,8 +61,24 @@ public class RiskGUI extends JFrame {
         this.boardPanel.setClickableTerritories(territories);
     }
 
-    public void updateColorTerritoryButton() {
-        this.boardPanel.updateColorTerritoryButton();
+    public void updateColorsTerritoriesButtons(List<Territory> territories) {
+        this.boardPanel.updateColors(territories);
+    }
+    
+    public void enableCardsButton() {
+        this.playerPanel.enableCardsButton();
+    }
+    
+    public void enableEndStageButton() {
+        this.playerPanel.enableEndStageButton();
+    }
+    
+    public void disableCardsButton() {
+        this.playerPanel.disableCardsButton();
+    }
+    
+    public void disableEndStageButton() {
+        this.playerPanel.disableEndStageButton();
     }
 
 }

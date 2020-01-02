@@ -7,18 +7,18 @@ Northwest Territory, 110, 30, 120, 50
 Ontario, 190, 80, 60, 50
 Quebec, 250, 90, 50, 70
 Western United States, 110, 130, 90, 80
-Venezuela, 200, 270, 70, 50
-Brazil, 230, 320, 90, 120
-Peru, 180, 320, 50, 120
-Argentina, 200, 440, 70, 100
+Venezuela, 160, 270, 70, 50
+Brazil, 190, 320, 90, 120
+Peru, 140, 320, 50, 120
+Argentina, 160, 440, 70, 100
 Great Britain, 365, 120, 50, 40
 Iceland, 350, 85, 50, 30
 Northern Europe, 440, 140, 60, 40
-Scandinavia, 450, 20, 50, 100
+Scandinavia, 440, 20, 60, 100
 Ukraine, 500, 70, 100, 110
 Southern Europe, 440, 180, 80, 40
 Western Europe, 380, 160, 60, 40
-Madagascar, 540, 400, 50, 40
+Madagascar, 540, 400, 55, 40
 Egypt, 450, 240, 70, 40
 North Africa, 360, 240, 90, 90
 East Africa, 450, 280, 80, 110
@@ -34,9 +34,9 @@ Siam, 690, 180, 50, 70
 Mongolia, 730, 80, 60, 30
 Irkutsk, 730, 55, 60, 25
 Yakutsk, 730, 30, 60, 25
-Kamchatka, 790, 30, 50, 70
-Japan, 810, 110, 50, 40
-Indonesia, 730, 300, 50, 30
+Kamchatka, 790, 30, 55, 70
+Japan, 810, 110, 55, 40
+Indonesia, 730, 300, 55, 30
 Western Australia, 740, 360, 60, 70
-Eastern Australia, 800, 360, 50, 70
-New Guinea, 800, 310, 50, 25
+Eastern Australia, 800, 360, 55, 70
+New Guinea, 800, 310, 60, 25

@@ -35,7 +35,9 @@ public interface Facade {
 
     public void updateLog(String string);
 
-    public void updateBoard(List<Territory> territories);
+    public void updateLabelsTerritories(List<Territory> territories);
+    
+    public void updateColorsTerritories(List<Territory> territories);
 
     public void setMediator(Mediator mediator);
 
@@ -55,12 +57,18 @@ public interface Facade {
 
     public void endStage();
 
-    public void updateColorTerritoryButton();
-
     public Player getCurrentPlayer();
 
     public Integer getNumberOfTanksToMove();
     
     public Map<Continent, Integer> getAllContinentsBonus();
+    
+    public void disableCards();
+    
+    public void enableCards();
+    
+    public void disableEndStage();
+    
+    public void enableEndStage();
 
 }

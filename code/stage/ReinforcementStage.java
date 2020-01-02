@@ -3,7 +3,7 @@ package risk;
 import java.util.*;
 import java.io.*;
 
-class ReinforcementStage extends Stage {
+public class ReinforcementStage extends Stage {
 
     public ReinforcementStage(Mediator mediator) {
         super(mediator);
@@ -14,7 +14,7 @@ class ReinforcementStage extends Stage {
             clickedTerritories.get(0).getTanks().add(this.mediator.getCurrentPlayer().getFreeTanks().remove(0));
             this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer() + " places a tank in " + clickedTerritories.get(0).getName() + 
                                                 ", " + this.mediator.getCurrentPlayer().getFreeTanks().size() + " still to place");
-            this.mediator.getFacade().updateBoard(clickedTerritories);
+            this.mediator.getFacade().updateLabelsTerritories(clickedTerritories);
             this.mediator.getFacade().clearClickedTerritories();
             this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
         }
@@ -47,7 +47,7 @@ class ReinforcementStage extends Stage {
         if (this.mediator.getCurrentPlayer().getFreeTanks().isEmpty()) {
             return true;
         } else {
-            this.mediator.getFacade().updateLog("Posizionare tutti i tank disponibili");
+            this.mediator.getFacade().updateLog("You have to places all the free tanks");
             return false;
         }
     }

@@ -1,20 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
 import java.awt.FlowLayout;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-/**
- *
- * @author dario
- */
 public class StartWindow extends JFrame {
 
     private static final Integer WIDTH = 350;
@@ -49,7 +50,6 @@ public class StartWindow extends JFrame {
         this.add(this.numberOfVirtualPlayersList);
         this.add(this.startButton);
         this.startButton.setEnabled(false);
-        this.defaultOperations();
         this.addListeners();
         this.virtualPlayers = new TreeMap<>(new Comparator<JLabel>() {
             @Override
@@ -128,6 +128,7 @@ public class StartWindow extends JFrame {
         }
         this.add(this.startButton);
         this.setSize(StartWindow.WIDTH, StartWindow.HEIGHT + numberOfVirtualPlayers * 45);
+        this.defaultOperations();
     }
 
     private JComboBox<RiskStrategy> getRiskStrategyComboBox() {

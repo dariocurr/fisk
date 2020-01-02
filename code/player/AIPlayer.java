@@ -3,7 +3,6 @@ package risk;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Map;
 
@@ -35,9 +34,13 @@ public class AIPlayer extends Player {
         return this.strategy.attack(this);
     }
     
-    public Entry<List<Territory>, Integer> moveTanks() {
+    public List<Territory> moveTanks() {
         return this.strategy.moveTanks(this);
     }
+    
+    public Integer getNumberOfTanksToMove(List<Territory> territories) {
+        return this.strategy.getNumberOfTanksToMove(territories);
+    } 
 
     protected static Set<String> initNamesSet() {
         Set<String> temp = new HashSet<>();

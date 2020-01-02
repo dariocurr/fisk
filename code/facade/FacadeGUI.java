@@ -97,8 +97,8 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public void updateBoard(List<Territory> territories) {
-        this.gui.updateBoardPanel(territories);
+    public void updateLabelsTerritories(List<Territory> territories) {
+        this.gui.updateLabelsTerritoriesButtons(territories);
     }
 
     @Override
@@ -107,11 +107,11 @@ public class FacadeGUI implements Facade {
     }
 
     public void showDice() {
-        System.out.println("Work in progress");
+        //System.out.println("Work in progress");
     }
 
     public int getNumberOfTanks() {
-        System.out.println("Work in progress");
+        //System.out.println("Work in progress");
         return 0;
     }
 
@@ -150,13 +150,33 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public void updateColorTerritoryButton() {
-        this.gui.updateColorTerritoryButton();
+    public void updateColorsTerritories(List<Territory> territories) {
+        this.gui.updateColorsTerritoriesButtons(territories);
     }
     
     @Override
     public Map<Continent, Integer> getAllContinentsBonus() {
         return this.mediator.getAllContinentsBonus();
+    }
+
+    @Override
+    public void disableCards() {
+        this.gui.disableCardsButton();
+    }
+
+    @Override
+    public void enableCards() {
+        this.gui.enableCardsButton();
+    }
+
+    @Override
+    public void disableEndStage() {
+        this.gui.disableEndStageButton();
+    }
+
+    @Override
+    public void enableEndStage() {
+        this.gui.enableEndStageButton();
     }
 
 }

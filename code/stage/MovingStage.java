@@ -3,7 +3,7 @@ package risk;
 import java.util.*;
 import java.io.*;
 
-class MovingStage extends Stage {
+public class MovingStage extends Stage {
 
     public MovingStage(Mediator mediator) {
         super(mediator);
@@ -18,16 +18,14 @@ class MovingStage extends Stage {
                     for (int i = 0; i < numberOfTanksToMove; i++) {
                         to.getTanks().add(from.getTanks().remove(0));
                     }
-
+                    this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer().getName() + " moved " + numberOfTanksToMove + " from " + 
+                                                        clickedTerritories.get(0).getName() + " to " + clickedTerritories.get(1).getName());
                     this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
-                    this.mediator.updateColorTerritoryButton();
-                    this.mediator.updateLabelTerritoryButton(clickedTerritories);
+                    this.mediator.getFacade().updateLabelsTerritories(clickedTerritories);
                     this.mediator.getFacade().clearClickedTerritories();
-                    this.mediator.nextStage();
-
+                    this.mediator.endStage();
                 } else {
                     this.mediator.getFacade().updateLog("Errore: numero di tanks troppo alto");
-                    return;
                 }
             } else {
                 this.mediator.getFacade().updateLog("I territori cliccati devono essere confinanti.");
@@ -49,14 +47,6 @@ class MovingStage extends Stage {
         }
     }
 
-    /*
-	
-	************************************************************************************************************************************************************
-	IMPORTANTE
-	I System.out.println("") vanno sostituiti con dei messageDialog nella gui
-	************************************************************************************************************************************************************
-
-     */
     @Override
     public String toString() {
         return "Moving " + super.toString();
