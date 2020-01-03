@@ -51,7 +51,7 @@ public class NumberOfTanksFrame extends JDialog {
         this.setTitle("Moving");
         this.facade = facade;
         JLabel request = new JLabel("How many tanks do you want to move to: " + territory, SwingConstants.CENTER);
-        this.numberOfTanksSlider = new JSlider(JSlider.HORIZONTAL, min, max, max / 2);
+        this.numberOfTanksSlider = new JSlider(JSlider.HORIZONTAL, min, max, min);
         Dictionary<Integer, JLabel> labels = new Hashtable<>();
         for (int i = min; i <= max; i++) {
             labels.put(i, new JLabel("" + i));
