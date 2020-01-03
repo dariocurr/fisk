@@ -20,7 +20,6 @@ public class ConcreteGameBuilder implements GameBuilder {
     protected final ClassicDice[] defenseDice;
     protected final GoalDeck goalsDeck;
     protected final TerritoryDeck territoriesDeck;
-    protected final SymbolDeck symbolDeck;
     protected final Map<RiskColor, TankPool> tanksPolls;
 
     public ConcreteGameBuilder() {
@@ -38,7 +37,6 @@ public class ConcreteGameBuilder implements GameBuilder {
         this.initGame();
         this.goalsDeck = new GoalDeck(this.continents, this.territories);
         this.territoriesDeck = new TerritoryDeck(this.territories);
-        this.symbolDeck = new SymbolDeck(this.territoriesDeck);
         this.tanksPolls = new HashMap<>();
         this.initTankPools();
     }
@@ -48,7 +46,7 @@ public class ConcreteGameBuilder implements GameBuilder {
         return new Game(this.allTris, this.trisBonus, this.continentsBonus,
                 this.territories, this.continents, this.attackDice,
                 this.defenseDice, this.goalsDeck, this.territoriesDeck,
-                this.symbolDeck, this.tanksPolls);
+                this.tanksPolls);
     }
 
     protected void initGame() {

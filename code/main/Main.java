@@ -1,5 +1,8 @@
 package risk;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface Main {
 
     public static void main(String... args) {
@@ -31,5 +34,6 @@ public interface Main {
         mediator.setFacade(facade);
         facade.setMediator(mediator);
         new StartWindow(facade);
+        
     }
 }

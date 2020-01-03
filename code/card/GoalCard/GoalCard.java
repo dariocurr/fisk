@@ -8,7 +8,7 @@ public abstract class GoalCard<T> extends Card<T> {
 
     @Override
     public String toString() {
-        return "goal: " + super.toString();
+        return "goal " + super.toString();
     }
     
 }

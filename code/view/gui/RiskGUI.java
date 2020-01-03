@@ -17,7 +17,6 @@ public class RiskGUI extends JFrame {
 
     public RiskGUI(Facade facade) {
         super();
-        this.setTitle("Risk");
         this.facade = facade;
         this.playerPanel = new PlayerPanel(RiskGUI.WIDTH / 5, RiskGUI.HEIGHT, facade);
         this.boardPanel = new BoardPanel(RiskGUI.WIDTH - RiskGUI.WIDTH / 5, 
@@ -80,10 +79,6 @@ public class RiskGUI extends JFrame {
     
     public void disableEndStageButton() {
         this.playerPanel.disableEndStageButton();
-    }
-    
-    public void showError(String error) {
-        JOptionPane.showMessageDialog(this, error);
     }
 
 }

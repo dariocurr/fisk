@@ -5,6 +5,7 @@ import java.util.*;
 public class Mediator {
 
     private Game game;
+    private SymbolDeck symbolDeck;
     private Player humanPlayer;
     protected Facade facade;
     protected List<Player> players;
@@ -23,8 +24,8 @@ public class Mediator {
     public void prepareGame(String humanPlayerName, RiskColor humanPlayerColor, List<RiskStrategy> virtualPlayersStrategies) {
         this.createHumanPlayer(humanPlayerName, humanPlayerColor);
         this.createVirtualPlayers(virtualPlayersStrategies);
+        this.createNewSymbolDeck();
         this.initStages();
-        AIPlayer.setTrisBonus(this.game.getAllTrisBonus());
         PreparationStage ps = new PreparationStage(this);
         ps.init();
         this.facade.createRiskInterface();
@@ -33,7 +34,6 @@ public class Mediator {
     }
     
     private void startPreparationStage (){
-        this.facade.disableEndStage();
         this.stages.add( 0, new PreparationStage( this ) );
         this.currentPlayer = this.players.get( this.players.size() - 1 );
         this.nextPlayerPreparationStage();
@@ -43,12 +43,16 @@ public class Mediator {
         for ( Player p : this.players )
             if ( p.getFreeTanks().size() > 0 )
                 return false;
+
         return true;
     }
 
     public void nextPlayerPreparationStage (){
         if ( this.preparationStageEnd() ){
             this.stages.remove(0);
+            System.out.println( this.players.get(0).getFreeTanks().size() );
+            System.out.println( this.players.get(1).getFreeTanks().size() );
+            System.out.println( this.players.get(2).getFreeTanks().size() );
             this.startGame();
         }
         else{
@@ -58,7 +62,7 @@ public class Mediator {
             this.currentStage = this.stages.get(0);
             this.facade.setClickableTerritories(this.currentStage.setClickableTerritories());
             this.facade.updatePlayerData(this.currentPlayer.getTerritories().size(), this.currentPlayer.getFreeTanks().size(), this.currentStage.toString());
-            this.facade.updateLog( "It's the turn of " + this.currentPlayer.getName() + " (" + this.currentPlayer.getColor() + ")");
+            this.facade.updateLog( "E' il turno di " + this.currentPlayer.getName() );
             if (this.currentPlayer instanceof AIPlayer) {
                 this.playPreparationStageAIPlayer();
             }
@@ -117,7 +121,6 @@ public class Mediator {
 
     public void endStage() {
         if (this.currentStage.checkEndStage()) {
-            this.getFacade().clearClickedTerritories();
             this.nextStage();
         }
     }
@@ -135,7 +138,7 @@ public class Mediator {
     }
 
     public SymbolDeck getSymbolDeck() {
-        return this.game.getSymbolDeck();
+        return this.symbolDeck;
     }
 
     public Player getCurrentPlayer() {
@@ -186,14 +189,6 @@ public class Mediator {
         this.facade.updateLog( "It's the turn of " + this.currentPlayer.getName() + " (" + this.currentPlayer.getColor() + ")");
         if (this.currentPlayer instanceof AIPlayer) {
             this.playAIPlayer();
-        } else {
-            if (this.currentPlayer.getFreeTanks().size() > 0) {
-                this.facade.enableCards();
-                this.facade.disableEndStage();
-            } else {
-                this.endStage();
-            }
-            
         }
     }
     
@@ -203,7 +198,7 @@ public class Mediator {
             numberOfTanks += this.game.getContinentBonus(continent);
         }
         for(int i = 0; i < numberOfTanks; i++) {
-            this.currentPlayer.getFreeTanks().add(this.game.getTanksPool(this.currentPlayer.getColor()).releaseTank());
+            this.currentPlayer.getFreeTanks().add(this.game.getTanksPools(this.currentPlayer.getColor()).releaseTank());
         }
     }
 
@@ -215,10 +210,6 @@ public class Mediator {
             int indexCurrentStage = this.stages.indexOf(this.currentStage);
             int indexNextStage = indexCurrentStage + 1;
             this.currentStage = this.stages.get(indexNextStage);
-            if ((this.currentPlayer.equals(this.humanPlayer)) && (this.currentStage instanceof AttackStage)) {
-                this.facade.disableCards();
-                this.facade.enableEndStage();
-            }
             this.facade.setClickableTerritories(this.currentStage.setClickableTerritories());
             this.facade.updatePlayerData(this.currentPlayer.getTerritories().size(), this.currentPlayer.getFreeTanks().size(), this.currentStage.toString());
         }
@@ -227,16 +218,13 @@ public class Mediator {
     private void playAIPlayer() {
         AIPlayer aiPlayer = (AIPlayer) this.currentPlayer;
         List<Territory> clickedTerritories = new ArrayList<>();
-        Tris tris = aiPlayer.exchangeTris();
-        if(tris != null) {
-            this.exchangeTris(tris);
-        }
         while (aiPlayer.getFreeTanks().size() > 0) {
             clickedTerritories.add(aiPlayer.addTank());
             this.currentStage.play(clickedTerritories);
             clickedTerritories.clear();
             this.pause(1);
         }
+        this.endStage();
         clickedTerritories = aiPlayer.attack();
         while (clickedTerritories != null) {
             this.currentStage.play(clickedTerritories);
@@ -266,49 +254,12 @@ public class Mediator {
         */
     }
 
+    public void createNewSymbolDeck() {
+        this.symbolDeck = new SymbolDeck(this.game.getTerritoriesDeck());
+    }
+
     public void play(List<Territory> clickedTerritories) {
         this.currentStage.play(clickedTerritories);
-    }
-    
-    public void exchangeTris(Tris tris) {
-        if (this.checkTris(tris)) {
-            Integer bonus = this.game.getTrisBonus(tris);
-            for (SymbolCard symbolCard : tris.getCards()) {
-                if (symbolCard instanceof TerritoryCard) {
-                    TerritoryCard territoryCard = (TerritoryCard) symbolCard;
-                    if (this.currentPlayer.getTerritories().contains(territoryCard.getTerritory())) {
-                        bonus += 2;
-                    }
-                }
-            }
-            this.facade.updateLog(this.currentPlayer.getName() + " change " + tris + " and obtain " + bonus + " more tanks");
-            for(int i = 0; i < bonus; i++) {
-                this.currentPlayer.getFreeTanks().add(this.game.getTanksPool(this.currentPlayer.getColor()).releaseTank());
-            }
-            if(this.currentPlayer.equals(this.humanPlayer)) {
-                this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.freeTanks.size(), this.currentStage.toString());
-            }
-            for(SymbolCard symbolCard: tris) {
-                this.game.getSymbolDeck().addCard(symbolCard);
-                this.currentPlayer.getCards().remove(symbolCard);
-            }
-        }
-    }
-    
-    public boolean checkTris(Tris tris) {
-        for (Tris validTris: this.game.getAllTrisBonus().keySet()) {
-            if (validTris.equals(tris)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public void removeTanks(Territory territory, Integer num) {
-        TankPool pool = this.game.getTanksPool(territory.getOwnerPlayer().getColor());
-        for (int i = 0; i < num; i++) {
-            pool.acquireTank(territory.getTanks().remove(0));
-        }
     }
 
 }

@@ -1,5 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package risk;
 
+import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -7,11 +13,15 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 
+/**
+ *
+ * @author dario
+ */
 public class CardsFrame extends JFrame {
 
     private static final Integer WIDTH = 400;
     private final Map<JCheckBox, SymbolCard> checkBoxes;
-    private final JButton changeTrisButton;
+    private final JButton changeTris;
     private final JLabel status;
     private final Facade facade;
     private Tris currentTris;
@@ -26,13 +36,13 @@ public class CardsFrame extends JFrame {
             this.checkBoxes.put(cb, symbolCard);
             this.add(cb);
         }
+        this.addListenersToCheckBoxes();
         this.status = new JLabel("You must select 3 cards", SwingConstants.CENTER);
         this.status.setForeground(Color.RED);
         this.add(this.status);
-        this.changeTrisButton = new JButton("Change tris");
-        this.changeTrisButton.setEnabled(false);
-        this.add(this.changeTrisButton);
-        this.addListeners();
+        this.changeTris = new JButton("Change tris");
+        this.changeTris.setEnabled(false);
+        this.add(this.changeTris);
         this.setSize(CardsFrame.WIDTH, 150 + this.checkBoxes.size() * 55);
         this.defaultOperations();
     }
@@ -44,7 +54,7 @@ public class CardsFrame extends JFrame {
         this.setVisible(true);
     }
 
-    private void addListeners() {
+    private void addListenersToCheckBoxes() {
         for (JCheckBox checkBox : this.checkBoxes.keySet()) {
             checkBox.addActionListener(new ActionListener() {
                 @Override
@@ -65,27 +75,33 @@ public class CardsFrame extends JFrame {
                         }
                         Tris tris = new Tris(temp.get(0), temp.get(1), temp.get(2));
                         if (facade.checkTris(tris)) {
-                            changeTrisButton.setEnabled(true);
+                            changeTris.setEnabled(true);
                             status.setText("Press to change Tris!");
                             status.setForeground(Color.GREEN);
                             currentTris = tris;
                         }
                     } else {
-                        changeTrisButton.setEnabled(false);
+                        changeTris.setEnabled(false);
                         status.setText("You must select 3 cards");
                         status.setForeground(Color.RED);
                     }
                 }
             });
+
         }
-        this.changeTrisButton.addActionListener(new ActionListener() {
+    }
+
+    private void addListenerToButton() {
+        this.changeTris.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (currentTris != null) {
-                    facade.exchangeTris(currentTris);
-                    dispose();
+                    if (!facade.changeTris(currentTris)) {
+                        JOptionPane.showMessageDialog(null, "You reached the maximum number of tanks");
+                    }
                 }
             }
         });
     }
+
 }

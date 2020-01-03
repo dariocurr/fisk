@@ -44,15 +44,20 @@ public class Player {
     }
 
     public List<Continent> getContinents() {
-        return this.continents;
+        return continents;
     }
 
     public List<Tank> getFreeTanks() {
         return this.freeTanks;
     }
 
-    public void setGoal(GoalCard goal) {
-        this.goal = goal;
+    public boolean setGoal(GoalCard goal) {
+        if (this.goal == null) {
+            this.goal = goal;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public GoalCard getGoal() {

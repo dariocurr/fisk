@@ -61,37 +61,33 @@ public class AIPlayer extends Player {
         return temp;
     }
 
-    public Tris exchangeTris() {
+    public Tris changeTris() {
         if (this.cards.size() < 3) {
             return null;
         } else {
-            List<Tris> allCombinationsOfCards = this.generateAllCombinationsOfCards();           
-            List<Tris> allPossibleTris = new ArrayList<>();
-            for(Tris tris: allCombinationsOfCards) {
-                for(Tris validTris: AIPlayer.TRIS_BONUS.keySet()) {
-                    if(validTris.equals(tris)) {
-                        allPossibleTris.add(tris);
-                    }
-                }
-            }
+            List<Tris> allCombinationsOfCards = this.generateAllCombinationsOfCards();
+            List<Tris> allPossibleTris = this.generateAllCombinationsOfCards();
+            allCombinationsOfCards
+                    .stream()
+                    .filter((tris) -> (AIPlayer.TRIS_BONUS.keySet().contains(tris)))
+                    .forEachOrdered(allPossibleTris::add);
             if (allPossibleTris.isEmpty()) {
                 return null;
             } else if (allPossibleTris.size() == 1) {
-                return allPossibleTris.get(0);
+                return allPossibleTris.get(1);
             } else {
                 Integer maxBonus = Integer.MIN_VALUE;
                 Tris bestTris = null;
                 for (Tris tris : allPossibleTris) {
                     Integer bonus = AIPlayer.TRIS_BONUS.get(tris);
-                    for (SymbolCard symbolCard : tris.getCards()) {
+                    /*for (SymbolCard symbolCard : tris.getCards()) {
                         if (symbolCard instanceof TerritoryCard) {
-                            TerritoryCard territoryCard = (TerritoryCard) symbolCard;
-                            if (this.territories.contains(territoryCard.getTerritory())) {
-                                bonus += 2;
-                            }
+                        TerritoryCard territoryCard = (TerritoryCard) symbolCard;
+                        if (this.territories.contains(territoryCard.getTerritory())) {
+                            bonus += 2;
                         }
                     }
-                    /*
+                    }*/
                     bonus = tris.getCards()
                             .stream()
                             .filter((symbolCard) -> (symbolCard instanceof TerritoryCard))
@@ -99,10 +95,8 @@ public class AIPlayer extends Player {
                             .filter((territoryCard) -> (this.territories.contains(territoryCard.getTerritory())))
                             .mapToInt((territory) -> 2)
                             .sum();
-                    */
                     if (bonus > maxBonus) {
                         bestTris = tris;
-                        maxBonus = bonus;
                     }
                 }
                 return bestTris;

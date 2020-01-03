@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Game {
 
+    protected final List<Tris> allTris;
     protected final Map<Tris, Integer> trisBonus;
     protected final Map<Continent, Integer> continentsBonus;
     protected final List<Territory> territories;
@@ -13,15 +14,14 @@ public class Game {
     protected final ClassicDice[] defenseDice;
     protected final GoalDeck goalsDeck;
     protected final TerritoryDeck territoriesDeck;
-    protected final SymbolDeck symbolDeck;
-    protected final Map<RiskColor, TankPool> tanksPools;
+    protected final Map<RiskColor, TankPool> tanksPolls;
 
     public Game(List<Tris> allTris, Map<Tris, Integer> trisBonus,
             Map<Continent, Integer> continentsBonus, List<Territory> territories,
             List<Continent> continents, ClassicDice[] attackDice,
             ClassicDice[] defenseDice, GoalDeck goaslDeck,
-            TerritoryDeck territoriesDeck, SymbolDeck symbolDeck,
-            Map<RiskColor, TankPool> tanksPools) {
+            TerritoryDeck territoriesDeck, Map<RiskColor, TankPool> tanksPools) {
+        this.allTris = allTris;
         this.trisBonus = trisBonus;
         this.continentsBonus = continentsBonus;
         this.territories = territories;
@@ -30,30 +30,19 @@ public class Game {
         this.defenseDice = defenseDice;
         this.goalsDeck = goaslDeck;
         this.territoriesDeck = territoriesDeck;
-        this.symbolDeck = symbolDeck;
-        this.tanksPools = tanksPools;
+        this.tanksPolls = tanksPools;
     }
 
     public Integer getTrisBonus(Tris tris) {
-        for (Tris validTris : this.trisBonus.keySet()) {
-            if (validTris.equals(tris)) {
-                return this.trisBonus.get(validTris);
-            }
-        }
-        return null;
+        return this.trisBonus.get(tris);
     }
 
     public Integer getContinentBonus(Continent continent) {
-        for (Continent c : this.continentsBonus.keySet()) {
-            if (c.equals(continent)) {
-                return this.continentsBonus.get(c);
-            }
-        }
-        return null;
+        return this.continentsBonus.get(continent);
     }
 
     public List<Territory> getTerritories() {
-        return this.territories;
+        return territories;
     }
 
     public TerritoryDeck getTerritoriesDeck() {
@@ -64,10 +53,10 @@ public class Game {
         return this.goalsDeck;
     }
 
-    public Map<Tris, Integer> getAllTrisBonus() {
-        return this.trisBonus;
+    public List<Tris> getAllTris() {
+        return this.allTris;
     }
-
+    
     public Map<Continent, Integer> getAllContinentsBonus() {
         return this.continentsBonus;
     }
@@ -80,12 +69,8 @@ public class Game {
         return this.defenseDice;
     }
 
-    public TankPool getTanksPool(RiskColor riskColor) {
-        return this.tanksPools.get(riskColor);
-    }
-
-    public SymbolDeck getSymbolDeck() {
-        return this.symbolDeck;
+    public TankPool getTanksPools(RiskColor riskColor) {
+        return this.tanksPolls.get(riskColor);
     }
 
 }

@@ -19,6 +19,10 @@ public class FacadeGUI implements Facade {
         this.mediator = mediator;
     }
 
+    public Mediator getMediator() {
+        return this.mediator;
+    }
+
     @Override
     public void addClickedTerritory(Territory territory) {
         this.clickedTerritories.add(territory);
@@ -47,12 +51,14 @@ public class FacadeGUI implements Facade {
 
     @Override
     public boolean checkTris(Tris tris) {
-        return this.mediator.checkTris(tris);
+        //return this.mediator.checkTris(tris);
+        return false;
     }
 
     @Override
-    public void exchangeTris(Tris tris) {
-        this.mediator.exchangeTris(tris);
+    public boolean changeTris(Tris tris) {
+        //return this.mediator.changeTris(null, tris);
+        return false;
     }
 
     @Override
@@ -124,8 +130,9 @@ public class FacadeGUI implements Facade {
         this.clickedTerritories.clear();
     }
 
-    public void setNumberOfTanksToMove(Integer num) {
-        this.numberOfTanksToMove = num;
+    public void setNumberOfTanksToMove(Integer v) {
+        System.out.println(v);
+        this.numberOfTanksToMove = v;
     }
 
     public Integer getNumberOfTanksToMove() {
@@ -172,8 +179,4 @@ public class FacadeGUI implements Facade {
         this.gui.enableEndStageButton();
     }
 
-    public void notifyError(String error) {
-        this.gui.showError(error);
-    }
-    
 }
