@@ -17,7 +17,7 @@ public interface Facade {
 
     public boolean checkTris(Tris tris);
 
-    public boolean changeTris(Tris tris);
+    public void exchangeTris(Tris tris);
 
     public Color getPlayerColor();
 
@@ -25,9 +25,10 @@ public interface Facade {
 
     public void askMatch();
 
-    public void askDice();
+    public void askDice( int numberOfRolledDice, ClassicDice [] attackDiceValues, ClassicDice [] defenseDiceValues );
 
-    public void askNumberOfTanks(Territory territory, Integer max);
+    public Integer askNumberOfTanks(Territory territory, Integer max);
+    public Integer askNumberOfTanks(Territory territory, Integer max, Integer min);
 
     public void prepareGame(String humanPlayerName, RiskColor humanPlayerColor, List<RiskStrategy> virtualPlayersStrategies);
 
@@ -70,5 +71,13 @@ public interface Facade {
     public void disableEndStage();
     
     public void enableEndStage();
+    
+    public void notifyError(String error);
+
+    public void showMessage ( String message );
+
+    public void endGame ();
+
+    public RiskGUI getGui ();
 
 }

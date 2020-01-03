@@ -14,7 +14,7 @@ import javax.swing.*;
  *
  * @author dario
  */
-public class RollFrame extends JFrame {
+public class RollFrame extends JDialog {
 
     private static final Integer WIDTH = 300;
     private static final Integer HEIGHT = 300;
@@ -23,9 +23,18 @@ public class RollFrame extends JFrame {
     private final JLabel[] ATTACK_LABEL;
     private final JLabel[] DEFENSE_LABEL;
     private final Facade facade;
+    private ClassicDice [] attackDiceValues;
+    private ClassicDice [] defenseDiceValues;
+    private boolean isAttackDiceUpdated = false;
+    private boolean isDefenseDiceUpdated = false;
+    private Integer numberOfRolledDice;
 
-    public RollFrame(Facade facade) {
+    public RollFrame(Facade facade, int numberOfRolledDice, ClassicDice [] attackDiceValues, ClassicDice [] defenseDiceValues) {
+        super( facade.getGui(), true );
         this.facade = facade;
+        this.numberOfRolledDice = numberOfRolledDice;
+        this.attackDiceValues = attackDiceValues;
+        this.defenseDiceValues = defenseDiceValues;
         this.setLayout(new GridLayout(3, 1));
         int hgap = RollFrame.WIDTH / 10;
         int vgap = RollFrame.HEIGHT / 15;
@@ -53,8 +62,8 @@ public class RollFrame extends JFrame {
         this.add(centerPanel);
         this.add(downPanel);
         this.setSize(RollFrame.WIDTH, RollFrame.HEIGHT);
-        this.defaultOperations();
         this.addListeners();
+        this.defaultOperations();
     }
 
     private void defaultOperations() {
@@ -68,19 +77,46 @@ public class RollFrame extends JFrame {
         this.rollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                if ( isAttackDiceUpdated == false ){
+                    updateAttackDiceFrame();
+                }
+                else if ( isDefenseDiceUpdated == false ){
+                    updateDefenseDiceFrame();
+                }
+            }
+        });
+
+        this.exitButton.addActionListener ( new ActionListener(){
+            @Override
+            public void actionPerformed ( ActionEvent ae ){
+                dispose();
             }
         });
     }
 
-    private void updateFrame(Integer[] diceValues) {
+    /*private void updateFrame(Integer[] diceValues) {
         for (int i = 0; i < diceValues.length; i++) {
             this.ATTACK_LABEL[i].setIcon(new ImageIcon(this.getAttackDice(diceValues[i])));
         }
-        /*
+        
         for (int i = 0; i < this.DEFENSE_DICE.length; i++) {
             this.DEFENSE_LABEL[i].setIcon(new ImageIcon(this.getDefenseDice(this.DEFENSE_DICE[i].getValue())));
         }
-         */
+         
+    }*/
+
+    private void updateAttackDiceFrame (){
+        this.isAttackDiceUpdated = true;
+        for (int i = 0; i < this.numberOfRolledDice; i++) {
+            this.ATTACK_LABEL[i].setIcon(new ImageIcon( this.getAttackDice(this.attackDiceValues[i].getValue()) ));
+        }
+    }
+
+    private void updateDefenseDiceFrame (){
+        this.isDefenseDiceUpdated = true;
+        for (int i = 0; i < this.numberOfRolledDice; i++) {
+            this.DEFENSE_LABEL[i].setIcon(new ImageIcon( this.getDefenseDice(this.defenseDiceValues[i].getValue()) ));
+        }
     }
 
     private Image getAttackDice(Integer value) {

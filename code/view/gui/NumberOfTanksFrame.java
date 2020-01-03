@@ -14,7 +14,8 @@ import java.util.*;
  *
  * @author dario
  */
-public class NumberOfTanksFrame extends JFrame {
+
+public class NumberOfTanksFrame extends JDialog {
 
     private static final Integer HEIGHT = 220;
     private final JButton moveButton;
@@ -22,6 +23,7 @@ public class NumberOfTanksFrame extends JFrame {
     private final Facade facade;
 
     public NumberOfTanksFrame(Facade facade, String territory, Integer max) {
+        super( facade.getGui(), true );
         this.setTitle("Moving");
         this.facade = facade;
         JLabel request = new JLabel("How many tanks do you want to move to: " + territory, SwingConstants.CENTER);
@@ -40,8 +42,32 @@ public class NumberOfTanksFrame extends JFrame {
         this.add(this.numberOfTanksSlider);
         this.add(this.moveButton);
         this.setSize(componentMaxWidth + 50, NumberOfTanksFrame.HEIGHT);
-        this.defaultOperations();
         this.addButtonListener();
+        this.defaultOperations();
+    }
+
+    public NumberOfTanksFrame(Facade facade, String territory, Integer max, Integer min) {
+        super( facade.getGui(), true );
+        this.setTitle("Moving");
+        this.facade = facade;
+        JLabel request = new JLabel("How many tanks do you want to move to: " + territory, SwingConstants.CENTER);
+        this.numberOfTanksSlider = new JSlider(JSlider.HORIZONTAL, min, max, max / 2);
+        Dictionary<Integer, JLabel> labels = new Hashtable<>();
+        for (int i = min; i <= max; i++) {
+            labels.put(i, new JLabel("" + i));
+        }
+        Integer componentMaxWidth = Math.max(request.getText().length() * 8, max * 20);
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, componentMaxWidth, 30));
+        this.numberOfTanksSlider.setLabelTable(labels);
+        this.numberOfTanksSlider.setPaintLabels(true);
+        this.numberOfTanksSlider.setPreferredSize(new Dimension(max * 20, 30));
+        this.moveButton = new JButton("Move");
+        this.add(request);
+        this.add(this.numberOfTanksSlider);
+        this.add(this.moveButton);
+        this.setSize(componentMaxWidth + 50, NumberOfTanksFrame.HEIGHT);
+        this.addButtonListener();
+        this.defaultOperations();
     }
 
     private void defaultOperations() {
@@ -56,7 +82,7 @@ public class NumberOfTanksFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 facade.setNumberOfTanksToMove(numberOfTanksSlider.getValue());
-                facade.update();
+                System.out.println(numberOfTanksSlider.getValue());
                 dispose();
             }
         });

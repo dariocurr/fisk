@@ -1,6 +1,5 @@
 package risk;
 
-import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -139,17 +138,21 @@ public abstract class RiskStrategy {
     public List<Territory> moveTanks(Player player) {
         List<Territory> territoriesInvolvedMoving = new ArrayList<>();
         Map<Territory, Territory> bestMovings = this.getPossibleBestMovings(player.getTerritories());
-        List<Entry<Territory, Territory>> entries = new ArrayList<>();
-        entries.addAll(bestMovings.entrySet());
-        int delta = entries.get(0).getKey().getTanks().size() - entries.get(0).getValue().getTanks().size();
-        if (delta > 1) {
-            if (bestMovings.size() == 1) {
-                territoriesInvolvedMoving.add(entries.get(0).getKey());
-                territoriesInvolvedMoving.add(entries.get(0).getValue());
+        if(!bestMovings.isEmpty()) {
+            List<Entry<Territory, Territory>> entries = new ArrayList<>();
+            entries.addAll(bestMovings.entrySet());
+            int delta = entries.get(0).getKey().getTanks().size() - entries.get(0).getValue().getTanks().size();
+            if (delta > 1) {
+                if (bestMovings.size() == 1) {
+                    territoriesInvolvedMoving.add(entries.get(0).getKey());
+                    territoriesInvolvedMoving.add(entries.get(0).getValue());
+                } else {
+                    return this.moveByGoal(player.getGoal(), bestMovings);
+                }
+                return territoriesInvolvedMoving;
             } else {
-                return this.moveByGoal(player.getGoal(), bestMovings);
+                return null;
             }
-            return territoriesInvolvedMoving;
         } else {
             return null;
         }

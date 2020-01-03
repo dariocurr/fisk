@@ -15,12 +15,18 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public void setMediator(Mediator mediator) {
-        this.mediator = mediator;
+    public RiskGUI getGui (){
+        return this.gui;
     }
 
+    @Override
     public Mediator getMediator() {
         return this.mediator;
+    }
+
+    @Override
+    public void setMediator(Mediator mediator) {
+        this.mediator = mediator;
     }
 
     @Override
@@ -51,14 +57,12 @@ public class FacadeGUI implements Facade {
 
     @Override
     public boolean checkTris(Tris tris) {
-        //return this.mediator.checkTris(tris);
-        return false;
+        return this.mediator.checkTris(tris);
     }
 
     @Override
-    public boolean changeTris(Tris tris) {
-        //return this.mediator.changeTris(null, tris);
-        return false;
+    public void exchangeTris(Tris tris) {
+        this.mediator.exchangeTris(tris);
     }
 
     @Override
@@ -72,13 +76,20 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public void askDice() {
-        new RollFrame(this);
+    public void askDice( int numberOfRolledDice, ClassicDice [] attackDiceValues, ClassicDice [] defenseDiceValues ) {
+        new RollFrame(this, numberOfRolledDice, attackDiceValues, defenseDiceValues);
     }
 
     @Override
-    public void askNumberOfTanks(Territory territory, Integer max) {
+    public Integer askNumberOfTanks(Territory territory, Integer max) {
         new NumberOfTanksFrame(this, "" + territory, max);
+        return this.numberOfTanksToMove;
+    }
+
+    @Override
+    public Integer askNumberOfTanks(Territory territory, Integer max, Integer min) {
+        new NumberOfTanksFrame(this, "" + territory, max, min);
+        return this.numberOfTanksToMove;
     }
 
     @Override
@@ -130,9 +141,8 @@ public class FacadeGUI implements Facade {
         this.clickedTerritories.clear();
     }
 
-    public void setNumberOfTanksToMove(Integer v) {
-        System.out.println(v);
-        this.numberOfTanksToMove = v;
+    public void setNumberOfTanksToMove(Integer num) {
+        this.numberOfTanksToMove = num;
     }
 
     public Integer getNumberOfTanksToMove() {
@@ -179,4 +189,19 @@ public class FacadeGUI implements Facade {
         this.gui.enableEndStageButton();
     }
 
+    @Override
+    public void notifyError(String error) {
+        this.gui.showError(error);
+    }
+
+    @Override
+    public void showMessage ( String message ){
+        this.gui.showMessage( message );
+    }
+
+    @Override
+    public void endGame (){
+        this.gui.dispose();
+    }
+    
 }

@@ -8,8 +8,8 @@ import javax.swing.*;
 
 public class RiskGUI extends JFrame {
 
-    private static final Integer WIDTH = 1500;
-    private static final Integer HEIGHT = 900;
+    private static final Integer WIDTH = 1300;
+    private static final Integer HEIGHT = 700;
     private final Facade facade;
     private final BoardPanel boardPanel;
     private final LogPanel logPanel;
@@ -17,6 +17,7 @@ public class RiskGUI extends JFrame {
 
     public RiskGUI(Facade facade) {
         super();
+        this.setTitle("Risk");
         this.facade = facade;
         this.playerPanel = new PlayerPanel(RiskGUI.WIDTH / 5, RiskGUI.HEIGHT, facade);
         this.boardPanel = new BoardPanel(RiskGUI.WIDTH - RiskGUI.WIDTH / 5, 
@@ -80,5 +81,13 @@ public class RiskGUI extends JFrame {
     public void disableEndStageButton() {
         this.playerPanel.disableEndStageButton();
     }
+    
+    public void showError(String error) {
+        JOptionPane.showMessageDialog(this, error);
+    }
 
+    public void showMessage ( String message ){
+        JOptionPane.showMessageDialog(this, message);
+    }
+    
 }
