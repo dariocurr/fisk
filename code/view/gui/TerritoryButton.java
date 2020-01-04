@@ -5,14 +5,14 @@ import javax.swing.*;
 
 public class TerritoryButton extends JButton {
 
-    private static final String TANK_IMAGE_FILE = "res/tank.png";
-    private final static Image TANK_IMAGE = ImageLoader.loadImage(TANK_IMAGE_FILE);
-    private final int positionX;
-    private final int positionY;
-    private final int width;
-    private final int height;
-    private final Territory territory;
-    private final JLabel numberTanks;
+    protected static final String TANK_IMAGE_FILE = "res/tank.png";
+    protected final static Image TANK_IMAGE = ImageLoader.loadImage(TANK_IMAGE_FILE);
+    protected final int positionX;
+    protected final int positionY;
+    protected final int width;
+    protected final int height;
+    protected final Territory territory;
+    protected final JLabel numberTanks;
 
     public TerritoryButton(Territory territory, int x, int y, int width, int height) {
         super();

@@ -1,35 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 
-/**
- *
- * @author dario
- */
 public class RollFrame extends JDialog {
 
-    private static final Integer WIDTH = 300;
-    private static final Integer HEIGHT = 300;
-    private final JButton rollButton;
-    private final JButton exitButton;
-    private final JLabel[] ATTACK_LABEL;
-    private final JLabel[] DEFENSE_LABEL;
-    private final Facade facade;
-    private ClassicDice [] attackDiceValues;
-    private ClassicDice [] defenseDiceValues;
-    private boolean isAttackDiceUpdated = false;
-    private boolean isDefenseDiceUpdated = false;
-    private Integer numberOfRolledDice;
+    protected static final Integer WIDTH = 300;
+    protected static final Integer HEIGHT = 300;
+    protected final JButton rollButton;
+    protected final JButton exitButton;
+    protected final JLabel[] ATTACK_LABEL;
+    protected final JLabel[] DEFENSE_LABEL;
+    protected final Facade facade;
+    protected Dice [] attackDiceValues;
+    protected Dice [] defenseDiceValues;
+    protected boolean isAttackDiceUpdated = false;
+    protected boolean isDefenseDiceUpdated = false;
+    protected Integer numberOfRolledDice;
 
-    public RollFrame(Facade facade, int numberOfRolledDice, ClassicDice [] attackDiceValues, ClassicDice [] defenseDiceValues) {
+    public RollFrame(Facade facade, int numberOfRolledDice, Dice [] attackDiceValues, Dice [] defenseDiceValues) {
         super( facade.getGui(), true );
         this.facade = facade;
         this.numberOfRolledDice = numberOfRolledDice;
@@ -66,14 +56,14 @@ public class RollFrame extends JDialog {
         this.defaultOperations();
     }
 
-    private void defaultOperations() {
+    protected void defaultOperations() {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
-    private void addListeners() {
+    protected void addListeners() {
         this.rollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -94,7 +84,7 @@ public class RollFrame extends JDialog {
         });
     }
 
-    /*private void updateFrame(Integer[] diceValues) {
+    /*protected void updateFrame(Integer[] diceValues) {
         for (int i = 0; i < diceValues.length; i++) {
             this.ATTACK_LABEL[i].setIcon(new ImageIcon(this.getAttackDice(diceValues[i])));
         }
@@ -105,28 +95,28 @@ public class RollFrame extends JDialog {
          
     }*/
 
-    private void updateAttackDiceFrame (){
+    protected void updateAttackDiceFrame (){
         this.isAttackDiceUpdated = true;
         for (int i = 0; i < this.numberOfRolledDice; i++) {
             this.ATTACK_LABEL[i].setIcon(new ImageIcon( this.getAttackDice(this.attackDiceValues[i].getValue()) ));
         }
     }
 
-    private void updateDefenseDiceFrame (){
+    protected void updateDefenseDiceFrame (){
         this.isDefenseDiceUpdated = true;
         for (int i = 0; i < this.numberOfRolledDice; i++) {
             this.DEFENSE_LABEL[i].setIcon(new ImageIcon( this.getDefenseDice(this.defenseDiceValues[i].getValue()) ));
         }
     }
 
-    private Image getAttackDice(Integer value) {
+    protected Image getAttackDice(Integer value) {
         String path = "res/dice/red_dice_";
         path += String.valueOf(value);
         path += ".png";
         return ImageLoader.loadImage(path);
     }
 
-    private Image getDefenseDice(Integer value) {
+    protected Image getDefenseDice(Integer value) {
         String path = "res/dice/white_dice_";
         path += String.valueOf(value);
         path += ".png";

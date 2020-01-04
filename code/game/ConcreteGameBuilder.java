@@ -16,11 +16,11 @@ public class ConcreteGameBuilder implements GameBuilder {
     protected final Map<Continent, Integer> continentsBonus;
     protected final List<Territory> territories;
     protected final List<Continent> continents;
-    protected final ClassicDice[] attackDice;
-    protected final ClassicDice[] defenseDice;
-    protected final GoalDeck goalsDeck;
-    protected final TerritoryDeck territoriesDeck;
-    protected final SymbolDeck symbolDeck;
+    protected final Dice[] attackDice;
+    protected final Dice[] defenseDice;
+    protected final GoalsDeck goalsDeck;
+    protected final TerritoriesDeck territoriesDeck;
+    protected final SymbolsDeck symbolDeck;
     protected final Map<RiskColor, TankPool> tanksPolls;
 
     public ConcreteGameBuilder() {
@@ -29,26 +29,26 @@ public class ConcreteGameBuilder implements GameBuilder {
         this.continentsBonus = new HashMap<>();
         this.territories = new ArrayList<>();
         this.continents = new ArrayList<>();
-        this.attackDice = new ClassicDice[3];
-        this.defenseDice = new ClassicDice[3];
+        this.attackDice = new ConcreteClassicDice[3];
+        this.defenseDice = new ConcreteClassicDice[3];
         for (int i = 0; i < 3; i++) {
-            this.attackDice[i] = new ClassicDice();
-            this.defenseDice[i] = new ClassicDice();
+            this.attackDice[i] = new ConcreteClassicDice();
+            this.defenseDice[i] = new ConcreteClassicDice();
         }
         this.initGame();
-        this.goalsDeck = new GoalDeck(this.continents, this.territories);
-        this.territoriesDeck = new TerritoryDeck(this.territories);
-        this.symbolDeck = new SymbolDeck(this.territoriesDeck);
+        this.goalsDeck = new ConcreteGoalsDeck(this.continents, this.territories);
+        this.territoriesDeck = new ConcreteTerritoriesDeck(this.territories);
+        this.symbolDeck = new ConcreteSymbolsDeck(this.territoriesDeck);
         this.tanksPolls = new HashMap<>();
         this.initTankPools();
     }
 
     @Override
     public Game buildGame() {
-        return new Game(this.allTris, this.trisBonus, this.continentsBonus,
-                this.territories, this.continents, this.attackDice,
-                this.defenseDice, this.goalsDeck, this.territoriesDeck,
-                this.symbolDeck, this.tanksPolls);
+        return new ConcreteGame(this.trisBonus, this.continentsBonus, this.territories, 
+                                this.continents, this.attackDice, this.defenseDice, 
+                                this.goalsDeck, this.territoriesDeck, this.symbolDeck, 
+                                this.tanksPolls);
     }
 
     protected void initGame() {
@@ -68,7 +68,7 @@ public class ConcreteGameBuilder implements GameBuilder {
                 symbolCards.add(fromStringToSymbolCard(splitted_line[0]));
                 symbolCards.add(fromStringToSymbolCard(splitted_line[1]));
                 symbolCards.add(fromStringToSymbolCard(splitted_line[2]));
-                Tris tris = new Tris(symbolCards.get(0), symbolCards.get(1), symbolCards.get(2));
+                Tris tris = new ConcreteTris(symbolCards.get(0), symbolCards.get(1), symbolCards.get(2));
                 this.trisBonus.put(tris, Integer.valueOf(splitted_line[3]));
                 line = reader.readLine();
             }
@@ -113,14 +113,12 @@ public class ConcreteGameBuilder implements GameBuilder {
                 String continentName = splitted_line[0];
                 List<Territory> continentTerritories = new ArrayList<>();
                 for (int i = 1; i < splitted_line.length; i++) {
-                    Territory territory = new Territory(splitted_line[i].trim());
+                    Territory territory = new ConcreteTerritory(splitted_line[i].trim());
                     continentTerritories.add(territory);
                     this.territories.add(territory);
                 }
-                Continent continent = new Continent(continentName, continentTerritories);
-                for (Territory territory: continentTerritories) {
-                    territory.setContinent(continent);
-                }
+                Continent continent = new ConcreteContinent(continentName, continentTerritories);
+                continentTerritories.forEach((territory) -> territory.setContinent(continent));
                 this.continents.add(continent);
                 line = reader.readLine();
             }
@@ -158,13 +156,13 @@ public class ConcreteGameBuilder implements GameBuilder {
 
     protected SymbolCard fromStringToSymbolCard(String symbol) {
         if (symbol.equalsIgnoreCase("cannon")) {
-            return new SymbolCard(Symbol.CANNON);
+            return new ConcreteSymbolCard(Symbol.CANNON);
         } else if (symbol.equalsIgnoreCase("bishop")) {
-            return new SymbolCard(Symbol.BISHOP);
+            return new ConcreteSymbolCard(Symbol.BISHOP);
         } else if (symbol.equalsIgnoreCase("knight")) {
-            return new SymbolCard(Symbol.KNIGHT);
+            return new ConcreteSymbolCard(Symbol.KNIGHT);
         } else if (symbol.equalsIgnoreCase("jolly")) {
-            return new SymbolCard(Symbol.JOKER);
+            return new ConcreteSymbolCard(Symbol.JOKER);
         }
         return null;
     }

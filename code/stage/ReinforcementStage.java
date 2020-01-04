@@ -23,7 +23,7 @@ public class ReinforcementStage extends Stage {
     }
 
     @Override
-    public List<Territory> setClickableTerritories() {
+    public List<Territory> setAvailableTerritories() {
         return this.mediator.getCurrentPlayer().getTerritories();
     }
 
@@ -34,11 +34,7 @@ public class ReinforcementStage extends Stage {
 
     @Override
     public boolean checkEndStage() {
-        if (this.mediator.getCurrentPlayer().getFreeTanks().isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.mediator.getCurrentPlayer().getFreeTanks().isEmpty();
     }
 
 }

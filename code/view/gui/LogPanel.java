@@ -5,9 +5,9 @@ import javax.swing.*;
 
 public class LogPanel extends JScrollPane {
 
-    private final Integer WIDTH;
-    private final Integer HEIGHT;
-    private static final JTextArea TEXT_AREA = new JTextArea();
+    protected final Integer WIDTH;
+    protected final Integer HEIGHT;
+    protected static final JTextArea TEXT_AREA = new JTextArea();
 
     public LogPanel(int width, int height) {
         super(LogPanel.TEXT_AREA, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

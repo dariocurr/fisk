@@ -1,6 +1,6 @@
 package risk;
 
-public class TerritoryCard extends SymbolCard {
+public abstract class TerritoryCard extends SymbolCard {
 
     protected final Territory territory;
 
@@ -17,5 +17,8 @@ public class TerritoryCard extends SymbolCard {
     public String toString() {
         return super.toString() + " " + this.territory.getName();
     }
+    
+    @Override
+    public abstract boolean equals(Object obj);
 
 }

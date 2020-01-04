@@ -1,6 +1,6 @@
 package risk;
 
-public class Tank {
+public abstract class Tank {
 
     protected RiskColor color;
 

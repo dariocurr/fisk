@@ -12,16 +12,16 @@ import java.util.*;
 
 public class BoardPanel extends JPanel {
 
-    private static final String TERRITORIES_BUTTON_FILE = "res/territory_button.txt";
-    private static final String BACKGROUND_IMAGE_FILE = "res/background.jpg";
-    private static final Image BACKGROUND_IMAGE = ImageLoader.loadImage(BACKGROUND_IMAGE_FILE);
-    private final Image SCALED_IMAGE;
-    private final List<TerritoryButton> TERRITORY_BUTTONS;
-    private final Integer WIDTH;
-    private final Integer HEIGHT;
-    private final List<Territory> TERRITORIES;
-    private final Map<Continent, Integer> CONTINENT_BONUS;
-    private final Facade facade;
+    protected static final String TERRITORIES_BUTTON_FILE = "res/territory_button.txt";
+    protected static final String BACKGROUND_IMAGE_FILE = "res/background.jpg";
+    protected static final Image BACKGROUND_IMAGE = ImageLoader.loadImage(BACKGROUND_IMAGE_FILE);
+    protected final Image SCALED_IMAGE;
+    protected final List<TerritoryButton> TERRITORY_BUTTONS;
+    protected final Integer WIDTH;
+    protected final Integer HEIGHT;
+    protected final List<Territory> TERRITORIES;
+    protected final Map<Continent, Integer> CONTINENT_BONUS;
+    protected final Facade facade;
 
     public BoardPanel(int width, int height, List<Territory> territories, Map<Continent, Integer> CONTINENT_BONUS, Facade facade) {
         super();
@@ -46,7 +46,7 @@ public class BoardPanel extends JPanel {
         this.addListeners();
     }
 
-    private void initTerritoryButtons() {
+    protected void initTerritoryButtons() {
         try {
             Scanner in = new Scanner(new File(TERRITORIES_BUTTON_FILE));
             while (in.hasNextLine()) {
@@ -65,7 +65,7 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    private Territory fromStringToTerritory(String territoryName) {
+    protected Territory fromStringToTerritory(String territoryName) {
         for (Territory territory : this.TERRITORIES) {
             if (territory.getName().equalsIgnoreCase(territoryName.trim())) {
                 return territory;
@@ -102,7 +102,7 @@ public class BoardPanel extends JPanel {
         }
     }
 
-    private void addListeners() {
+    protected void addListeners() {
         for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
             territoryButton.addActionListener(new ActionListener() {
                 @Override

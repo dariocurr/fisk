@@ -2,27 +2,28 @@ package risk;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Player {
+public abstract class Player {
 
     protected final String name;
-    protected final RiskColor COLOR;
+    protected final RiskColor color;
     protected final List<Territory> territories;
     protected final List<Continent> continents;
     protected final List<Tank> freeTanks;
     protected final List<SymbolCard> cards;
     protected GoalCard goal;
 
-    public Player(String name, RiskColor COLOR) {
+    public Player(String name, RiskColor color) {
         this.name = name;
-        this.COLOR = COLOR;
+        this.color = color;
         this.territories = new ArrayList<>();
         this.continents = new ArrayList<>();
         this.freeTanks = new ArrayList<>();
         this.cards = new ArrayList<>();
     }
 
-    public void rollDice(ClassicDice[] dices, int rolls) {
+    public void rollDice(Dice[] dices, int rolls) {
         for (int i = 0; i < rolls; i++) {
             dices[i].roll();
         }
@@ -61,11 +62,22 @@ public class Player {
 
     @Override
     public String toString() {
-        return this.name;
+        return this.name + " (" + this.color + ")";
     }
 
     public RiskColor getColor() {
-        return this.COLOR;
+        return this.color;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null) {
+            if (obj instanceof Player) {
+                Player otherPlayer = (Player) obj;
+                return this.color.equals(otherPlayer.color);
+            }
+        }
+        return false;
+    }    
 
 }

@@ -3,7 +3,7 @@ package risk;
 public class AggressiveRiskStrategy extends RiskStrategy {
 
     @Override
-    protected boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack) {
+    protected Boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack) {
         return delta > numberOfTanksToAttack * 0.5;
     }
 

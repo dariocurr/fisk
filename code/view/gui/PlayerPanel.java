@@ -15,16 +15,16 @@ import javax.swing.*;
  */
 public class PlayerPanel extends JPanel {
 
-    private final Integer WIDTH;
-    private final Integer HEIGHT;
-    private JLabel nameColorLabel;
-    private JLabel numberTerritoriesLabel;
-    private JLabel freeTanksLabel;
-    private JButton cardsButton;
-    private JButton goalButton;
-    private JLabel stageLabel;
-    private JButton endButton;
-    private final Facade facade;
+    protected final Integer WIDTH;
+    protected final Integer HEIGHT;
+    protected JLabel nameColorLabel;
+    protected JLabel numberTerritoriesLabel;
+    protected JLabel freeTanksLabel;
+    protected JButton cardsButton;
+    protected JButton goalButton;
+    protected JLabel stageLabel;
+    protected JButton endButton;
+    protected final Facade facade;
 
     public PlayerPanel(int width, int height, Facade facade) {
         this.facade = facade;
@@ -35,7 +35,7 @@ public class PlayerPanel extends JPanel {
         this.addListeners();
     }
 
-    private void buildGUI() {
+    protected void buildGUI() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints innerGBC = new GridBagConstraints();
         innerGBC.gridx = GridBagConstraints.CENTER;
@@ -54,8 +54,8 @@ public class PlayerPanel extends JPanel {
         JPanel southPanel = new JPanel();
         southPanel.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT / 5));
         southPanel.setLayout(new GridBagLayout());
-        this.nameColorLabel = new JLabel(this.facade.getPlayerName(), SwingConstants.CENTER);
-        this.nameColorLabel.setForeground(this.facade.getPlayerColor());
+        this.nameColorLabel = new JLabel(this.facade.getHumanPlayerName(), SwingConstants.CENTER);
+        this.nameColorLabel.setForeground(this.facade.getHumanPlayerColor());
         this.nameColorLabel.setFont(new Font("Dialog", Font.BOLD, 14));
         this.numberTerritoriesLabel = new JLabel("Number of territories: ", SwingConstants.CENTER);
         this.freeTanksLabel = new JLabel("Tanks to locate: ", SwingConstants.CENTER);
@@ -75,11 +75,11 @@ public class PlayerPanel extends JPanel {
         this.add(southPanel, outerGBC);
     }
 
-    private void addListeners() {
+    protected void addListeners() {
         this.goalButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                JOptionPane.showMessageDialog(null, facade.getPlayerGoal(), "Your goal", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, facade.getHumanPlayerGoal(), "Your goal", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         this.cardsButton.addActionListener(new ActionListener() {

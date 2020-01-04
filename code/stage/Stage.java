@@ -12,7 +12,7 @@ public abstract class Stage {
     
     public abstract void play(List<Territory> clickedTerritories);
 
-    public abstract List<Territory> setClickableTerritories();
+    public abstract List<Territory> setAvailableTerritories();
 
     public abstract boolean checkEndStage();
 

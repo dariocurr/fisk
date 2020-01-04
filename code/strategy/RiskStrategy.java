@@ -16,8 +16,6 @@ public abstract class RiskStrategy {
             return addTankByGoal(player.getGoal(), territoriesWithMinimumTanks);
         }
     }
-    
-    protected abstract String getStrategyName();
 
     protected List<Territory> getTerritoriesWithMinumumTanks(List<Territory> territories) {
         List<Territory> territoriesWithMinumumTanks = new ArrayList<>();
@@ -133,8 +131,6 @@ public abstract class RiskStrategy {
         return territoriesInvolvedAttack;
     }
 
-    protected abstract boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack);
-
     public List<Territory> moveTanks(Player player) {
         List<Territory> territoriesInvolvedMoving = new ArrayList<>();
         Map<Territory, Territory> bestMovings = this.getPossibleBestMovings(player.getTerritories());
@@ -216,5 +212,9 @@ public abstract class RiskStrategy {
     public String toString() {
         return this.getStrategyName() + " strategy";
     }
+    
+    protected abstract String getStrategyName();
+    
+    protected abstract Boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack);
 
 }

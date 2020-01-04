@@ -5,23 +5,13 @@ import java.util.*;
 
 public class FacadeGUI implements Facade {
 
-    private final List<Territory> clickedTerritories;
-    private Mediator mediator;
-    private RiskGUI gui;
-    private Integer numberOfTanksToMove;
+    protected final List<Territory> clickedTerritories;
+    protected Mediator mediator;
+    protected RiskGUI gui;
+    protected Integer numberOfTanksToMove;
 
     public FacadeGUI() {
         this.clickedTerritories = new ArrayList<>();
-    }
-
-    @Override
-    public RiskGUI getGui (){
-        return this.gui;
-    }
-
-    @Override
-    public Mediator getMediator() {
-        return this.mediator;
     }
 
     @Override
@@ -46,12 +36,12 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public GoalCard getPlayerGoal() {
+    public GoalCard getHumanPlayerGoal() {
         return this.mediator.getHumanPlayer().getGoal();
     }
 
     @Override
-    public List<SymbolCard> getPlayerCards() {
+    public List<SymbolCard> getHumanPlayerCards() {
         return this.mediator.getHumanPlayer().getCards();
     }
 
@@ -66,29 +56,23 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public Color getPlayerColor() {
+    public Color getHumanPlayerColor() {
         return this.mediator.getHumanPlayer().getColor().getColor();
     }
 
     @Override
-    public String getPlayerName() {
+    public String getHumanPlayerName() {
         return this.mediator.getHumanPlayer().getName();
     }
 
     @Override
-    public void askDice( int numberOfRolledDice, ClassicDice [] attackDiceValues, ClassicDice [] defenseDiceValues ) {
+    public void askDice( int numberOfRolledDice, Dice [] attackDiceValues, Dice [] defenseDiceValues ) {
         new RollFrame(this, numberOfRolledDice, attackDiceValues, defenseDiceValues);
     }
 
     @Override
-    public Integer askNumberOfTanks(Territory territory, Integer max) {
-        new NumberOfTanksFrame(this, "" + territory, max);
-        return this.numberOfTanksToMove;
-    }
-
-    @Override
-    public Integer askNumberOfTanks(Territory territory, Integer max, Integer min) {
-        new NumberOfTanksFrame(this, "" + territory, max, min);
+    public Integer askNumberOfTanks(Territory territory, Integer min, Integer max) {
+        new NumberOfTanksFrame(this, "" + territory, min, max);
         return this.numberOfTanksToMove;
     }
 
@@ -127,7 +111,7 @@ public class FacadeGUI implements Facade {
     }
 
     @Override
-    public void setClickableTerritories(List<Territory> territories) {
+    public void setAvailableTerritories(List<Territory> territories) {
         this.gui.setClickableTerritories( territories );
     }
 
@@ -202,6 +186,11 @@ public class FacadeGUI implements Facade {
     @Override
     public void endGame (){
         this.gui.dispose();
+    }
+
+    @Override
+    public RiskGUI getGui() {
+        return this.gui;
     }
     
 }

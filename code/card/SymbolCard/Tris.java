@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class Tris implements Iterable<SymbolCard> {
+public abstract class Tris implements Iterable<SymbolCard> {
 
     protected final List<SymbolCard> cards;
 
@@ -22,17 +22,6 @@ public class Tris implements Iterable<SymbolCard> {
         return "Tris: " + this.cards;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj != null) {
-            if (obj instanceof Tris) {
-                Tris otherTris = (Tris) obj;
-                return this.cards.equals(otherTris.cards);
-            }
-        }
-        return false;
-    }
-
     public List<SymbolCard> getCards() {
         return this.cards;
     }
@@ -41,5 +30,8 @@ public class Tris implements Iterable<SymbolCard> {
     public Iterator<SymbolCard> iterator() {
         return this.cards.iterator();
     }
+    
+    @Override
+    public abstract boolean equals(Object obj);
 
 }

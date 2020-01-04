@@ -4,11 +4,13 @@ public class ConcreteTankFactory implements TankFactory {
     
     protected static ConcreteTankFactory tankFactory;
     
-    protected ConcreteTankFactory() {}
+    protected ConcreteTankFactory() {
+        super();
+    }
     
     @Override
     public Tank createTank(RiskColor color) {
-        return new Tank(color);
+        return new ConcreteTank(color);
     }
     
     public static ConcreteTankFactory getTankFactory() {

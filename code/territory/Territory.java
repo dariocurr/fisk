@@ -3,7 +3,7 @@ package risk;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Territory {
+public abstract class Territory {
 
     protected final List<Territory> neighboringTerritories;
     protected final String name;
@@ -38,17 +38,6 @@ public class Territory {
         this.continent = continent;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj != null) {
-            if (obj instanceof Territory) {
-                Territory otherTerritory = (Territory) obj;
-                return this.name.equalsIgnoreCase(otherTerritory.name);
-            }
-        }
-        return false;
-    }
-
     public Player getOwnerPlayer() {
         return ownerPlayer;
     }
@@ -56,5 +45,8 @@ public class Territory {
     public void setOwnerPlayer(Player ownerPlayer) {
         this.ownerPlayer = ownerPlayer;
     }
+    
+    @Override
+    public abstract boolean equals(Object obj);
 
 }

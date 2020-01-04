@@ -8,8 +8,8 @@ import javax.swing.*;
 
 public class RiskGUI extends JFrame {
 
-    private static final Integer WIDTH = 1300;
-    private static final Integer HEIGHT = 700;
+    private static final Integer WIDTH = 1500;
+    private static final Integer HEIGHT = 900;
     private final Facade facade;
     private final BoardPanel boardPanel;
     private final LogPanel logPanel;

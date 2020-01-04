@@ -18,6 +18,7 @@ import javax.swing.event.DocumentListener;
 
 public class StartWindow extends JFrame {
 
+    public static final RiskStrategy[] ALL_POSSIBLE_STRATEGIES = StartWindow.initStrategies();
     private static final Integer WIDTH = 350;
     private static final Integer HEIGHT = 220;
     private final JTextField nameTextField;
@@ -132,8 +133,16 @@ public class StartWindow extends JFrame {
     }
 
     private JComboBox<RiskStrategy> getRiskStrategyComboBox() {
-        JComboBox<RiskStrategy> temp = new JComboBox<>(AIPlayer.ALL_POSSIBLE_STRATEGIES);
+        JComboBox<RiskStrategy> temp = new JComboBox<>(StartWindow.ALL_POSSIBLE_STRATEGIES);
         temp.setSelectedIndex(1);
+        return temp;
+    }
+    
+    protected static RiskStrategy[] initStrategies() {
+        RiskStrategy[] temp = new RiskStrategy[3];
+        temp[0] = new AggressiveRiskStrategy();
+        temp[1] = new BalancedRiskStrategy();
+        temp[2] = new ConservativeRiskStrategy();
         return temp;
     }
 

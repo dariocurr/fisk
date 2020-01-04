@@ -3,25 +3,24 @@ package risk;
 import java.util.List;
 import java.util.Map;
 
-public class Game {
+public abstract class Game {
 
     protected final Map<Tris, Integer> trisBonus;
     protected final Map<Continent, Integer> continentsBonus;
     protected final List<Territory> territories;
     protected final List<Continent> continents;
-    protected final ClassicDice[] attackDice;
-    protected final ClassicDice[] defenseDice;
-    protected final GoalDeck goalsDeck;
-    protected final TerritoryDeck territoriesDeck;
-    protected final SymbolDeck symbolDeck;
+    protected final Dice[] attackDice;
+    protected final Dice[] defenseDice;
+    protected final GoalsDeck goalsDeck;
+    protected final TerritoriesDeck territoriesDeck;
+    protected final SymbolsDeck symbolDeck;
     protected final Map<RiskColor, TankPool> tanksPools;
 
-    public Game(List<Tris> allTris, Map<Tris, Integer> trisBonus,
-            Map<Continent, Integer> continentsBonus, List<Territory> territories,
-            List<Continent> continents, ClassicDice[] attackDice,
-            ClassicDice[] defenseDice, GoalDeck goaslDeck,
-            TerritoryDeck territoriesDeck, SymbolDeck symbolDeck,
-            Map<RiskColor, TankPool> tanksPools) {
+    public Game(Map<Tris, Integer> trisBonus, Map<Continent, Integer> continentsBonus, 
+                List<Territory> territories, List<Continent> continents, 
+                Dice[] attackDice, Dice[] defenseDice, GoalsDeck goaslDeck,
+                TerritoriesDeck territoriesDeck, SymbolsDeck symbolDeck,
+                Map<RiskColor, TankPool> tanksPools) {
         this.trisBonus = trisBonus;
         this.continentsBonus = continentsBonus;
         this.territories = territories;
@@ -38,33 +37,15 @@ public class Game {
         return this.continents;
     }
 
-    public Integer getTrisBonus(Tris tris) {
-        for (Tris validTris : this.trisBonus.keySet()) {
-            if (validTris.equals(tris)) {
-                return this.trisBonus.get(validTris);
-            }
-        }
-        return null;
-    }
-
-    public Integer getContinentBonus(Continent continent) {
-        for (Continent c : this.continentsBonus.keySet()) {
-            if (c.equals(continent)) {
-                return this.continentsBonus.get(c);
-            }
-        }
-        return null;
-    }
-
     public List<Territory> getTerritories() {
         return this.territories;
     }
 
-    public TerritoryDeck getTerritoriesDeck() {
+    public TerritoriesDeck getTerritoriesDeck() {
         return this.territoriesDeck;
     }
 
-    public GoalDeck getGoalsDeck() {
+    public GoalsDeck getGoalsDeck() {
         return this.goalsDeck;
     }
 
@@ -76,11 +57,11 @@ public class Game {
         return this.continentsBonus;
     }
 
-    public ClassicDice[] getAttackDice() {
+    public Dice[] getAttackDice() {
         return this.attackDice;
     }
 
-    public ClassicDice[] getDefenseDice() {
+    public Dice[] getDefenseDice() {
         return this.defenseDice;
     }
 
@@ -88,8 +69,12 @@ public class Game {
         return this.tanksPools.get(riskColor);
     }
 
-    public SymbolDeck getSymbolDeck() {
+    public SymbolsDeck getSymbolDeck() {
         return this.symbolDeck;
     }
+    
+    public abstract Integer getTrisBonus(Tris tris);
+
+    public abstract Integer getContinentBonus(Continent continent);
 
 }

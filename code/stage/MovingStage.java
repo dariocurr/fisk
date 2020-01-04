@@ -60,47 +60,24 @@ public class MovingStage extends Stage {
         if (clickedTerritories.size() == 2) {
             Territory from = clickedTerritories.get(0);
             Territory to = clickedTerritories.get(1);
-            System.out.println("d");
-            if (this.mediator.getCurrentPlayer().getTerritories().contains(from) && from.getNeighboringTerritories().contains(to)) {
-                if (numberOfTanksToMove < from.getTanks().size()) {
-                    for (int i = 0; i < numberOfTanksToMove; i++) {
-                        to.getTanks().add(from.getTanks().remove(0));
-                    }
-                    this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer().getName() + " moved " + numberOfTanksToMove + " from " + 
-                                                        clickedTerritories.get(0).getName() + " to " + clickedTerritories.get(1).getName());
-                    this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
-                    this.mediator.getFacade().updateLabelsTerritories(clickedTerritories);
-                    this.mediator.getFacade().clearClickedTerritories();
-                    this.mediator.getFacade().setNumberOfTanksToMove(null);
-                    this.mediator.endStage();
-                } else {
-                    this.mediator.getFacade().updateLog("Errore: numero di tanks troppo alto");
-                    this.mediator.getFacade().setNumberOfTanksToMove(null);
-                }
-            } else {
-                this.mediator.getFacade().updateLog("I territori cliccati devono essere confinanti.");
-                this.mediator.getFacade().clearClickedTerritories();
-                this.mediator.getFacade().setNumberOfTanksToMove(null);
-            }
+            this.mediator.moveTanks( from, to, numberOfTanksToMove );
+            this.mediator.getFacade().clearClickedTerritories();
+            this.mediator.endStage();
         }
     }
 
     public void play(List<Territory> clickedTerritories) {
         if (clickedTerritories.size() == 2) {
-            if (this.mediator.getFacade().getNumberOfTanksToMove() == null) {
-                System.out.println("a");
-                this.mediator.getFacade().askNumberOfTanks(clickedTerritories.get(0), clickedTerritories.get(0).getTanks().size() - 1);
-                this.play(clickedTerritories, this.mediator.getFacade().getNumberOfTanksToMove());
-                System.out.println("ciao movingstage");
+            if (clickedTerritories.get(0).getTanks().size() == 2) {
+                this.play(clickedTerritories, 1);
             } else {
-                System.out.println("b");
+                this.mediator.getFacade().askNumberOfTanks(clickedTerritories.get(0), 1, clickedTerritories.get(0).getTanks().size() - 1);
                 this.play(clickedTerritories, this.mediator.getFacade().getNumberOfTanksToMove());
+                this.mediator.getFacade().setNumberOfTanksToMove(null);
             }
-        } else if (clickedTerritories.size() > 2) {
-            System.out.println("c");
-            this.mediator.getFacade().clearClickedTerritories();
+        } else if (clickedTerritories.size() == 1) {
+            this.setAvailableTerritoriesAfterFirstAction(clickedTerritories.get(0));
         }
-        this.mediator.getFacade().setNumberOfTanksToMove(null);
     }
 
     @Override
@@ -109,8 +86,33 @@ public class MovingStage extends Stage {
     }
 
     @Override
-    public List<Territory> setClickableTerritories() {
-        return this.mediator.getCurrentPlayer().getTerritories();
+    public List<Territory> setAvailableTerritories() {
+        List<Territory> availableTerritories = new ArrayList<>();
+        for (Territory territory: this.mediator.getCurrentPlayer().getTerritories()) {
+            if(territory.getTanks().size() > 1) {
+                boolean hasNeighboringTerritory = false;
+                List<Territory> neighboringTerritories = territory.getNeighboringTerritories();
+                for(int i = 0; i < neighboringTerritories.size() && !hasNeighboringTerritory; i++) {
+                    if(this.mediator.getCurrentPlayer().getTerritories().contains(neighboringTerritories.get(i))) {
+                        hasNeighboringTerritory = true;
+                    }
+                }
+                if (hasNeighboringTerritory) {
+                    availableTerritories.add(territory);
+                }
+            }
+        }
+        return availableTerritories;
+    }
+    
+    public void setAvailableTerritoriesAfterFirstAction(Territory clickedTerritory) {
+        List<Territory> availableTerritories = new ArrayList<>();
+        for (Territory neighboringTerritory : clickedTerritory.getNeighboringTerritories()) {
+            if(neighboringTerritory.getOwnerPlayer().equals(this.mediator.getCurrentPlayer())) {
+                availableTerritories.add(neighboringTerritory);
+            }
+        }
+        this.mediator.getFacade().setAvailableTerritories(availableTerritories);
     }
 
     @Override

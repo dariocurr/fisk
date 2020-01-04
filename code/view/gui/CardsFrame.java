@@ -9,19 +9,19 @@ import javax.swing.*;
 
 public class CardsFrame extends JFrame {
 
-    private static final Integer WIDTH = 400;
-    private final Map<JCheckBox, SymbolCard> checkBoxes;
-    private final JButton changeTrisButton;
-    private final JLabel status;
-    private final Facade facade;
-    private Tris currentTris;
+    protected static final Integer WIDTH = 400;
+    protected final Map<JCheckBox, SymbolCard> checkBoxes;
+    protected final JButton changeTrisButton;
+    protected final JLabel status;
+    protected final Facade facade;
+    protected Tris currentTris;
 
     public CardsFrame(Facade facade) {
         this.setTitle("Your cards");
         this.facade = facade;
         this.checkBoxes = new HashMap<>();
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 200, 30));
-        for (SymbolCard symbolCard : facade.getPlayerCards()) {
+        for (SymbolCard symbolCard : this.facade.getHumanPlayerCards()) {
             JCheckBox cb = new JCheckBox(symbolCard.toString());
             this.checkBoxes.put(cb, symbolCard);
             this.add(cb);
@@ -37,14 +37,14 @@ public class CardsFrame extends JFrame {
         this.defaultOperations();
     }
 
-    private void defaultOperations() {
+    protected void defaultOperations() {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
-    private void addListeners() {
+    protected void addListeners() {
         for (JCheckBox checkBox : this.checkBoxes.keySet()) {
             checkBox.addActionListener(new ActionListener() {
                 @Override
@@ -63,7 +63,7 @@ public class CardsFrame extends JFrame {
                                 temp.add(checkBoxes.get(cb));
                             }
                         }
-                        Tris tris = new Tris(temp.get(0), temp.get(1), temp.get(2));
+                        Tris tris = new ConcreteTris(temp.get(0), temp.get(1), temp.get(2));
                         if (facade.checkTris(tris)) {
                             changeTrisButton.setEnabled(true);
                             status.setText("Press to change Tris!");
