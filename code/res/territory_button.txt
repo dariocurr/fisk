@@ -1,18 +1,18 @@
 Alaska, 30, 30, 80, 60
 Alberta, 110, 80, 80, 50
-Central America, 140, 210, 65, 60
-Eastern United States, 200, 130, 50, 80
+Central America, 145, 210, 65, 60
+Eastern United States, 200, 130, 55, 80
 Greenland, 280, 20, 80, 60
 Northwest Territory, 110, 30, 120, 50
-Ontario, 190, 80, 60, 50
-Quebec, 250, 90, 50, 70
+Ontario, 190, 80, 65, 50
+Quebec, 255, 90, 55, 70
 Western United States, 110, 130, 90, 80
 Venezuela, 160, 270, 70, 50
 Brazil, 190, 320, 90, 120
-Peru, 140, 320, 50, 120
+Peru, 135, 320, 55, 120
 Argentina, 160, 440, 70, 100
-Great Britain, 365, 120, 50, 40
-Iceland, 350, 85, 50, 30
+Great Britain, 360, 120, 55, 40
+Iceland, 345, 85, 55, 30
 Northern Europe, 440, 140, 60, 40
 Scandinavia, 440, 20, 60, 100
 Ukraine, 500, 70, 100, 110

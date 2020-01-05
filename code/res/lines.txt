@@ -1,0 +1,24 @@
+Eastern Australia,New Guinea
+Western Australia,New Guinea
+Western Australia,Indonesia
+Indonesia,New Guinea
+Siam,Indonesia
+Japan,Mongolia
+Japan,Kamchatka
+Madagascar,South Africa
+Madagascar,East Africa
+North Africa,Western Europe
+North Africa,Southern Europe
+North Africa,Brazil
+Egypt,Southern Europe
+Great Britain,Iceland
+Great Britain,Scandinavia
+Great Britain,Northern Europe
+Scandinavia,Iceland
+Scandinavia,Northern Europe
+Iceland,Greenland
+Greenland,Quebec
+Greenland,Ontario
+Greenland,Northwest Territory
+Alaska,LEFT
+Kamchatka,RIGHT
