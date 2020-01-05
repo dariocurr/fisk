@@ -18,7 +18,4 @@ public abstract class TerritoryCard extends SymbolCard {
         return super.toString() + " " + this.territory.getName();
     }
 
-    @Override
-    public abstract boolean equals(Object obj);
-
 }

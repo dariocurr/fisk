@@ -17,6 +17,14 @@ public abstract class SymbolCard extends Card<Symbol> implements Comparable<Symb
     }
 
     @Override
-    public abstract boolean equals(Object obj);
+    public boolean equals(Object obj) {
+        if (obj != null) {
+            if (obj instanceof SymbolCard) {
+                SymbolCard otherSymbolCard = (SymbolCard) obj;
+                return this.card.equals(otherSymbolCard.card);
+            }
+        }
+        return false;
+    }
 
 }

@@ -1,7 +1,9 @@
 package risk;
 
 import java.awt.Color;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GUIRiskFacade implements RiskFacade {
 
