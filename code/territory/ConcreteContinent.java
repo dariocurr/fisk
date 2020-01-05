@@ -3,11 +3,11 @@ package risk;
 import java.util.List;
 
 public class ConcreteContinent extends Continent {
-    
+
     public ConcreteContinent(String continentName, List<Territory> territories) {
         super(continentName, territories);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj != null) {
@@ -18,5 +18,5 @@ public class ConcreteContinent extends Continent {
         }
         return false;
     }
-    
+
 }

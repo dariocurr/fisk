@@ -13,10 +13,10 @@ public class CardsFrame extends JFrame {
     protected final Map<JCheckBox, SymbolCard> checkBoxes;
     protected final JButton changeTrisButton;
     protected final JLabel status;
-    protected final Facade facade;
+    protected final RiskFacade facade;
     protected Tris currentTris;
 
-    public CardsFrame(Facade facade) {
+    public CardsFrame(RiskFacade facade) {
         this.setTitle("Your cards");
         this.facade = facade;
         this.checkBoxes = new HashMap<>();

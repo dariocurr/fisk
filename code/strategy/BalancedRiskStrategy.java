@@ -6,7 +6,7 @@ public class BalancedRiskStrategy extends RiskStrategy {
     protected Boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack) {
         return delta > numberOfTanksToAttack;
     }
-    
+
     @Override
     public String getStrategyName() {
         return "Balanced";

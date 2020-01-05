@@ -5,10 +5,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TankPool implements Iterable<Tank> {
-    
+
     protected TankFactory tankFactory;
     protected List<Tank> tanks;
-    
+
     public TankPool(int number, RiskColor riskColor) {
         this.tankFactory = ConcreteTankFactory.getTankFactory();
         this.tanks = new ArrayList<>();

@@ -13,7 +13,8 @@ public class ConcreteGame extends Game {
             Map<RiskColor, TankPool> tanksPools) {
         super(trisBonus, continentsBonus, territories, continents, attackDice, defenseDice, goaslDeck, territoriesDeck, symbolDeck, tanksPools);
     }
-    
+
+    @Override
     public Integer getTrisBonus(Tris tris) {
         for (Tris validTris : this.trisBonus.keySet()) {
             if (validTris.equals(tris)) {
@@ -23,6 +24,7 @@ public class ConcreteGame extends Game {
         return null;
     }
 
+    @Override
     public Integer getContinentBonus(Continent continent) {
         for (Continent c : this.continentsBonus.keySet()) {
             if (c.equals(continent)) {
@@ -31,6 +33,5 @@ public class ConcreteGame extends Game {
         }
         return null;
     }
-    
-    
+
 }

@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package risk;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-/**
- *
- * @author dario
- */
 public class PlayerPanel extends JPanel {
 
     protected final Integer WIDTH;
@@ -24,9 +15,9 @@ public class PlayerPanel extends JPanel {
     protected JButton goalButton;
     protected JLabel stageLabel;
     protected JButton endButton;
-    protected final Facade facade;
+    protected final RiskFacade facade;
 
-    public PlayerPanel(int width, int height, Facade facade) {
+    public PlayerPanel(RiskFacade facade, int width, int height) {
         this.facade = facade;
         this.WIDTH = width;
         this.HEIGHT = height;
@@ -101,19 +92,19 @@ public class PlayerPanel extends JPanel {
         this.freeTanksLabel.setText("Tanks to locate: " + numberOfFreeTanks);
         this.stageLabel.setText("Stage: " + currentStage);
     }
-    
+
     public void enableCardsButton() {
         this.cardsButton.setEnabled(true);
     }
-    
+
     public void enableEndStageButton() {
         this.endButton.setEnabled(true);
     }
-    
+
     public void disableCardsButton() {
         this.cardsButton.setEnabled(false);
     }
-    
+
     public void disableEndStageButton() {
         this.endButton.setEnabled(false);
     }

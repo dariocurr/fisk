@@ -34,6 +34,10 @@ public abstract class Territory {
         return "Territory: " + this.getName();
     }
 
+    public Continent getContinent() {
+        return this.continent;
+    }
+
     public void setContinent(Continent continent) {
         this.continent = continent;
     }
@@ -45,7 +49,7 @@ public abstract class Territory {
     public void setOwnerPlayer(Player ownerPlayer) {
         this.ownerPlayer = ownerPlayer;
     }
-    
+
     @Override
     public abstract boolean equals(Object obj);
 

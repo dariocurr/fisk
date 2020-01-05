@@ -15,7 +15,7 @@ public abstract class SymbolCard extends Card<Symbol> implements Comparable<Symb
     public int compareTo(SymbolCard otherSymbolCard) {
         return this.card.compareTo(otherSymbolCard.card);
     }
-    
+
     @Override
     public abstract boolean equals(Object obj);
 

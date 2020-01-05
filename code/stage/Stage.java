@@ -4,22 +4,19 @@ import java.util.List;
 
 public abstract class Stage {
 
-    protected Mediator mediator;
-    
-    public Stage(Mediator mediator) {
+    protected RiskMediator mediator;
+
+    public Stage(RiskMediator mediator) {
         this.mediator = mediator;
     }
-    
+
     public abstract void play(List<Territory> clickedTerritories);
 
-    public abstract List<Territory> setAvailableTerritories();
-
-    public abstract boolean checkEndStage();
+    public abstract void setAvailableTerritories();
 
     @Override
     public String toString() {
         return "stage";
     }
-    
 
 }

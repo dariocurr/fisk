@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ConcreteTerritoriesDeck extends TerritoriesDeck {
-    
+
     public ConcreteTerritoriesDeck(List<Territory> territories) {
         super();
         for (int i = 0; i < territories.size();) {
@@ -14,5 +14,5 @@ public class ConcreteTerritoriesDeck extends TerritoriesDeck {
         }
         Collections.shuffle(this.deck);
     }
-    
+
 }

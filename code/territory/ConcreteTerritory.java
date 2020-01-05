@@ -1,11 +1,11 @@
 package risk;
 
 public class ConcreteTerritory extends Territory {
-    
+
     public ConcreteTerritory(String territoryName) {
         super(territoryName);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj != null) {
@@ -16,5 +16,5 @@ public class ConcreteTerritory extends Territory {
         }
         return false;
     }
-    
+
 }

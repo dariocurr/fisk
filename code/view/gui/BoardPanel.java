@@ -21,9 +21,9 @@ public class BoardPanel extends JPanel {
     protected final Integer HEIGHT;
     protected final List<Territory> TERRITORIES;
     protected final Map<Continent, Integer> CONTINENT_BONUS;
-    protected final Facade facade;
+    protected final RiskFacade facade;
 
-    public BoardPanel(int width, int height, List<Territory> territories, Map<Continent, Integer> CONTINENT_BONUS, Facade facade) {
+    public BoardPanel(RiskFacade facade, int width, int height, List<Territory> territories, Map<Continent, Integer> CONTINENT_BONUS) {
         super();
         this.WIDTH = width;
         this.HEIGHT = height;
@@ -79,7 +79,7 @@ public class BoardPanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(this.SCALED_IMAGE, 0, 0, null);
     }
-    
+
     protected void addContinentsBonusLabels() {
         Integer counter = 0;
         Integer x = this.WIDTH - (this.WIDTH * 5 / 16);
@@ -87,7 +87,7 @@ public class BoardPanel extends JPanel {
         Integer numberOfContinents = this.CONTINENT_BONUS.keySet().size();
         Font font = new Font("", Font.ITALIC + Font.BOLD, 14);
         Color brownColor = new Color(68, 48, 34);
-        for (Continent continent: this.CONTINENT_BONUS.keySet()) {
+        for (Continent continent : this.CONTINENT_BONUS.keySet()) {
             JLabel nameContinentLabel = new JLabel(continent.getName());
             nameContinentLabel.setFont(font);
             nameContinentLabel.setForeground(brownColor);
@@ -108,7 +108,7 @@ public class BoardPanel extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
                     Territory clickedTerritory = territoryButton.getTerritory();
-                    facade.addClickedTerritory(clickedTerritory);
+                    facade.update(clickedTerritory);
                 }
             });
         }

@@ -11,5 +11,5 @@ public class AggressiveRiskStrategy extends RiskStrategy {
     public String getStrategyName() {
         return "Aggressive";
     }
-    
+
 }

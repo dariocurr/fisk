@@ -10,14 +10,15 @@ public class NumberOfTanksFrame extends JDialog {
     private static final Integer HEIGHT = 220;
     private final JButton moveButton;
     private final JSlider numberOfTanksSlider;
-    private final Facade facade;
+    private final RiskFacade facade;
 
-    public NumberOfTanksFrame(Facade facade, String territory, Integer min, Integer max) {
-        super( facade.getGui(), true );
+    public NumberOfTanksFrame(RiskFacade facade, String territory, Integer min, Integer max) {
+        super();
+        this.setModal(true);
         this.setTitle("Moving");
         this.facade = facade;
         JLabel request = new JLabel("How many tanks do you want to move to: " + territory, SwingConstants.CENTER);
-        this.numberOfTanksSlider = new JSlider(JSlider.HORIZONTAL, min, max, (Integer)max / 2);
+        this.numberOfTanksSlider = new JSlider(JSlider.HORIZONTAL, min, max, (min + max) / 2);
         Dictionary<Integer, JLabel> labels = new Hashtable<>();
         for (int i = 1; i <= max; i++) {
             labels.put(i, new JLabel("" + i));

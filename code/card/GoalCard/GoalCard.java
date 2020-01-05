@@ -10,5 +10,5 @@ public abstract class GoalCard<T> extends Card<T> {
     public String toString() {
         return "goal: " + super.toString();
     }
-    
+
 }

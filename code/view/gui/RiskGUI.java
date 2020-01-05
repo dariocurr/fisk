@@ -10,22 +10,23 @@ public class RiskGUI extends JFrame {
 
     private static final Integer WIDTH = 1500;
     private static final Integer HEIGHT = 900;
-    private final Facade facade;
+    private final RiskFacade facade;
     private final BoardPanel boardPanel;
     private final LogPanel logPanel;
     private final PlayerPanel playerPanel;
 
-    public RiskGUI(Facade facade) {
+    public RiskGUI(RiskFacade facade) {
         super();
         this.setTitle("Risk");
         this.facade = facade;
-        this.playerPanel = new PlayerPanel(RiskGUI.WIDTH / 5, RiskGUI.HEIGHT, facade);
-        this.boardPanel = new BoardPanel(RiskGUI.WIDTH - RiskGUI.WIDTH / 5, 
-                                         RiskGUI.HEIGHT - RiskGUI.HEIGHT / 6, 
-                                         this.facade.getTerritories(), 
-                                         this.facade.getAllContinentsBonus(), facade);
+        this.playerPanel = new PlayerPanel(this.facade, RiskGUI.WIDTH / 5, RiskGUI.HEIGHT);
+        this.boardPanel = new BoardPanel(this.facade,
+                RiskGUI.WIDTH - RiskGUI.WIDTH / 5,
+                RiskGUI.HEIGHT - RiskGUI.HEIGHT / 6,
+                this.facade.getTerritories(),
+                this.facade.getAllContinentsBonus());
         this.boardPanel.updateColors(this.facade.getTerritories());
-        this.logPanel = new LogPanel(RiskGUI.WIDTH - RiskGUI.WIDTH / 5, RiskGUI.HEIGHT / 6);
+        this.logPanel = new LogPanel(this.facade, RiskGUI.WIDTH - RiskGUI.WIDTH / 5, RiskGUI.HEIGHT / 6);
         Container contentPane = this.getContentPane();
         contentPane.setLayout(new BorderLayout(0, 0));
         contentPane.add(this.playerPanel, BorderLayout.WEST);
@@ -65,29 +66,25 @@ public class RiskGUI extends JFrame {
     public void updateColorsTerritoriesButtons(List<Territory> territories) {
         this.boardPanel.updateColors(territories);
     }
-    
+
     public void enableCardsButton() {
         this.playerPanel.enableCardsButton();
     }
-    
+
     public void enableEndStageButton() {
         this.playerPanel.enableEndStageButton();
     }
-    
+
     public void disableCardsButton() {
         this.playerPanel.disableCardsButton();
     }
-    
+
     public void disableEndStageButton() {
         this.playerPanel.disableEndStageButton();
     }
-    
-    public void showError(String error) {
-        JOptionPane.showMessageDialog(this, error);
-    }
 
-    public void showMessage ( String message ){
+    public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
-    
+
 }

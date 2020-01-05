@@ -25,7 +25,7 @@ public abstract class Dice implements Comparable<Dice> {
     public String toString() {
         return "Dice value: " + this.value;
     }
-    
+
     public abstract Integer roll();
 
 }

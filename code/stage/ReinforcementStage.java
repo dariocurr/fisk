@@ -1,21 +1,18 @@
 package risk;
 
-import java.util.*;
+import java.util.List;
 
 public class ReinforcementStage extends Stage {
 
-    public ReinforcementStage(Mediator mediator) {
+    public ReinforcementStage(RiskMediator mediator) {
         super(mediator);
     }
 
-    public void play(List<Territory> clickedTerritories) {
-        if (this.mediator.getCurrentPlayer().getFreeTanks().size() > 0 && clickedTerritories.size() == 1) {
-            clickedTerritories.get(0).getTanks().add(this.mediator.getCurrentPlayer().getFreeTanks().remove(0));
-            this.mediator.getFacade().updateLog(this.mediator.getCurrentPlayer() + " places a tank in " + clickedTerritories.get(0).getName() + 
-                                                ", " + this.mediator.getCurrentPlayer().getFreeTanks().size() + " still to place");
-            this.mediator.getFacade().updateLabelsTerritories(clickedTerritories);
-            this.mediator.getFacade().updatePlayerData(this.mediator.getCurrentPlayer().getTerritories().size(), this.mediator.getCurrentPlayer().getFreeTanks().size(), this.mediator.getCurrentStage().toString());
-            this.mediator.getFacade().clearClickedTerritories();
+    @Override
+    public void play(List<Territory> involvedTerritories) {
+        if (involvedTerritories.size() == 1) {
+            this.mediator.putTank(involvedTerritories.get(0));
+            this.mediator.getFacade().clearInvolvedTerritories();
             if (this.checkEndStage()) {
                 this.mediator.nextStage();
             }
@@ -23,8 +20,8 @@ public class ReinforcementStage extends Stage {
     }
 
     @Override
-    public List<Territory> setAvailableTerritories() {
-        return this.mediator.getCurrentPlayer().getTerritories();
+    public void setAvailableTerritories() {
+        this.mediator.getFacade().setAvailableTerritories(this.mediator.getCurrentPlayer().getTerritories());
     }
 
     @Override
@@ -32,7 +29,6 @@ public class ReinforcementStage extends Stage {
         return "Reinforcement " + super.toString();
     }
 
-    @Override
     public boolean checkEndStage() {
         return this.mediator.getCurrentPlayer().getFreeTanks().isEmpty();
     }

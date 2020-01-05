@@ -30,7 +30,7 @@ public abstract class Tris implements Iterable<SymbolCard> {
     public Iterator<SymbolCard> iterator() {
         return this.cards.iterator();
     }
-    
+
     @Override
     public abstract boolean equals(Object obj);
 

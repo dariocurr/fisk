@@ -100,7 +100,7 @@ public abstract class RiskStrategy {
         boolean found = false;
         if (goal instanceof ContinentsGoalCard) {
             ContinentsGoalCard goalCard = (ContinentsGoalCard) goal;
-            for(Entry<Territory, Territory> entry: bestAttacks.entrySet()) {
+            for (Entry<Territory, Territory> entry : bestAttacks.entrySet()) {
                 for (Continent continent : goalCard.getCard()) {
                     if (continent.getTerritories().contains(entry.getValue())) {
                         territoriesInvolvedAttack.clear();
@@ -120,7 +120,7 @@ public abstract class RiskStrategy {
                     found = true;
                 }
             }
-        } 
+        }
         if (!found) {
             List<Entry<Territory, Territory>> entries = new ArrayList<>();
             entries.addAll(bestAttacks.entrySet());
@@ -134,7 +134,7 @@ public abstract class RiskStrategy {
     public List<Territory> moveTanks(Player player) {
         List<Territory> territoriesInvolvedMoving = new ArrayList<>();
         Map<Territory, Territory> bestMovings = this.getPossibleBestMovings(player.getTerritories());
-        if(!bestMovings.isEmpty()) {
+        if (!bestMovings.isEmpty()) {
             List<Entry<Territory, Territory>> entries = new ArrayList<>();
             entries.addAll(bestMovings.entrySet());
             int delta = entries.get(0).getKey().getTanks().size() - entries.get(0).getValue().getTanks().size();
@@ -179,7 +179,7 @@ public abstract class RiskStrategy {
         boolean found = false;
         if (goal instanceof ContinentsGoalCard) {
             ContinentsGoalCard goalCard = (ContinentsGoalCard) goal;
-            for(Entry<Territory, Territory> entry: bestMovings.entrySet()) {
+            for (Entry<Territory, Territory> entry : bestMovings.entrySet()) {
                 for (Continent continent : goalCard.getCard()) {
                     if (continent.getTerritories().contains(entry.getValue())) {
                         territoriesInvolvedMoving.clear();
@@ -199,7 +199,7 @@ public abstract class RiskStrategy {
         }
         return territoriesInvolvedMoving;
     }
-    
+
     public Integer getNumberOfTanksToMove(List<Territory> territories) {
         if (territories.size() == 2) {
             return (territories.get(0).getTanks().size() - territories.get(1).getTanks().size()) / 2;
@@ -212,9 +212,9 @@ public abstract class RiskStrategy {
     public String toString() {
         return this.getStrategyName() + " strategy";
     }
-    
+
     protected abstract String getStrategyName();
-    
+
     protected abstract Boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack);
 
 }

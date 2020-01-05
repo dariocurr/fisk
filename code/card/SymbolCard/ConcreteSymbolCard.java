@@ -1,11 +1,11 @@
 package risk;
 
 public class ConcreteSymbolCard extends SymbolCard {
-    
+
     public ConcreteSymbolCard(Symbol symbol) {
         super(symbol);
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj != null) {
@@ -16,5 +16,5 @@ public class ConcreteSymbolCard extends SymbolCard {
         }
         return false;
     }
-    
+
 }

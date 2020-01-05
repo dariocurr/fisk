@@ -12,15 +12,17 @@ public class RollFrame extends JDialog {
     protected final JButton exitButton;
     protected final JLabel[] ATTACK_LABEL;
     protected final JLabel[] DEFENSE_LABEL;
-    protected final Facade facade;
-    protected Dice [] attackDiceValues;
-    protected Dice [] defenseDiceValues;
+    protected final RiskFacade facade;
+    protected Dice[] attackDiceValues;
+    protected Dice[] defenseDiceValues;
     protected boolean isAttackDiceUpdated = false;
     protected boolean isDefenseDiceUpdated = false;
     protected Integer numberOfRolledDice;
 
-    public RollFrame(Facade facade, int numberOfRolledDice, Dice [] attackDiceValues, Dice [] defenseDiceValues) {
-        super( facade.getGui(), true );
+    public RollFrame(RiskFacade facade, int numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues) {
+        super();
+        this.setModal(true);
+        this.setTitle("Rolled Dice");
         this.facade = facade;
         this.numberOfRolledDice = numberOfRolledDice;
         this.attackDiceValues = attackDiceValues;
@@ -67,18 +69,17 @@ public class RollFrame extends JDialog {
         this.rollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if ( isAttackDiceUpdated == false ){
+                if (isAttackDiceUpdated == false) {
                     updateAttackDiceFrame();
-                }
-                else if ( isDefenseDiceUpdated == false ){
+                } else if (isDefenseDiceUpdated == false) {
                     updateDefenseDiceFrame();
                 }
             }
         });
 
-        this.exitButton.addActionListener ( new ActionListener(){
+        this.exitButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed ( ActionEvent ae ){
+            public void actionPerformed(ActionEvent ae) {
                 dispose();
             }
         });
@@ -94,18 +95,17 @@ public class RollFrame extends JDialog {
         }
          
     }*/
-
-    protected void updateAttackDiceFrame (){
+    protected void updateAttackDiceFrame() {
         this.isAttackDiceUpdated = true;
         for (int i = 0; i < this.numberOfRolledDice; i++) {
-            this.ATTACK_LABEL[i].setIcon(new ImageIcon( this.getAttackDice(this.attackDiceValues[i].getValue()) ));
+            this.ATTACK_LABEL[i].setIcon(new ImageIcon(this.getAttackDice(this.attackDiceValues[i].getValue())));
         }
     }
 
-    protected void updateDefenseDiceFrame (){
+    protected void updateDefenseDiceFrame() {
         this.isDefenseDiceUpdated = true;
         for (int i = 0; i < this.numberOfRolledDice; i++) {
-            this.DEFENSE_LABEL[i].setIcon(new ImageIcon( this.getDefenseDice(this.defenseDiceValues[i].getValue()) ));
+            this.DEFENSE_LABEL[i].setIcon(new ImageIcon(this.getDefenseDice(this.defenseDiceValues[i].getValue())));
         }
     }
 

@@ -16,11 +16,11 @@ public abstract class Game {
     protected final SymbolsDeck symbolDeck;
     protected final Map<RiskColor, TankPool> tanksPools;
 
-    public Game(Map<Tris, Integer> trisBonus, Map<Continent, Integer> continentsBonus, 
-                List<Territory> territories, List<Continent> continents, 
-                Dice[] attackDice, Dice[] defenseDice, GoalsDeck goaslDeck,
-                TerritoriesDeck territoriesDeck, SymbolsDeck symbolDeck,
-                Map<RiskColor, TankPool> tanksPools) {
+    public Game(Map<Tris, Integer> trisBonus, Map<Continent, Integer> continentsBonus,
+            List<Territory> territories, List<Continent> continents,
+            Dice[] attackDice, Dice[] defenseDice, GoalsDeck goaslDeck,
+            TerritoriesDeck territoriesDeck, SymbolsDeck symbolDeck,
+            Map<RiskColor, TankPool> tanksPools) {
         this.trisBonus = trisBonus;
         this.continentsBonus = continentsBonus;
         this.territories = territories;
@@ -33,7 +33,7 @@ public abstract class Game {
         this.tanksPools = tanksPools;
     }
 
-    public List<Continent> getContinents (){
+    public List<Continent> getContinents() {
         return this.continents;
     }
 
@@ -72,7 +72,7 @@ public abstract class Game {
     public SymbolsDeck getSymbolDeck() {
         return this.symbolDeck;
     }
-    
+
     public abstract Integer getTrisBonus(Tris tris);
 
     public abstract Integer getContinentBonus(Continent continent);

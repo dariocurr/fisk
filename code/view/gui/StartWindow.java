@@ -26,9 +26,9 @@ public class StartWindow extends JFrame {
     private final JComboBox<Integer> numberOfVirtualPlayersList;
     private final Map<JLabel, JComboBox<RiskStrategy>> virtualPlayers;
     private final JButton startButton;
-    private final Facade facade;
+    private final RiskFacade facade;
 
-    public StartWindow(Facade facade) {
+    public StartWindow(RiskFacade facade) {
         this.setTitle("Let's play risk!");
         this.facade = facade;
         JLabel playerNameLabel = new JLabel("Choice your name:");
@@ -137,7 +137,7 @@ public class StartWindow extends JFrame {
         temp.setSelectedIndex(1);
         return temp;
     }
-    
+
     protected static RiskStrategy[] initStrategies() {
         RiskStrategy[] temp = new RiskStrategy[3];
         temp[0] = new AggressiveRiskStrategy();
