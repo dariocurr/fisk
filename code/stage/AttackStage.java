@@ -3,19 +3,12 @@ package risk;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
-    Classe che implementa la fase di attacco di un turno di gioco.
-*/
-
 public class AttackStage extends TwoActionsStage {
 
     public AttackStage(RiskMediator mediator) {
         super(mediator);
     }
 
-    /**
-        Permette di attaccare un territorio da uno posseduto dal giocatore corrente.
-    */
     @Override
     public void play(List<Territory> involvedTerritories) {
         if (involvedTerritories.size() == 2) {
@@ -59,9 +52,6 @@ public class AttackStage extends TwoActionsStage {
         return "Attack " + super.toString();
     }
 
-    /**
-        Rende cliccabili i propri territori e quelli confinanti ad essi.
-    */
     @Override
     public void setAvailableTerritories() {
         List<Territory> availableTerritories = new ArrayList<>();
@@ -82,9 +72,6 @@ public class AttackStage extends TwoActionsStage {
         this.mediator.getFacade().setAvailableTerritories(availableTerritories);
     }
 
-    /**
-        Rende cliccabili i territori confinanti con quello scelto e posseduti da altri player.
-    */
     @Override
     public void setAvailableTerritoriesAfterFirstAction(Territory InvolvedTerritory) {
         List<Territory> availableTerritories = new ArrayList<>();

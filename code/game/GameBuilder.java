@@ -1,9 +1,5 @@
 package risk;
 
-/**
-	Interfaccia funzionale del design pattern Builder, per la classe Game.
-*/
-
 @FunctionalInterface
 public interface GameBuilder {
 
@@ -12,10 +8,6 @@ public interface GameBuilder {
     public static final String ADJACENCIES_FILE = "res/adjacencies.txt";
     public static final String CONTINENTS_FILE = "res/continents.txt";
 
-    /**
-		Costruisce un oggetto di tipo Game e lo restituisce.
-		@return un istanza della classe Game
-    */
     public Game buildGame();
 
 }

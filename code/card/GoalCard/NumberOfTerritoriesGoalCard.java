@@ -1,9 +1,5 @@
 package risk;
 
-/**
-	Carte degli obiettivi del numero di territori da conquistare.
-*/
-
 public class NumberOfTerritoriesGoalCard extends GoalCard<Integer> {
 
     public NumberOfTerritoriesGoalCard(Integer num) {

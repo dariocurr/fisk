@@ -1,9 +1,5 @@
 package risk;
 
-/**
-	Carte degli obiettivi dei nemici da uccidere.
-*/
-
 public class KillGoalCard extends GoalCard<RiskColor> {
 
     public KillGoalCard(RiskColor riskcolor) {

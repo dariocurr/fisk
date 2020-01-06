@@ -10,5 +10,5 @@ public class StartRIskGUI implements Startable {
         facade.setMediator(mediator);
         new StartWindow(facade);
     }
-    
+
 }

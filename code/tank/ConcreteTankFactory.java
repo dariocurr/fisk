@@ -2,7 +2,7 @@ package risk;
 
 public class ConcreteTankFactory implements TankFactory {
 
-    protected static ConcreteTankFactory tankFactory;
+    protected static TankFactory tankFactory;
 
     protected ConcreteTankFactory() {
         super();
@@ -13,7 +13,7 @@ public class ConcreteTankFactory implements TankFactory {
         return new ConcreteTank(color);
     }
 
-    public static ConcreteTankFactory getTankFactory() {
+    public static TankFactory getTankFactory() {
         if (ConcreteTankFactory.tankFactory == null) {
             ConcreteTankFactory.tankFactory = new ConcreteTankFactory();
         }

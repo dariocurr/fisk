@@ -7,27 +7,20 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
-    Concretizzazione della classe RiskMediator.
-*/
-
 public class ConcreteRiskMediator extends RiskMediator {
-    
+
     protected Player humanPlayer;
     protected List<Stage> stages;
     protected Stage currentStage;
     protected Boolean currentPlayerWinsTerritory;
     protected static final Set<String> VIRTUAL_PLAYER_NAMES_SET = ConcreteRiskMediator.initNamesSet();
-    
-    /**
-        Costruttore della classe.
-    */
+
     public ConcreteRiskMediator() {
         super();
         this.stages = new ArrayList<>();
         this.currentPlayerWinsTerritory = false;
     }
-    
+
     protected static Set<String> initNamesSet() {
         Set<String> temp = new HashSet<>();
         temp.add("Dario");
@@ -38,12 +31,12 @@ public class ConcreteRiskMediator extends RiskMediator {
         temp.add("Eleonora");
         return temp;
     }
-    
+
     @Override
     public Player getHumanPlayer() {
         return this.humanPlayer;
     }
-    
+
     @Override
     public void prepareGame(String humanPlayerName, RiskColor humanPlayerColor, List<RiskStrategy> virtualPlayersStrategies) {
         this.createHumanPlayer(humanPlayerName, humanPlayerColor);
@@ -61,12 +54,12 @@ public class ConcreteRiskMediator extends RiskMediator {
         PreparationStage ps = new PreparationStage(this);
         this.startPreparationStage();
     }
-    
+
     protected void createHumanPlayer(String name, RiskColor color) {
         this.humanPlayer = new ConcretePlayer(name, color);
         this.players.add(this.humanPlayer);
     }
-    
+
     protected void createVirtualPlayers(List<RiskStrategy> virtualPlayersStrategies) {
         ConcreteRiskMediator.VIRTUAL_PLAYER_NAMES_SET.remove(this.humanPlayer.getName());
         List<RiskColor> freeColors = new ArrayList<>();
@@ -77,10 +70,12 @@ public class ConcreteRiskMediator extends RiskMediator {
         }
         for (int i = 0; i < virtualPlayersStrategies.size(); i++) {
             String name = (String) ConcreteRiskMediator.VIRTUAL_PLAYER_NAMES_SET.toArray()[i];
-            this.players.add(new ConcreteAIPlayer(name, freeColors.get(i), virtualPlayersStrategies.get(i)));
+            AIPlayer aiPlayer = new ConcreteAIPlayer(name, freeColors.get(i), virtualPlayersStrategies.get(i));
+            virtualPlayersStrategies.get(i).setPlayer(aiPlayer);
+            this.players.add(aiPlayer);
         }
     }
-    
+
     protected void initStages() {
         ReinforcementStage rs = new ReinforcementStage(this);
         AttackStage as = new AttackStage(this);
@@ -89,7 +84,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         this.stages.add(as);
         this.stages.add(ms);
     }
-    
+
     protected void releaseGoals() {
         for (Player p : this.players) {
             p.setGoal(this.game.getGoalsDeck().removeCard());
@@ -118,7 +113,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     protected void releaseInitialTanks() {
         Integer numberOfTanks;
         if (this.players.size() == 3) {
@@ -136,7 +131,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     protected void releaseTerritories() {
         TerritoryCard drawCard;
         boolean isDrawEnded = false;
@@ -152,7 +147,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     protected void initTerritories() {
         for (Player player : this.players) {
             for (Territory territory : player.getTerritories()) {
@@ -160,7 +155,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     protected void updateAllContinents() {
         for (Continent continent : this.game.getContinents()) {
             for (Player player : this.players) {
@@ -170,7 +165,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     @Override
     public void startPreparationStage() {
         this.facade.disableEndStage();
@@ -179,7 +174,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         this.currentPlayer = this.players.get(this.players.size() - 1);
         this.nextPlayerPreparationStage();
     }
-    
+
     @Override
     public void nextPlayerPreparationStage() {
         if (this.isPreparationStageEnded()) {
@@ -207,7 +202,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         }
         return true;
     }
-    
+
     protected void playPreparationStageAIPlayer() {
         AIPlayer aiPlayer = (AIPlayer) this.currentPlayer;
         List<Territory> clickedTerritories = new ArrayList<>();
@@ -220,7 +215,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             this.pause(1);
         }
     }
-    
+
     @Override
     public void startGame() {
         this.currentPlayer = this.players.get(this.players.size() - 1);
@@ -231,7 +226,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         this.facade.showMessage("The player " + winnerPlayer.toString() + " wins!");
         this.facade.endGame();
     }
-    
+
     @Override
     public void nextPlayer() {
         if (!this.isEnded) {
@@ -263,8 +258,8 @@ public class ConcreteRiskMediator extends RiskMediator {
             this.getFacade().clearInvolvedTerritories();
             if (this.currentStage instanceof MovingStage) {
                 if (this.currentPlayerWinsTerritory) {
-                    if (!this.game.getSymbolDeck().isEmpty()) {
-                        this.currentPlayer.getCards().add(this.game.getSymbolDeck().removeCard());
+                    if (!this.game.getSymbolsDeck().isEmpty()) {
+                        this.currentPlayer.getCards().add(this.game.getSymbolsDeck().removeCard());
                     }
                 }
                 this.nextPlayer();
@@ -281,7 +276,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     protected void releaseTanks() {
         Integer numberOfTanks = this.currentPlayer.getTerritories().size() / 3;
         for (Continent continent : this.currentPlayer.getContinents()) {
@@ -324,7 +319,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     protected void pause(Integer seconds) {
         /*
         Long startTime = System.currentTimeMillis();
@@ -334,7 +329,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         }
          */
     }
-    
+
     @Override
     public void exchangeTris(Tris tris) {
         if (this.checkTris(tris)) {
@@ -355,7 +350,7 @@ public class ConcreteRiskMediator extends RiskMediator {
                 this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.freeTanks.size(), this.currentStage.toString());
             }
             for (SymbolCard symbolCard : tris) {
-                this.game.getSymbolDeck().addCard(symbolCard);
+                this.game.getSymbolsDeck().addCard(symbolCard);
                 this.currentPlayer.getCards().remove(symbolCard);
             }
         }
@@ -370,7 +365,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         }
         return false;
     }
-    
+
     @Override
     public void putTank(Territory territory) {
         territory.getTanks().add(this.currentPlayer.getFreeTanks().remove(0));
@@ -429,7 +424,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         if ( from.getOwnerPlayer().equals(this.humanPlayer) || to.getOwnerPlayer().equals(this.humanPlayer)) {
             this.showDice(numberOfComparisons);
         }
-        */
+         */
         int[] result = this.compareDice(numberOfComparisons);
         this.removeTanks(from, result[0]);
         this.removeTanks(to, result[1]);
@@ -440,7 +435,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         this.notifyObservers("Result of the clash: " + this.currentPlayer.getName() + " lost "
                 + result[0] + " tank(s), " + attackedPlayer.toString() + " " + result[1]);
     }
-    
+
     protected int[] compareDice(int numberOfComparisons) {
         int howManyLoseAttacking = 0;
         int howManyLoseAttacked = 0;
@@ -483,7 +478,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             }
         }
     }
-    
+
     protected Boolean checkEnd() {
         Player winnerPlayer = null;
         for (Player player : this.players) {
@@ -532,10 +527,10 @@ public class ConcreteRiskMediator extends RiskMediator {
             attackedPlayer.getContinents().remove(territory.getContinent());
         }
     }
-    
+
     @Override
     public void playHumanPlayer(List<Territory> involvedTerritories) {
         this.currentStage.play(involvedTerritories);
-    }    
-    
+    }
+
 }

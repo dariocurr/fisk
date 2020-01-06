@@ -5,37 +5,41 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.*;
-import javax.swing.*;
-import java.io.*;
-import java.util.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class BoardPanel extends JPanel {
 
-    protected static final String TERRITORIES_BUTTON_FILE = "res/territory_button.txt";
-    protected static final String BACKGROUND_IMAGE_FILE = "res/background.jpg";
-    protected static final Image BACKGROUND_IMAGE = ImageLoader.loadImage(BACKGROUND_IMAGE_FILE);
-    protected final Image SCALED_IMAGE;
-    protected final List<TerritoryButton> TERRITORY_BUTTONS;
-    protected final Integer WIDTH;
-    protected final Integer HEIGHT;
-    protected final List<Territory> TERRITORIES;
-    protected final Map<Continent, Integer> CONTINENT_BONUS;
+    protected static final Image BACKGROUND_IMAGE = ImageLoader.loadImage(Resource.BACKGROUND_IMAGE_FILE);
+    protected final Image scaledImage;
+    protected final List<TerritoryButton> territoriesButtons;
+    protected final Integer width;
+    protected final Integer height;
+    protected final List<Territory> territories;
+    protected final Map<Continent, Integer> continentsBonus;
     protected final RiskFacade facade;
 
-    public BoardPanel(RiskFacade facade, int width, int height, List<Territory> territories, Map<Continent, Integer> CONTINENT_BONUS) {
+    public BoardPanel(RiskFacade facade, int width, int height, List<Territory> territories, Map<Continent, Integer> continentsBonus) {
         super();
-        this.WIDTH = width;
-        this.HEIGHT = height;
-        this.CONTINENT_BONUS = CONTINENT_BONUS;
+        this.width = width;
+        this.height = height;
+        this.continentsBonus = continentsBonus;
         this.facade = facade;
-        this.setPreferredSize(new Dimension(this.WIDTH, this.HEIGHT));
-        this.SCALED_IMAGE = BoardPanel.BACKGROUND_IMAGE.getScaledInstance(this.WIDTH, this.HEIGHT, 0);
-        this.TERRITORIES = territories;
-        this.TERRITORY_BUTTONS = new ArrayList<>();
+        this.setPreferredSize(new Dimension(this.width, this.height));
+        this.scaledImage = BoardPanel.BACKGROUND_IMAGE.getScaledInstance(this.width, this.height, 0);
+        this.territories = territories;
+        this.territoriesButtons = new ArrayList<>();
         this.initTerritoryButtons();
         this.setLayout(null);
-        for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
+        for (TerritoryButton territoryButton : this.territoriesButtons) {
             territoryButton.setBounds(territoryButton.getPositionX(),
                     territoryButton.getPositionY(),
                     territoryButton.getWidth(),
@@ -48,7 +52,7 @@ public class BoardPanel extends JPanel {
 
     protected void initTerritoryButtons() {
         try {
-            Scanner in = new Scanner(new File(TERRITORIES_BUTTON_FILE));
+            Scanner in = new Scanner(new File(Resource.TERRITORIES_BUTTON_FILE));
             while (in.hasNextLine()) {
                 String line = in.nextLine();
                 String[] splitted_line = line.split(",");
@@ -58,17 +62,57 @@ public class BoardPanel extends JPanel {
                         Integer.parseInt(splitted_line[2].trim()),
                         Integer.parseInt(splitted_line[3].trim()),
                         Integer.parseInt(splitted_line[4].trim()));
-                this.TERRITORY_BUTTONS.add(t);
+                this.territoriesButtons.add(t);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File " + TERRITORIES_BUTTON_FILE + " not found!");
+            System.out.println("File " + Resource.TERRITORIES_BUTTON_FILE + " not found!");
+        }
+    }
+
+    protected void drawLinesBetweenTerritories(Graphics g) {
+        try {
+            Scanner in = new Scanner(new File(Resource.LINES_BETWEEN_TERRITORIES_FILE));
+            while (in.hasNextLine()) {
+                String line = in.nextLine();
+                String[] splitted_line = line.split(",");
+                splitted_line[0] = splitted_line[0].trim();
+                splitted_line[1] = splitted_line[1].trim();
+                Integer x1, y1, x2, y2;
+                TerritoryButton firstTerritoryButton = this.fromTerritoryToTerritoryButton(this.fromStringToTerritory(splitted_line[0]));
+                x1 = firstTerritoryButton.getPositionX() + (firstTerritoryButton.getWidth() / 2);
+                y1 = firstTerritoryButton.getPositionY() + (firstTerritoryButton.getHeight() / 2);
+                if ((splitted_line[1].equalsIgnoreCase("LEFT")) || (splitted_line[1].equalsIgnoreCase("RIGHT"))) {
+                    if (splitted_line[1].equalsIgnoreCase("LEFT")) {
+                        x2 = 0;
+                    } else {
+                        x2 = this.width;
+                    }
+                    y2 = y1;
+                } else {
+                    TerritoryButton secondTerritoryButton = this.fromTerritoryToTerritoryButton(this.fromStringToTerritory(splitted_line[1]));
+                    x2 = secondTerritoryButton.getPositionX() + (secondTerritoryButton.getWidth() / 2);
+                    y2 = secondTerritoryButton.getPositionY() + (secondTerritoryButton.getHeight() / 2);
+                }
+                g.drawLine(x1, y1, x2, y2);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File " + Resource.LINES_BETWEEN_TERRITORIES_FILE + " not found!");
         }
     }
 
     protected Territory fromStringToTerritory(String territoryName) {
-        for (Territory territory : this.TERRITORIES) {
+        for (Territory territory : this.territories) {
             if (territory.getName().equalsIgnoreCase(territoryName.trim())) {
                 return territory;
+            }
+        }
+        return null;
+    }
+
+    protected TerritoryButton fromTerritoryToTerritoryButton(Territory territory) {
+        for (TerritoryButton territoryButton : this.territoriesButtons) {
+            if (territoryButton.getTerritory().equals(territory)) {
+                return territoryButton;
             }
         }
         return null;
@@ -77,22 +121,22 @@ public class BoardPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(this.SCALED_IMAGE, 0, 0, null);
+        g.drawImage(this.scaledImage, 0, 0, null);
+        drawLinesBetweenTerritories(g);
     }
 
     protected void addContinentsBonusLabels() {
         Integer counter = 0;
-        Integer x = this.WIDTH - (this.WIDTH * 5 / 16);
-        Integer y = (this.HEIGHT * 73 / 72) - this.HEIGHT / 5;
-        Integer numberOfContinents = this.CONTINENT_BONUS.keySet().size();
+        Integer x = this.width - (this.width * 5 / 16);
+        Integer y = (this.height * 73 / 72) - this.height / 5;
         Font font = new Font("", Font.ITALIC + Font.BOLD, 14);
         Color brownColor = new Color(68, 48, 34);
-        for (Continent continent : this.CONTINENT_BONUS.keySet()) {
+        for (Continent continent : this.continentsBonus.keySet()) {
             JLabel nameContinentLabel = new JLabel(continent.getName());
             nameContinentLabel.setFont(font);
             nameContinentLabel.setForeground(brownColor);
             nameContinentLabel.setBounds(x, y + 20 * counter, 150, 20);
-            JLabel bonusContinentLabel = new JLabel(this.CONTINENT_BONUS.get(continent).toString());
+            JLabel bonusContinentLabel = new JLabel(this.continentsBonus.get(continent).toString());
             bonusContinentLabel.setFont(font);
             bonusContinentLabel.setForeground(brownColor);
             bonusContinentLabel.setBounds(x + 150, y + 20 * counter, 30, 20);
@@ -103,7 +147,7 @@ public class BoardPanel extends JPanel {
     }
 
     protected void addListeners() {
-        for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
+        for (TerritoryButton territoryButton : this.territoriesButtons) {
             territoryButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent ae) {
@@ -115,7 +159,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void updateLabels(List<Territory> territories) {
-        for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
+        for (TerritoryButton territoryButton : this.territoriesButtons) {
             if (territories.contains(territoryButton.getTerritory())) {
                 territoryButton.updateNumberTanksLabel();
             }
@@ -123,7 +167,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void setClickableTerritories(List<Territory> territories) {
-        for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
+        for (TerritoryButton territoryButton : this.territoriesButtons) {
             if (territories.contains(territoryButton.getTerritory())) {
                 territoryButton.setEnabled(true);
             } else {
@@ -133,7 +177,7 @@ public class BoardPanel extends JPanel {
     }
 
     public void updateColors(List<Territory> territories) {
-        for (TerritoryButton territoryButton : this.TERRITORY_BUTTONS) {
+        for (TerritoryButton territoryButton : this.territoriesButtons) {
             if (territories.contains(territoryButton.getTerritory())) {
                 territoryButton.updateColor();
             }

@@ -2,10 +2,6 @@ package risk;
 
 import java.util.List;
 
-/**
-	Carte degli obiettivi dei continenti da conquistare.
-*/
-
 public class ContinentsGoalCard extends GoalCard<List<Continent>> {
 
     public ContinentsGoalCard(List<Continent> continents) {

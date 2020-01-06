@@ -2,10 +2,6 @@ package risk;
 
 import java.util.Collections;
 
-/**
-    Classe che rappresenta il mazzo delle carte dei simboli.
-*/
-
 public abstract class SymbolsDeck extends Deck<SymbolCard> {
 
     public SymbolsDeck(TerritoriesDeck territoryDeck, Integer numberOfJokers) {

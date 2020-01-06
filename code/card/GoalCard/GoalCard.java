@@ -1,9 +1,5 @@
 package risk;
 
-/**
-	Classe che rappresenta una carta dell'obiettivo.
-*/
-
 public abstract class GoalCard<T> extends Card<T> {
 
     public GoalCard(T goal) {

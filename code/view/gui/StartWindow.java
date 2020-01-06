@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,22 +15,17 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-/**
-    Classe che implementa l'interfaccia grafica per la scelta del nome del giocatore reale,
-    per la scelta del numero di giocatori e per la scelta dello stile di gioco dei giocatori virtuali.
-*/
-
 public class StartWindow extends JFrame {
 
     public static final RiskStrategy[] ALL_POSSIBLE_STRATEGIES = StartWindow.initStrategies();
-    private static final Integer WIDTH = 350;
-    private static final Integer HEIGHT = 220;
-    private final JTextField nameTextField;
-    private final JComboBox<RiskColor> playerColorList;
-    private final JComboBox<Integer> numberOfVirtualPlayersList;
-    private final Map<JLabel, JComboBox<RiskStrategy>> virtualPlayers;
-    private final JButton startButton;
-    private final RiskFacade facade;
+    protected final Integer width = 350;
+    protected final Integer height = 220;
+    protected final JTextField nameTextField;
+    protected final JComboBox<RiskColor> playerColorList;
+    protected final JComboBox<Integer> numberOfVirtualPlayersList;
+    protected final Map<JLabel, JComboBox<RiskStrategy>> virtualPlayers;
+    protected final JButton startButton;
+    protected final RiskFacade facade;
 
     public StartWindow(RiskFacade facade) {
         this.setTitle("Let's play risk!");
@@ -57,23 +51,18 @@ public class StartWindow extends JFrame {
         this.add(this.startButton);
         this.startButton.setEnabled(false);
         this.addListeners();
-        this.virtualPlayers = new TreeMap<>(new Comparator<JLabel>() {
-            @Override
-            public int compare(JLabel label1, JLabel label2) {
-                return label1.getText().compareToIgnoreCase(label2.getText());
-            }
-        });
+        this.virtualPlayers = new TreeMap<>((JLabel label1, JLabel label2) -> label1.getText().compareToIgnoreCase(label2.getText()));
         this.updateFrame((Integer) this.numberOfVirtualPlayersList.getSelectedItem());
     }
 
-    private void defaultOperations() {
+    protected void defaultOperations() {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
-    private void addListeners() {
+    protected void addListeners() {
         this.nameTextField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent de) {
@@ -116,7 +105,7 @@ public class StartWindow extends JFrame {
         });
     }
 
-    private void updateFrame(Integer numberOfVirtualPlayers) {
+    protected void updateFrame(Integer numberOfVirtualPlayers) {
         this.remove(this.startButton);
         for (JLabel label : this.virtualPlayers.keySet()) {
             this.remove(label);
@@ -133,11 +122,11 @@ public class StartWindow extends JFrame {
             this.add(this.virtualPlayers.get(label));
         }
         this.add(this.startButton);
-        this.setSize(StartWindow.WIDTH, StartWindow.HEIGHT + numberOfVirtualPlayers * 45);
+        this.setSize(this.width, this.height + numberOfVirtualPlayers * 45);
         this.defaultOperations();
     }
 
-    private JComboBox<RiskStrategy> getRiskStrategyComboBox() {
+    protected JComboBox<RiskStrategy> getRiskStrategyComboBox() {
         JComboBox<RiskStrategy> temp = new JComboBox<>(StartWindow.ALL_POSSIBLE_STRATEGIES);
         temp.setSelectedIndex(1);
         return temp;
