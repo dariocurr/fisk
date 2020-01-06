@@ -1,5 +1,9 @@
 package risk;
 
+/**
+    Classe che rappresenta una carta dei simboli.
+*/
+
 public abstract class SymbolCard extends Card<Symbol> implements Comparable<SymbolCard> {
 
     public SymbolCard(Symbol symbol) {
@@ -17,14 +21,6 @@ public abstract class SymbolCard extends Card<Symbol> implements Comparable<Symb
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj != null) {
-            if (obj instanceof SymbolCard) {
-                SymbolCard otherSymbolCard = (SymbolCard) obj;
-                return this.card.equals(otherSymbolCard.card);
-            }
-        }
-        return false;
-    }
+    public abstract boolean equals(Object obj);
 
 }

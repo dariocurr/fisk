@@ -6,8 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+	Classe che implementa le strategie di gioco dei player virtuali.
+*/
+
 public abstract class RiskStrategy {
 
+	/**
+		Dato il giocatore corrente, restituisce il territorio su cui posizionare un' armata.
+		Se il territorio con il minimo numero di armate è unico allora verrà scelto come territorio su cui posizionare la prossima armata;
+		altrimenti verrà scelto il territorio più affine all'obiettivo da raggiungere.
+		@param player player corrente
+		@return territorio su cui posizionare un armata
+	*/
     public Territory addTank(Player player) {
         List<Territory> territoriesWithMinimumTanks = this.getTerritoriesWithMinumumTanks(player.getTerritories());
         if (territoriesWithMinimumTanks.size() == 1) {
@@ -56,6 +67,15 @@ public abstract class RiskStrategy {
         return territoriesWithMinimumTanks.get(0);
     }
 
+    /**
+    	Metodo che dato il player corrente restituisce la lista dei territorio coinvoti nell'attacco.
+    	Il primo territorio è il territorio da cui attaccherà, il secondo sarà quello da attaccare.
+    	La scelta dei due territori è basata sulla differenza di armate poste nel territorio posseduto e nel territorio nemico.
+    	Se per una ed una sola certa coppia di territori tale differenza è massima allora verrà scelta tale coppia,
+    	altrimenti la scelta verrà effettuata in base all'affinità con l'obiettivo da perseguire.
+    	@param player giocatore corrente
+    	@return lista dei territori coinvolti nell'attacco
+    */
     public List<Territory> attack(Player player) {
         List<Territory> territoriesInvolvedAttack = new ArrayList<>();
         Map<Territory, Territory> bestAttacks = this.getPossibleBestAttacks(player.getTerritories());
@@ -131,6 +151,15 @@ public abstract class RiskStrategy {
         return territoriesInvolvedAttack;
     }
 
+    /**
+		Metodo che dato il player corrente restituisce la lista dei territori coinvoti nello spostamento.
+    	Il primo territorio è il territorio da cui verranno spostate le armate, il secondo sarà quello di destinazione.
+    	La scelta dei due territori è basata sulla differenza di armate poste nel territorio di partenza e nel territorio di arrivo.
+    	Se per una ed una sola certa coppia di territori tale differenza è massima allora verrà scelta tale coppia,
+    	altrimenti la scelta verrà effettuata in base all'affinità con l'obiettivo da perseguire.
+    	@param player giocatore corrente
+    	@return lista dei territori coinvolti nello spostamento
+    */
     public List<Territory> moveTanks(Player player) {
         List<Territory> territoriesInvolvedMoving = new ArrayList<>();
         Map<Territory, Territory> bestMovings = this.getPossibleBestMovings(player.getTerritories());
@@ -200,6 +229,11 @@ public abstract class RiskStrategy {
         return territoriesInvolvedMoving;
     }
 
+    /**
+		Dati i territori di partenza e di arrivo, restituisce il numero di armate da spostare.
+		@param territories lista dei territori coinvolti nello spostamento
+		@return numero di armate da spostare
+    */
     public Integer getNumberOfTanksToMove(List<Territory> territories) {
         if (territories.size() == 2) {
             return (territories.get(0).getTanks().size() - territories.get(1).getTanks().size()) / 2;
@@ -214,7 +248,7 @@ public abstract class RiskStrategy {
     }
 
     protected abstract String getStrategyName();
-
+    
     protected abstract Boolean wantToAttack(Integer delta, Integer numberOfTanksToAttack);
 
 }

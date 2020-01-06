@@ -1,9 +1,11 @@
 package risk;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+/**
+    Classe che implementa l'interfaccia RiskFacade per interfacciarsi con una GUI.
+*/
 
 public class GUIRiskFacade implements RiskFacade {
 

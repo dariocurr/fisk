@@ -1,5 +1,9 @@
 package risk;
 
+/**
+	Concretizzazione del mazzo delle carte dei simboli.
+*/
+
 public class ConcreteSymbolsDeck extends SymbolsDeck {
 
     public ConcreteSymbolsDeck(TerritoriesDeck territoryDeck) {

@@ -46,9 +46,9 @@ public class ConcreteGameBuilder implements GameBuilder {
     @Override
     public Game buildGame() {
         return new ConcreteGame(this.trisBonus, this.continentsBonus, this.territories,
-                this.continents, this.attackDice, this.defenseDice,
-                this.goalsDeck, this.territoriesDeck, this.symbolDeck,
-                this.tanksPolls);
+                                this.continents, this.attackDice, this.defenseDice,
+                                this.goalsDeck, this.territoriesDeck, this.symbolDeck,
+                                this.tanksPolls);
     }
 
     protected void initGame() {

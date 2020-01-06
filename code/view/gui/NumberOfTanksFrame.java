@@ -1,24 +1,21 @@
 package risk;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Dictionary;
-import java.util.Hashtable;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.*;
+
+/**
+	Classe che implementa l'interfaccia grafica per la scelta del numero di armate
+	da spostare in un territorio appena conquistato.
+*/
 
 public class NumberOfTanksFrame extends JDialog {
 
-    protected final Integer height = 220;
-    protected final JButton moveButton;
-    protected final JSlider numberOfTanksSlider;
-    protected final RiskFacade facade;
+    private static final Integer HEIGHT = 220;
+    private final JButton moveButton;
+    private final JSlider numberOfTanksSlider;
+    private final RiskFacade facade;
 
     public NumberOfTanksFrame(RiskFacade facade, String territory, Integer min, Integer max) {
         super();
@@ -40,19 +37,19 @@ public class NumberOfTanksFrame extends JDialog {
         this.add(request);
         this.add(this.numberOfTanksSlider);
         this.add(this.moveButton);
-        this.setSize(componentMaxWidth + 50, this.height);
+        this.setSize(componentMaxWidth + 50, NumberOfTanksFrame.HEIGHT);
         this.addButtonListener();
         this.defaultOperations();
     }
 
-    protected void defaultOperations() {
+    private void defaultOperations() {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
     }
 
-    protected void addButtonListener() {
+    private void addButtonListener() {
         this.moveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

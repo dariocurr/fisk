@@ -1,31 +1,28 @@
 package risk;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+/**
+    Classe che implementa l'interfaccia grafica per la visualizzazione 
+    dei dadi estratti durante una battaglia.
+*/
 
 public class RollFrame extends JDialog {
 
-    protected final Integer width = 300;
-    protected final Integer height = 300;
+    protected static final Integer WIDTH = 300;
+    protected static final Integer HEIGHT = 300;
     protected final JButton rollButton;
     protected final JButton exitButton;
-    protected final JLabel[] attackLabels;
-    protected final JLabel[] defenseLabels;
+    protected final JLabel[] ATTACK_LABEL;
+    protected final JLabel[] DEFENSE_LABEL;
     protected final RiskFacade facade;
-    protected final Dice[] attackDiceValues;
-    protected final Dice[] defenseDiceValues;
-    protected final Integer numberOfRolledDice;
-    protected Boolean isAttackDiceUpdated;
-    protected Boolean isDefenseDiceUpdated;
+    protected Dice[] attackDiceValues;
+    protected Dice[] defenseDiceValues;
+    protected boolean isAttackDiceUpdated = false;
+    protected boolean isDefenseDiceUpdated = false;
+    protected Integer numberOfRolledDice;
 
     public RollFrame(RiskFacade facade, int numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues) {
         super();
@@ -36,26 +33,24 @@ public class RollFrame extends JDialog {
         this.attackDiceValues = attackDiceValues;
         this.defenseDiceValues = defenseDiceValues;
         this.setLayout(new GridLayout(3, 1));
-        int hgap = this.width / 10;
-        int vgap = this.height / 15;
+        int hgap = RollFrame.WIDTH / 10;
+        int vgap = RollFrame.HEIGHT / 15;
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER, hgap, vgap));
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, hgap, vgap));
         JPanel downPanel = new JPanel();
         downPanel.setLayout(new FlowLayout(FlowLayout.CENTER, hgap * 2, vgap * 2));
-        this.attackLabels = new JLabel[3];
-        this.defenseLabels = new JLabel[3];
-        for (int i = 0; i < this.attackLabels.length; i++) {
-            this.attackLabels[i] = new JLabel();
-            topPanel.add(this.attackLabels[i]);
+        this.ATTACK_LABEL = new JLabel[3];
+        this.DEFENSE_LABEL = new JLabel[3];
+        for (int i = 0; i < this.ATTACK_LABEL.length; i++) {
+            this.ATTACK_LABEL[i] = new JLabel();
+            topPanel.add(this.ATTACK_LABEL[i]);
         }
-        for (int i = 0; i < this.defenseLabels.length; i++) {
-            this.defenseLabels[i] = new JLabel();
-            centerPanel.add(this.defenseLabels[i]);
+        for (int i = 0; i < this.DEFENSE_LABEL.length; i++) {
+            this.DEFENSE_LABEL[i] = new JLabel();
+            centerPanel.add(this.DEFENSE_LABEL[i]);
         }
-        this.isAttackDiceUpdated = false;
-        this.isDefenseDiceUpdated = false;
         this.rollButton = new JButton("Roll");
         this.exitButton = new JButton("Exit");
         downPanel.add(this.rollButton);
@@ -63,7 +58,7 @@ public class RollFrame extends JDialog {
         this.add(topPanel);
         this.add(centerPanel);
         this.add(downPanel);
-        this.setSize(this.width, this.height);
+        this.setSize(RollFrame.WIDTH, RollFrame.HEIGHT);
         this.addListeners();
         this.defaultOperations();
     }
@@ -95,31 +90,41 @@ public class RollFrame extends JDialog {
         });
     }
 
+    /*protected void updateFrame(Integer[] diceValues) {
+        for (int i = 0; i < diceValues.length; i++) {
+            this.ATTACK_LABEL[i].setIcon(new ImageIcon(this.getAttackDice(diceValues[i])));
+        }
+        
+        for (int i = 0; i < this.DEFENSE_DICE.length; i++) {
+            this.DEFENSE_LABEL[i].setIcon(new ImageIcon(this.getDefenseDice(this.DEFENSE_DICE[i].getValue())));
+        }
+         
+    }*/
     protected void updateAttackDiceFrame() {
         this.isAttackDiceUpdated = true;
         for (int i = 0; i < this.numberOfRolledDice; i++) {
-            this.attackLabels[i].setIcon(new ImageIcon(this.getAttackDice(this.attackDiceValues[i].getValue())));
+            this.ATTACK_LABEL[i].setIcon(new ImageIcon(this.getAttackDice(this.attackDiceValues[i].getValue())));
         }
     }
 
     protected void updateDefenseDiceFrame() {
         this.isDefenseDiceUpdated = true;
         for (int i = 0; i < this.numberOfRolledDice; i++) {
-            this.defenseLabels[i].setIcon(new ImageIcon(this.getDefenseDice(this.defenseDiceValues[i].getValue())));
+            this.DEFENSE_LABEL[i].setIcon(new ImageIcon(this.getDefenseDice(this.defenseDiceValues[i].getValue())));
         }
     }
 
     protected Image getAttackDice(Integer value) {
-        String path = Resource.RED_DICE_PATH;
+        String path = "res/dice/red_dice_";
         path += String.valueOf(value);
-        path += Resource.DICE_IMAGES_EXTENSION;
+        path += ".png";
         return ImageLoader.loadImage(path);
     }
 
     protected Image getDefenseDice(Integer value) {
-        String path = Resource.WHITE_DICE_PATH;
+        String path = "res/dice/white_dice_";
         path += String.valueOf(value);
-        path += Resource.DICE_IMAGES_EXTENSION;
+        path += ".png";
         return ImageLoader.loadImage(path);
     }
 

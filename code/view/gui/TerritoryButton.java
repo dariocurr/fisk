@@ -1,25 +1,24 @@
 package risk;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.awt.*;
+import javax.swing.*;
+
+/**
+    Classe che realizza un bottone per ogni territorio della board di gioco.
+*/
 
 public class TerritoryButton extends JButton {
 
-    protected static final Image TANK_IMAGE = ImageLoader.loadImage(Resource.TANK_IMAGE_FILE);
-    protected final Integer positionX;
-    protected final Integer positionY;
-    protected final Integer width;
-    protected final Integer height;
+    protected static final String TANK_IMAGE_FILE = "res/tank.png";
+    protected final static Image TANK_IMAGE = ImageLoader.loadImage(TANK_IMAGE_FILE);
+    protected final int positionX;
+    protected final int positionY;
+    protected final int width;
+    protected final int height;
     protected final Territory territory;
     protected final JLabel numberTanks;
 
-    public TerritoryButton(Territory territory, Integer x, Integer y, Integer width, Integer height) {
+    public TerritoryButton(Territory territory, int x, int y, int width, int height) {
         super();
         double resize = 1.35;
         this.territory = territory;
@@ -29,7 +28,7 @@ public class TerritoryButton extends JButton {
         this.height = (int) (height * resize);
         this.setPreferredSize(new Dimension(this.width, this.height));
         this.setForeground(Color.WHITE);
-        Image scaledImage = this.TANK_IMAGE.getScaledInstance(15, 15, 0);
+        Image scaledImage = TerritoryButton.TANK_IMAGE.getScaledInstance(15, 15, 0);
         this.setLayout(new BorderLayout());
         this.numberTanks = new JLabel(new ImageIcon(scaledImage));
         this.numberTanks.setText(" " + this.territory.getTanks().size());
@@ -39,24 +38,27 @@ public class TerritoryButton extends JButton {
         this.add(this.numberTanks, BorderLayout.CENTER);
     }
 
-    public Integer getPositionX() {
-        return this.positionX;
+    public int getPositionX() {
+        return positionX;
     }
 
-    public Integer getPositionY() {
-        return this.positionY;
+    public int getPositionY() {
+        return positionY;
     }
 
     @Override
     public int getWidth() {
-        return this.width;
+        return width;
     }
 
     @Override
     public int getHeight() {
-        return this.height;
+        return height;
     }
 
+    /**
+        Restituisce il territorio associato a questo bottone.
+    */
     public Territory getTerritory() {
         return this.territory;
     }
@@ -66,10 +68,16 @@ public class TerritoryButton extends JButton {
         return this.territory.getName() + " " + this.positionX + " " + this.positionY;
     }
 
+    /**
+        Aggiorna il numero di armate poste in questo territorio.
+    */
     public void updateNumberTanksLabel() {
         this.numberTanks.setText(" " + this.territory.getTanks().size());
     }
 
+    /**
+        Aggiorna il colore di questo territorio.
+    */
     public void updateColor() {
         this.setBackground(this.territory.getOwnerPlayer().getColor().getColor());
     }

@@ -8,6 +8,9 @@ public class ConcreteContinent extends Continent {
         super(continentName, territories);
     }
 
+    /**
+        Uguaglianza basata sul nome.
+    */
     @Override
     public boolean equals(Object obj) {
         if (obj != null) {

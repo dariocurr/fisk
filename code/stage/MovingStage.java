@@ -8,7 +8,11 @@ public class MovingStage extends TwoActionsStage {
     public MovingStage(RiskMediator mediator) {
         super(mediator);
     }
-
+    
+    /**
+        Permette di spostare un certo numero di armate da un territorio posseduto ad un altro ad esso confinante.
+        @param involvedTerritories territori coninvolti
+    */
     @Override
     public void play(List<Territory> involvedTerritories) {
         if (involvedTerritories.size() == 2) {
@@ -46,6 +50,9 @@ public class MovingStage extends TwoActionsStage {
         return "Moving " + super.toString();
     }
 
+    /**
+        Rende selezionabili solo i territori posseduti dal giocatore corrente.
+    */
     @Override
     public void setAvailableTerritories() {
         List<Territory> availableTerritories = new ArrayList<>();
@@ -66,6 +73,9 @@ public class MovingStage extends TwoActionsStage {
         this.mediator.getFacade().setAvailableTerritories(availableTerritories);
     }
 
+    /**
+        Rende selezionabili solo i territori confinanti al primo selezionato.
+    */
     @Override
     public void setAvailableTerritoriesAfterFirstAction(Territory involvedterritory) {
         List<Territory> availableTerritories = new ArrayList<>();

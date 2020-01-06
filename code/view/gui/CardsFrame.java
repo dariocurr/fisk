@@ -4,19 +4,17 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.util.*;
+import javax.swing.*;
+
+/**
+	Classe che implementa l'interfaccia grafica per la scelta e la visualizzazione 
+	delle carte dei territori possedute dal giocatore reale.
+*/
 
 public class CardsFrame extends JFrame {
 
-    protected final Integer width = 400;
+    protected static final Integer WIDTH = 400;
     protected final Map<JCheckBox, SymbolCard> checkBoxes;
     protected final JButton changeTrisButton;
     protected final JLabel status;
@@ -40,7 +38,7 @@ public class CardsFrame extends JFrame {
         this.changeTrisButton.setEnabled(false);
         this.add(this.changeTrisButton);
         this.addListeners();
-        this.setSize(this.width, 150 + this.checkBoxes.size() * 55);
+        this.setSize(CardsFrame.WIDTH, 150 + this.checkBoxes.size() * 55);
         this.defaultOperations();
     }
 
@@ -64,7 +62,7 @@ public class CardsFrame extends JFrame {
                         }
                     }
                     if (counter == 3) {
-                        List<SymbolCard> temp = new ArrayList<>();
+                        ArrayList<SymbolCard> temp = new ArrayList<>();
                         for (JCheckBox cb : checkBoxes.keySet()) {
                             if (cb.isSelected()) {
                                 temp.add(checkBoxes.get(cb));

@@ -1,6 +1,6 @@
 Alaska,Alberta,Northwest Territory,Kamchatka
 Alberta,Alaska,Northwest Territory,Ontario,Western United States
-Central America,Western United States,Venezuela,Eastern United States
+Central America,Western United States,Venezuela
 Eastern United States,Western United States,Ontario,Quebec
 Greenland,Northwest Territory,Ontario,Quebec,Iceland
 Northwest Territory,Alaska,Greenland,Ontario,Alberta
@@ -15,7 +15,7 @@ Great Britain,Iceland,Scandinavia,Northern Europe,Western Europe
 Iceland,Greenland,Great Britain
 Northern Europe,Great Britain,Ukraine,Southern Europe,Western Europe
 Scandinavia,Great Britain,Ukraine
-Southern Europe,Western Europe,Northern Europe,Ukraine,Egypt,North Africa,Middle East
+Southern Europe,Western Europe,Northern Europe,Ukraine,Egypt,North Africa
 Ukraine,Scandinavia,Ural,Afghanistan,Middle East,Southern Europe,Northern Europe
 Western Europe,Great Britain,Northern Europe,Southern Europe,North Africa
 Congo,North Africa,Egypt,East Africa,South Africa
@@ -30,7 +30,7 @@ India,Middle East,Afghanistan,China,Siam
 Irkutsk,Siberia,Yakutsk,Kamchatka,Mongolia
 Japan,Kamchatka,Mongolia
 Kamchatka,Yakutsk,Alaska,Japan,Mongolia,Irkutsk
-Middle East,Ukraine,Afghanistan,India,Egypt,Southern Europe
+Middle East,Ukraine,Afghanistan,India,Egypt
 Mongolia,Siberia,Irkutsk,Kamchatka,Japan,China
 Siam,India,China,Indonesia
 Siberia,Ural,Yakutsk,Irkutsk,Mongolia,China,Afghanistan

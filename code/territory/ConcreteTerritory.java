@@ -6,6 +6,9 @@ public class ConcreteTerritory extends Territory {
         super(territoryName);
     }
 
+    /**
+        Uguaglianza basata sul nome.
+    */
     @Override
     public boolean equals(Object obj) {
         if (obj != null) {

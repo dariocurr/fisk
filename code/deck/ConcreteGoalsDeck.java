@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+    Concretizzazione del mazzo delle carte degli obiettivi.
+*/
+
 public class ConcreteGoalsDeck extends GoalsDeck {
 
     public ConcreteGoalsDeck(List<Continent> continents, List<Territory> territories) {

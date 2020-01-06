@@ -3,6 +3,10 @@ package risk;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+    Classe che modella un giocatore.
+*/
+
 public abstract class Player {
 
     protected final String name;
@@ -13,6 +17,12 @@ public abstract class Player {
     protected final List<SymbolCard> cards;
     protected GoalCard goal;
 
+    /**
+        Costruttore della classe.
+        Specifica il nome del giocatore e il colore.
+        @param name nome del giocatore
+        @param color colore del giocatore
+    */
     public Player(String name, RiskColor color) {
         this.name = name;
         this.color = color;
@@ -22,6 +32,11 @@ public abstract class Player {
         this.cards = new ArrayList<>();
     }
 
+    /**
+        Lancia i dadi, prendendo a parametro gli stessi e il numero di lanci da effettuare.
+        @param dices dadi da lanciare
+        @param rolls numero di lanci
+    */
     public void rollDice(Dice[] dices, int rolls) {
         for (int i = 0; i < rolls; i++) {
             dices[i].roll();
@@ -31,30 +46,58 @@ public abstract class Player {
         }
     }
 
+    /**
+        Restituisce il nome del giocatore.
+        @return nome del giocatore
+    */
     public String getName() {
         return this.name;
     }
 
+    /**
+        Restituisce le carte del giocatore.
+        @return lista delle carte
+    */
     public List<SymbolCard> getCards() {
         return this.cards;
     }
 
+    /**
+        Restituisce la lista dei territori posseduti da questo giocatore.
+        @return lista dei territori del giocatore
+    */
     public List<Territory> getTerritories() {
         return this.territories;
     }
 
+    /**
+        Restituisce la lista dei continenti posseduti da questo giocatore.
+        @return lista dei continenti del giocatore
+    */
     public List<Continent> getContinents() {
         return this.continents;
     }
 
+    /**
+        Restituisce la lista delle armate ancora da posizionare possedute da questo giocatore.
+        @return lista delle armate da posizionare del giocatore
+    */
     public List<Tank> getFreeTanks() {
         return this.freeTanks;
     }
 
+    /**
+        Setta la carta degli obiettivi di questo giocatore.
+        @param goal carta degli obiettivi per questo giocatore
+    */
     public void setGoal(GoalCard goal) {
         this.goal = goal;
     }
 
+    /**
+        Restituisce la carta degli obiettivi di questo giocatore.
+        @return la carta degli obiettivi
+    */
     public GoalCard getGoal() {
         return this.goal;
     }
@@ -64,10 +107,17 @@ public abstract class Player {
         return this.name + " (" + this.color + ")";
     }
 
+    /**
+        Restituisce il colore di questo giocatore.
+        @return colore di questo giocatore
+    */
     public RiskColor getColor() {
         return this.color;
     }
 
+    /**
+        Uguaglianza basata sul colore dei giocatori.
+    */
     @Override
     public boolean equals(Object obj) {
         if (obj != null) {

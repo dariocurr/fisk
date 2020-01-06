@@ -1,13 +1,25 @@
 package risk;
 
+/**
+    Classe parametrica che modella un tipo di carta.
+*/
+
 public abstract class Card<T> {
 
     protected T card;
 
+    /**
+        Istanzia un tipo di carta.
+        @param card carta da istanziare
+    */
     public Card(T card) {
         this.card = card;
     }
 
+    /**
+        Restituisce questa carta.
+        @return questa carta
+    */
     public T getCard() {
         return this.card;
     }
