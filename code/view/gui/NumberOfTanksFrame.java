@@ -13,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
+/**
+ * Classe che implementa l'interfaccia grafica per la scelta del numero di
+ * armate da spostare in un territorio appena conquistato.
+ */
 public class NumberOfTanksFrame extends JDialog {
 
     protected final Integer height = 220;

@@ -15,6 +15,11 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+/**
+ * Classe che implementa l'interfaccia grafica per la scelta del nome del
+ * giocatore reale, per la scelta del numero di giocatori e per la scelta dello
+ * stile di gioco dei giocatori virtuali.
+ */
 public class StartWindow extends JFrame {
 
     public static final RiskStrategy[] ALL_POSSIBLE_STRATEGIES = StartWindow.initStrategies();

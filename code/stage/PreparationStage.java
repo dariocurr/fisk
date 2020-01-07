@@ -2,14 +2,22 @@ package risk;
 
 import java.util.List;
 
+/**
+ * Classe che implementa la fase di preparazione del gioco, prima del suo
+ * inizio.
+ */
 public class PreparationStage extends Stage {
 
-    protected int counter = 0;
+    protected Integer counter = 0;
 
     public PreparationStage(RiskMediator mediator) {
         super(mediator);
     }
 
+    /**
+     * Permette di posizionare le proprie armate a tre a tre fino ad
+     * esaurimento, a turno per ogni giocatore.
+     */
     @Override
     public void play(List<Territory> involvedTerritories) {
         if (involvedTerritories.size() == 1) {
@@ -23,10 +31,19 @@ public class PreparationStage extends Stage {
         }
     }
 
-    public boolean checkEndStage() {
+    /**
+     * Verifica se è necessario passare il turno al prossimo giocatore o meno.
+     *
+     * @return restituisce true se il giocatore corrente ha posizionate le tre
+     * armate o se le ha terminate, false altrimenti.
+     */
+    protected boolean checkEndStage() {
         return (this.counter == 3) || (this.mediator.getCurrentPlayer().getFreeTanks().isEmpty());
     }
 
+    /**
+     * Rende cliccabili solo i territori posseduti dal giocatore corrente.
+     */
     @Override
     public void setAvailableTerritories() {
         this.mediator.getFacade().setAvailableTerritories(this.mediator.getCurrentPlayer().getTerritories());

@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe che implementa l'interfaccia GameBuilder, quindi capace di creare
+ * un'istanza della classe game.
+ */
 public class ConcreteGameBuilder implements GameBuilder {
 
     protected final List<Tris> allTris;
@@ -36,7 +40,7 @@ public class ConcreteGameBuilder implements GameBuilder {
             this.defenseDice[i] = new ConcreteClassicDice();
         }
         this.initGame();
-        this.goalsDeck = new ConcreteGoalsDeck(this.continents, this.territories);
+        this.goalsDeck = new ConcreteGoalsDeck(this.continents, this.territories.size());
         this.territoriesDeck = new ConcreteTerritoriesDeck(this.territories);
         this.symbolDeck = new ConcreteSymbolsDeck(this.territoriesDeck);
         this.tanksPolls = new HashMap<>();
@@ -60,7 +64,7 @@ public class ConcreteGameBuilder implements GameBuilder {
 
     protected void addTrisAndBonus() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.TRIS_BONUS_FILE));
+            BufferedReader reader = new BufferedReader(new FileReader(Resource.TRIS_BONUS_FILE));
             String line = reader.readLine();
             while (line != null) {
                 String[] splitted_line = line.split(",");
@@ -74,7 +78,7 @@ public class ConcreteGameBuilder implements GameBuilder {
             }
             this.allTris.addAll(this.trisBonus.keySet());
         } catch (FileNotFoundException ex) {
-            System.out.println("File " + GameBuilder.TRIS_BONUS_FILE + " not found!");
+            System.out.println("File " + Resource.TRIS_BONUS_FILE + " not found!");
         } catch (IOException ex) {
             System.out.println("IO error!");
         }
@@ -82,7 +86,7 @@ public class ConcreteGameBuilder implements GameBuilder {
 
     protected void addAdjacencies() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.ADJACENCIES_FILE));
+            BufferedReader reader = new BufferedReader(new FileReader(Resource.ADJACENCIES_FILE));
             String line = reader.readLine();
             while (line != null) {
                 String[] splitted_line = line.split(",");
@@ -92,7 +96,7 @@ public class ConcreteGameBuilder implements GameBuilder {
                 line = reader.readLine();
             }
         } catch (FileNotFoundException ex) {
-            System.out.println("File " + GameBuilder.ADJACENCIES_FILE + " not found!");
+            System.out.println("File " + Resource.ADJACENCIES_FILE + " not found!");
         } catch (IOException ex) {
             System.out.println("IO error!");
         }
@@ -106,7 +110,7 @@ public class ConcreteGameBuilder implements GameBuilder {
 
     protected void addContinentsAndTerritories() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.CONTINENTS_FILE));
+            BufferedReader reader = new BufferedReader(new FileReader(Resource.CONTINENTS_FILE));
             String line = reader.readLine();
             while (line != null) {
                 String[] splitted_line = line.split(",");
@@ -123,7 +127,7 @@ public class ConcreteGameBuilder implements GameBuilder {
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File " + GameBuilder.CONTINENTS_FILE + " not found!");
+            System.out.println("File " + Resource.CONTINENTS_FILE + " not found!");
         } catch (IOException ex) {
             System.out.println("IO error!");
         }
@@ -131,7 +135,7 @@ public class ConcreteGameBuilder implements GameBuilder {
 
     protected void addContinentsBonus() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(GameBuilder.CONTINENTS_BONUS_FILE));
+            BufferedReader reader = new BufferedReader(new FileReader(Resource.CONTINENTS_BONUS_FILE));
             String line = reader.readLine();
             while (line != null) {
                 String[] splitted_line = line.split(",");
@@ -139,7 +143,7 @@ public class ConcreteGameBuilder implements GameBuilder {
                 line = reader.readLine();
             }
         } catch (FileNotFoundException ex) {
-            System.out.println("File " + GameBuilder.CONTINENTS_BONUS_FILE + " not found!");
+            System.out.println("File " + Resource.CONTINENTS_BONUS_FILE + " not found!");
         } catch (IOException ex) {
             System.out.println("IO error!");
         }

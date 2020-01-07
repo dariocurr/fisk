@@ -12,6 +12,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Classe che implementa l'interfaccia grafica per la visualizzazione dei dadi
+ * estratti durante una battaglia.
+ */
 public class RollFrame extends JDialog {
 
     protected final Integer width = 300;

@@ -1,5 +1,8 @@
 package risk;
 
+/**
+ * Classe che concretizza il concetto di continente.
+ */
 import java.util.List;
 
 public class ConcreteContinent extends Continent {

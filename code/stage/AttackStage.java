@@ -3,12 +3,21 @@ package risk;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che implementa la fase di attacco di un turno di gioco.
+ */
 public class AttackStage extends TwoActionsStage {
 
     public AttackStage(RiskMediator mediator) {
         super(mediator);
     }
 
+    /**
+     * Permette di attaccare un territorio da uno posseduto dal giocatore
+     * corrente.
+     *
+     * @param involvedTerritories territori coninvolti
+     */
     @Override
     public void play(List<Territory> involvedTerritories) {
         if (involvedTerritories.size() == 2) {
@@ -16,7 +25,7 @@ public class AttackStage extends TwoActionsStage {
             Territory to = involvedTerritories.get(1);
             this.mediator.handleAttack(from, to);
             if (to.getTanks().isEmpty()) {
-                this.mediator.changeOwnerOfTerritory(to);
+                this.mediator.changeOwnerTerritory(to);
                 if (!this.mediator.IsEnded()) {
                     this.mediator.moveTanks(from, to, this.getNumberOfTanksToMove(involvedTerritories));
                 }

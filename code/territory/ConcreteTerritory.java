@@ -1,5 +1,8 @@
 package risk;
 
+/**
+ * Classe che concretizza il concetto di territorio.
+ */
 public class ConcreteTerritory extends Territory {
 
     public ConcreteTerritory(String territoryName) {

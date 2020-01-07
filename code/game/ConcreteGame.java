@@ -3,6 +3,9 @@ package risk;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe che concretizza la classe Game.
+ */
 public class ConcreteGame extends Game {
 
     public ConcreteGame(Map<Tris, Integer> trisBonus,
@@ -14,6 +17,13 @@ public class ConcreteGame extends Game {
         super(trisBonus, continentsBonus, territories, continents, attackDice, defenseDice, goaslDeck, territoriesDeck, symbolDeck, tanksPools);
     }
 
+    /**
+     * Concretizzazione del metodo abstract definito nella
+     * superclasse.Implementa le regole del Risiko classico.
+     *
+     * @param tris tris di cui si chiede il bonus corrispondente
+     * @return bonus corrispondente
+     */
     @Override
     public Integer getTrisBonus(Tris tris) {
         for (Tris validTris : this.trisBonus.keySet()) {
@@ -24,6 +34,13 @@ public class ConcreteGame extends Game {
         return null;
     }
 
+    /**
+     * Concretizzazione del metodo abstract definito nella superclasse.
+     * Implementa le regole del Risiko classico.
+     *
+     * @param continent continente di cui si chiede il bonus corrispondente
+     * @return bonus corrispondente
+     */
     @Override
     public Integer getContinentBonus(Continent continent) {
         for (Continent c : this.continentsBonus.keySet()) {

@@ -1,5 +1,8 @@
 package risk;
 
+/**
+ * Classe che permette di cominciare una partita di risiko
+ */
 public class StartRIskGUI implements Startable {
 
     @Override

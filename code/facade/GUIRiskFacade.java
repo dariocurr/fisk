@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Classe che implementa l'interfaccia RiskFacade per interfacciarsi con una
+ * GUI.
+ */
 public class GUIRiskFacade implements RiskFacade {
 
     protected final List<Territory> clickedTerritories;
@@ -68,7 +72,7 @@ public class GUIRiskFacade implements RiskFacade {
     }
 
     @Override
-    public void askDice(int numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues) {
+    public void askDice(Integer numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues) {
         new RollFrame(this, numberOfRolledDice, attackDiceValues, defenseDiceValues);
     }
 
@@ -110,8 +114,8 @@ public class GUIRiskFacade implements RiskFacade {
     }
 
     @Override
-    public void setNumberOfTanksToMove(Integer num) {
-        this.numberOfTanksToMove = num;
+    public void setNumberOfTanksToMove(Integer numberOfTanksToMove) {
+        this.numberOfTanksToMove = numberOfTanksToMove;
     }
 
     @Override

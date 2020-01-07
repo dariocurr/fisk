@@ -14,6 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Classe che implementa l'interfaccia grafica per la scelta e la
+ * visualizzazione delle carte dei territori possedute dal giocatore reale.
+ */
 public class CardsFrame extends JFrame {
 
     protected final Integer width = 400;

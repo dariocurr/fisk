@@ -3,12 +3,21 @@ package risk;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che implementa la fase di spostamento di un turno di gioco.
+ */
 public class MovingStage extends TwoActionsStage {
 
     public MovingStage(RiskMediator mediator) {
         super(mediator);
     }
 
+    /**
+     * Permette di spostare un certo numero di armate da un territorio posseduto
+     * ad un altro ad esso confinante.
+     *
+     * @param involvedTerritories territori coninvolti
+     */
     @Override
     public void play(List<Territory> involvedTerritories) {
         if (involvedTerritories.size() == 2) {

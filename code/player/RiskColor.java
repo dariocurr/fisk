@@ -2,10 +2,18 @@ package risk;
 
 import java.awt.Color;
 
+/**
+ * Enumerazione contenente tutti i possibili colori dei giocatori.
+ */
 public enum RiskColor {
 
     RED, GREEN, BLUE, PURPLE, BLACK, YELLOW;
 
+    /**
+     * Restituisce il colore corrispondente.
+     *
+     * @return il colore corrispondente
+     */
     public Color getColor() {
         if (this == null) {
             return null;

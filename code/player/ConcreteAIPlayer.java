@@ -3,6 +3,9 @@ package risk;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che concretizza un player virtuale.
+ */
 public class ConcreteAIPlayer extends AIPlayer {
 
     public ConcreteAIPlayer(String name, RiskColor color, RiskStrategy strategy) {
@@ -42,12 +45,12 @@ public class ConcreteAIPlayer extends AIPlayer {
                     Integer bonus = AIPlayer.trisBonus.get(tris);
                     /*
                     for (SymbolCard symbolCard : tris.getCards()) {
-                        if (symbolCard instanceof TerritoryCard) {
-                            TerritoryCard territoryCard = (TerritoryCard) symbolCard;
-                            if (this.territories.contains(territoryCard.getTerritory())) {
-                                bonus += 2;
-                            }
-                        }
+                    if (symbolCard instanceof TerritoryCard) {
+                    TerritoryCard territoryCard = (TerritoryCard) symbolCard;
+                    if (this.territories.contains(territoryCard.getTerritory())) {
+                    bonus += 2;
+                    }
+                    }
                     }
                      */
                     bonus = tris.getCards()
@@ -55,8 +58,8 @@ public class ConcreteAIPlayer extends AIPlayer {
                             .filter((symbolCard) -> (symbolCard instanceof TerritoryCard))
                             .map((symbolCard) -> (TerritoryCard) symbolCard)
                             .filter((territoryCard) -> (this.territories.contains(territoryCard.getTerritory())))
-                            .mapToInt((territory) -> 2)
-                            .sum();
+                            .map((_item) -> 2)
+                            .reduce(bonus, Integer::sum);
                     if (bonus > maxBonus) {
                         bestTris = tris;
                         maxBonus = bonus;

@@ -9,6 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+/**
+ * Classe che realizza un bottone per ogni territorio della board di gioco.
+ */
 public class TerritoryButton extends JButton {
 
     protected static final Image TANK_IMAGE = ImageLoader.loadImage(Resource.TANK_IMAGE_FILE);

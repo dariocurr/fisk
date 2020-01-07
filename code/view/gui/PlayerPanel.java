@@ -12,6 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Classe che implementa il pannello del giocatore reale.
+ */
 public class PlayerPanel extends JPanel {
 
     protected final Integer width;
@@ -95,24 +98,46 @@ public class PlayerPanel extends JPanel {
         });
     }
 
+    /**
+     * Aggiorna il pannello del giocatore modificando il numero di territori da
+     * esso posseduti, il numero di armate ancora da posizionare e la fase
+     * corrente.
+     *
+     * @param numberOfTerritories numero di territori posseduti dal giocatore
+     * reale
+     * @param numberOfFreeTanks numero di armate ancora da posizionare
+     * @param currentStage fase corrente
+     */
     public void updateLabels(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
         this.numberTerritoriesLabel.setText("Number of territories: " + numberOfTerritories);
         this.freeTanksLabel.setText("Tanks to locate: " + numberOfFreeTanks);
         this.stageLabel.setText("Stage: " + currentStage);
     }
 
+    /**
+     * Abilita il bottone delle carte del giocatore.
+     */
     public void enableCardsButton() {
         this.cardsButton.setEnabled(true);
     }
 
+    /**
+     * Abilita il bottone di fine fase del turno corrente.
+     */
     public void enableEndStageButton() {
         this.endButton.setEnabled(true);
     }
 
+    /**
+     * Disabilita il bottone delle carte del giocatore.
+     */
     public void disableCardsButton() {
         this.cardsButton.setEnabled(false);
     }
 
+    /**
+     * Disabilita il bottone di fine fase del turno corrente.
+     */
     public void disableEndStageButton() {
         this.endButton.setEnabled(false);
     }

@@ -1,7 +1,15 @@
 package risk;
 
+/**
+ * Classe che rappresenta una carta simbolo.
+ */
 public abstract class SymbolCard extends Card<Symbol> implements Comparable<SymbolCard> {
 
+    /**
+     * Istanzia una carta simbolo.
+     *
+     * @param symbol simbolo della carta
+     */
     public SymbolCard(Symbol symbol) {
         super(symbol);
     }

@@ -1,7 +1,15 @@
 package risk;
 
+/**
+ * Carta obiettivo del nemico da uccidere.
+ */
 public class KillGoalCard extends GoalCard<RiskColor> {
 
+    /**
+     * Istanzia una carta obiettivo del nemico da uccidere.
+     *
+     * @param riskcolor colore da uccidere
+     */
     public KillGoalCard(RiskColor riskcolor) {
         super(riskcolor);
     }

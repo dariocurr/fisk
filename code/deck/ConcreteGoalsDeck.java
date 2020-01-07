@@ -5,11 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Concretizzazione del mazzo delle carte degli obiettivi.
+ */
 public class ConcreteGoalsDeck extends GoalsDeck {
 
-    public ConcreteGoalsDeck(List<Continent> continents, List<Territory> territories) {
-        this.deck.add(new NumberOfTerritoriesGoalCard(territories.size() / 2));
-        this.deck.add(new NumberOfTerritoriesGoalCard(territories.size() / 7 * 3));
+    public ConcreteGoalsDeck(List<Continent> continents, Integer numberOfTerritories) {
+        super(numberOfTerritories);
         continents.stream().map((continent) -> {
             List<Continent> continentsToConquer = new ArrayList<>();
             continentsToConquer.add(continent);
