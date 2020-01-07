@@ -7,6 +7,8 @@ import java.util.Collections;
  */
 public abstract class GoalsDeck extends Deck<GoalCard> {
 
+    protected GoalCardFactory goalCardFactory;
+
     /**
      * Istanzia un mazzo di carte obiettivo.
      *
@@ -14,8 +16,9 @@ public abstract class GoalsDeck extends Deck<GoalCard> {
      */
     public GoalsDeck(Integer numberOfTerritories) {
         super();
-        this.deck.add(new NumberOfTerritoriesGoalCard(numberOfTerritories / 2));
-        this.deck.add(new NumberOfTerritoriesGoalCard(numberOfTerritories / 7 * 3));
+        this.goalCardFactory = new ConcreteGoalCardFactory();
+        this.deck.add(this.goalCardFactory.createGoal(numberOfTerritories / 7 * 4));
+        this.deck.add(this.goalCardFactory.createGoal(numberOfTerritories / 7 * 3));
         Collections.shuffle(this.deck);
     }
 

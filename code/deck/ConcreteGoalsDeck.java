@@ -22,9 +22,9 @@ public class ConcreteGoalsDeck extends GoalsDeck {
             }
             continentsToConquer.add(otherContinent);
             return continentsToConquer;
-        }).forEach(ContinentsGoalCard::new);
+        }).forEach((goal) -> this.deck.add(this.goalCardFactory.createGoal(goal)));
         for (RiskColor color : RiskColor.values()) {
-            this.deck.add(new KillGoalCard(color));
+            this.deck.add(this.goalCardFactory.createGoal(color));
         }
         Collections.shuffle(this.deck);
     }

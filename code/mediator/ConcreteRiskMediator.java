@@ -101,10 +101,10 @@ public class ConcreteRiskMediator extends RiskMediator {
                 }
                 if (found) {
                     if (player.equals(playerToKill)) {
-                        player.setGoal(new NumberOfTerritoriesGoalCard(24));
+                        player.setGoal(new NumberOfTerritoriesGoalCard(this.game.getTerritories().size() / 7 * 4));
                     }
                 } else {
-                    player.setGoal(new NumberOfTerritoriesGoalCard(24));
+                    player.setGoal(new NumberOfTerritoriesGoalCard(this.game.getTerritories().size() / 7 * 4));
                 }
             }
         }
