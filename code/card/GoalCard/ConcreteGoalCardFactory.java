@@ -7,6 +7,12 @@ import java.util.List;
  */
 public class ConcreteGoalCardFactory implements GoalCardFactory {
 
+    /**
+     * Istanzia una Factory di carte obiettivo.
+     */
+    public ConcreteGoalCardFactory() {
+    }
+
     @Override
     public GoalCard createGoal(Object goal) {
         if (goal instanceof List) {
