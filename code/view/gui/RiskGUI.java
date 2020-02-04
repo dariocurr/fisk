@@ -1,8 +1,10 @@
 package risk;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,11 +25,11 @@ public class RiskGUI extends JFrame {
     /**
      * Costruttore della classe con rifierimento a RiskFacade
      */
-    public RiskGUI(RiskFacade facade) {
+    public RiskGUI(RiskFacade facade, String humanPlayerName, Color humanPlayerColor, List<SimpleEntry<String, RiskColor>> players, List<String> stages) {
         super();
         this.setTitle("Risk");
         this.facade = facade;
-        this.playerPanel = new PlayerPanel(this.facade, this.width / 5, this.height);
+        this.playerPanel = new PlayerPanel(this.facade, this.width / 5, this.height, humanPlayerName, humanPlayerColor, players, stages);
         this.boardPanel = new BoardPanel(this.facade,
                 this.width - this.width / 5,
                 this.height - this.height / 6,
@@ -67,10 +69,13 @@ public class RiskGUI extends JFrame {
     /**
      * Aggiorna il pannello del giocatore.
      *
+     * @param numberOfTerritories numero di territori del player reale
+     * @param currentPlayer giocatore corrente
+     * @param currentStage fase corrente di gioco
      * @see risk.PlayerPanel#updateLabels
      */
-    public void updatePlayerPanel(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
-        this.playerPanel.updateLabels(numberOfTerritories, numberOfFreeTanks, currentStage);
+    public void updatePlayerPanel(Integer numberOfTerritories, String currentPlayer, String currentStage) {
+        this.playerPanel.updateLabels(numberOfTerritories, currentPlayer, currentStage);
     }
 
     /**

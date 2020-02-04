@@ -35,7 +35,7 @@ public abstract class Stage {
 
     @Override
     public String toString() {
-        return "stage";
+        return "";
     }
 
 }

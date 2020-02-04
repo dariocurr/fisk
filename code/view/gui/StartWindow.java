@@ -43,7 +43,7 @@ public class StartWindow extends JFrame {
         for (int i = 0; i < 4; i++) {
             numberOfPlayers[i] = i + 2;
         }
-        JLabel playersListLabel = new JLabel("How many virtual player?");
+        JLabel playersListLabel = new JLabel("How many virtual players?");
         this.numberOfVirtualPlayersList = new JComboBox<>(numberOfPlayers);
         this.startButton = new JButton("Start");
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
@@ -91,41 +91,39 @@ public class StartWindow extends JFrame {
             public void changedUpdate(DocumentEvent de) {
             }
         });
-        this.startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                List<RiskStrategy> virtualPlayersStrategies = new ArrayList<>();
-                for (JLabel label : virtualPlayers.keySet()) {
-                    virtualPlayersStrategies.add((RiskStrategy) virtualPlayers.get(label).getSelectedItem());
-                }
-                dispose();
-                facade.prepareGame(nameTextField.getText(), (RiskColor) playerColorList.getSelectedItem(), virtualPlayersStrategies);
-            }
+        this.startButton.addActionListener((ActionEvent ae) -> {
+            List<RiskStrategy> virtualPlayersStrategies = new ArrayList<>();
+            virtualPlayers.keySet().forEach((label) -> {
+                virtualPlayersStrategies.add((RiskStrategy) virtualPlayers.get(label).getSelectedItem());
+            });
+            dispose();
+            facade.prepareGame(nameTextField.getText(), (RiskColor) playerColorList.getSelectedItem(), virtualPlayersStrategies);
         });
-        this.numberOfVirtualPlayersList.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                updateFrame((Integer) numberOfVirtualPlayersList.getSelectedItem());
-            }
+        this.numberOfVirtualPlayersList.addActionListener((ActionEvent ae) -> {
+            updateFrame((Integer) numberOfVirtualPlayersList.getSelectedItem());
         });
     }
 
     protected void updateFrame(Integer numberOfVirtualPlayers) {
         this.remove(this.startButton);
-        for (JLabel label : this.virtualPlayers.keySet()) {
+        this.virtualPlayers.keySet().stream().map((label) -> {
             this.remove(label);
+            return label;
+        }).forEachOrdered((label) -> {
             this.remove(this.virtualPlayers.get(label));
-        }
+        });
         this.virtualPlayers.clear();
         for (int i = 0; i < numberOfVirtualPlayers; i++) {
             JLabel virtualPlayerLabel = new JLabel((i + 1) + "° virtual player");
             JComboBox<RiskStrategy> virtualPlayerStrategiesList = this.getRiskStrategyComboBox();
             this.virtualPlayers.put(virtualPlayerLabel, virtualPlayerStrategiesList);
         }
-        for (JLabel label : this.virtualPlayers.keySet()) {
+        this.virtualPlayers.keySet().stream().map((label) -> {
             this.add(label);
+            return label;
+        }).forEachOrdered((label) -> {
             this.add(this.virtualPlayers.get(label));
-        }
+        });
         this.add(this.startButton);
         this.setSize(this.width, this.height + numberOfVirtualPlayers * 45);
         this.defaultOperations();

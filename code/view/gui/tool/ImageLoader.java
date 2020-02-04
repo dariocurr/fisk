@@ -12,10 +12,10 @@ public class ImageLoader {
         Image temp = null;
         try {
             temp = ImageIO.read(new File(path));
-        } catch (FileNotFoundException exx) {
+        } catch (FileNotFoundException ex) {
             System.out.println("Image " + path + " not found!");
         } catch (IOException ex) {
-            System.out.println("IO Error!");
+            System.out.println("IO Error: " + path);
         }
         return temp;
     }

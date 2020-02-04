@@ -3,7 +3,6 @@ package risk;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import javax.swing.JButton;
@@ -57,12 +56,9 @@ public class NumberOfTanksFrame extends JDialog {
     }
 
     protected void addButtonListener() {
-        this.moveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                facade.setNumberOfTanksToMove(numberOfTanksSlider.getValue());
-                dispose();
-            }
+        this.moveButton.addActionListener((ActionEvent ae) -> {
+            facade.setNumberOfTanksToMove(numberOfTanksSlider.getValue());
+            dispose();
         });
     }
 

@@ -1,14 +1,15 @@
 package risk;
 
 import java.awt.Color;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Interfaccia che permette la comunicazione tra Mediator e sistema di input.
  */
-public interface RiskFacade {
-
+public interface RiskFacade {  
+    
     /**
      * Permette di passare al Mediator quali territori sono stati selezionati e
      * di effettuare l'operazione propria di questa fase di gioco.
@@ -39,20 +40,6 @@ public interface RiskFacade {
     public List<SymbolCard> getHumanPlayerCards();
 
     /**
-     * Restituisce il colore scelto dal giocatore reale.
-     *
-     * @return colore del giocatore reale
-     */
-    public Color getHumanPlayerColor();
-
-    /**
-     * Resituisce il nome del giocatore reale.
-     *
-     * @return nome del giocatore reale.
-     */
-    public String getHumanPlayerName();
-
-    /**
      * Verifica se il tris passato a parametro è lecito.
      *
      * @param tris tris selezionato
@@ -78,7 +65,7 @@ public interface RiskFacade {
      * @param defenseDiceValues valori dei dadi di difesa
      * @see risk.RollFrame
      */
-    public void askDice(Integer numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues);
+    public void askDice(Territory from, Territory to, Integer numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues);
 
     /**
      * Permette di specificare in input il numero di armate da spostare da un
@@ -106,11 +93,11 @@ public interface RiskFacade {
      * Aggiorna i dati del player nell' interfaccia.
      *
      * @param numberOfTerritories numero di territori posseduti dal player reale
-     * @param numberOfFreeTanks numero di armate restanti da posizionare
+     * @param currentPlayer nome del giocatore corrente
      * @param currentStage fase corrente
      * @see risk.RiskGUI#updatePlayerPanel
      */
-    public void updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage);
+    public void updatePlayerData(Integer numberOfTerritories, String currentPlayer, String currentStage);
 
     /**
      * Aggiorna le label della board di gioco.
@@ -146,7 +133,7 @@ public interface RiskFacade {
     /**
      * Crea una nuova interfaccia di gioco.
      */
-    public void createRiskInterface();
+    public void createRiskInterface(String humanPlayerName, Color humanPlayerColor, List<SimpleEntry<String, RiskColor>> players, List<String> stages);
 
     /**
      * Svuota la lista dei territori selezionati.
@@ -217,5 +204,16 @@ public interface RiskFacade {
      * @see risk.Observable
      */
     public void addObserver(Observer observer);
+    
+    /**
+     * Permmette di conservare la volontà del giocatore di continuare ad attaccare o meno il territorio precedentemente attaccato
+     * @param isContinuous 
+     */
+    public void setContinuousAttack(Boolean isContinuous);
+    
+    /**
+     * @return true se il giocatore vuole continuare ad attaccare il territorio precedentemente attaccato, false altrimenti
+     */
+    public Boolean isContinuousAttack();
 
 }

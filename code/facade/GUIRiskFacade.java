@@ -1,6 +1,7 @@
 package risk;
 
 import java.awt.Color;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +16,11 @@ public class GUIRiskFacade implements RiskFacade {
     protected RiskMediator mediator;
     protected RiskGUI gui;
     protected Integer numberOfTanksToMove;
+    protected Boolean isContinuousAttack;
 
     public GUIRiskFacade() {
         this.clickedTerritories = new ArrayList<>();
+        this.isContinuousAttack = false;
     }
 
     @Override
@@ -52,16 +55,6 @@ public class GUIRiskFacade implements RiskFacade {
     }
 
     @Override
-    public Color getHumanPlayerColor() {
-        return this.mediator.getHumanPlayer().getColor().getColor();
-    }
-
-    @Override
-    public String getHumanPlayerName() {
-        return this.mediator.getHumanPlayer().getName();
-    }
-
-    @Override
     public boolean checkTris(Tris tris) {
         return this.mediator.checkTris(tris);
     }
@@ -72,8 +65,8 @@ public class GUIRiskFacade implements RiskFacade {
     }
 
     @Override
-    public void askDice(Integer numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues) {
-        new RollFrame(this, numberOfRolledDice, attackDiceValues, defenseDiceValues);
+    public void askDice(Territory from, Territory to, Integer numberOfRolledDice, Dice[] attackDiceValues, Dice[] defenseDiceValues) {
+        new RollFrame(this, from, to, numberOfRolledDice, attackDiceValues, defenseDiceValues);
     }
 
     @Override
@@ -94,8 +87,8 @@ public class GUIRiskFacade implements RiskFacade {
     }
 
     @Override
-    public void updatePlayerData(Integer numberOfTerritories, Integer numberOfFreeTanks, String currentStage) {
-        this.gui.updatePlayerPanel(numberOfTerritories, numberOfFreeTanks, currentStage);
+    public void updatePlayerData(Integer numberOfTerritories, String currentPlayer, String currentStage) {
+        this.gui.updatePlayerPanel(numberOfTerritories, currentPlayer, currentStage);
     }
 
     @Override
@@ -104,8 +97,8 @@ public class GUIRiskFacade implements RiskFacade {
     }
 
     @Override
-    public void createRiskInterface() {
-        this.gui = new RiskGUI(this);
+    public void createRiskInterface(String humanPlayerName, Color humanPlayerColor, List<SimpleEntry<String, RiskColor>> players, List<String> stages) {
+        this.gui = new RiskGUI(this, humanPlayerName, humanPlayerColor, players, stages);
     }
 
     @Override
@@ -161,6 +154,16 @@ public class GUIRiskFacade implements RiskFacade {
     @Override
     public void endGame() {
         this.gui.dispose();
+    }
+    
+    @Override
+    public void setContinuousAttack(Boolean isContinuous) {
+        this.isContinuousAttack = isContinuous;
+    }
+    
+    @Override
+    public Boolean isContinuousAttack() {
+        return this.isContinuousAttack;
     }
 
 }

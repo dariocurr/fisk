@@ -30,9 +30,11 @@ public class AttackStage extends TwoActionsStage {
                     this.mediator.moveTanks(from, to, this.getNumberOfTanksToMove(involvedTerritories));
                 }
             }
-            this.mediator.getFacade().clearInvolvedTerritories();
-            this.mediator.getFacade().enableEndStage();
-            this.setAvailableTerritories();
+            if(!this.mediator.getFacade().isContinuousAttack()) {
+                this.mediator.getFacade().clearInvolvedTerritories();
+                this.mediator.getFacade().enableEndStage();
+                this.setAvailableTerritories();
+            }
         } else if (involvedTerritories.size() == 1) {
             this.setAvailableTerritoriesAfterFirstAction(involvedTerritories.get(0));
             this.mediator.getFacade().disableEndStage();

@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -147,41 +146,38 @@ public class BoardPanel extends JPanel {
     }
 
     protected void addListeners() {
-        for (TerritoryButton territoryButton : this.territoriesButtons) {
-            territoryButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent ae) {
-                    Territory clickedTerritory = territoryButton.getTerritory();
-                    facade.update(clickedTerritory);
-                }
+        this.territoriesButtons.forEach((territoryButton) -> {
+            territoryButton.addActionListener((ActionEvent ae) -> {
+                Territory clickedTerritory = territoryButton.getTerritory();
+                facade.update(clickedTerritory);
             });
-        }
+        });
     }
 
     public void updateLabels(List<Territory> territories) {
-        for (TerritoryButton territoryButton : this.territoriesButtons) {
-            if (territories.contains(territoryButton.getTerritory())) {
-                territoryButton.updateNumberTanksLabel();
-            }
-        }
+        this.territoriesButtons
+                .stream()
+                .filter((territoryButton) -> (territories.contains(territoryButton.getTerritory())))
+                .forEach((territoryButton) -> territoryButton.updateNumberTanksLabel());
     }
 
     public void setClickableTerritories(List<Territory> territories) {
-        for (TerritoryButton territoryButton : this.territoriesButtons) {
+        this.territoriesButtons.forEach((territoryButton) -> {
             if (territories.contains(territoryButton.getTerritory())) {
                 territoryButton.setEnabled(true);
+                territoryButton.setBackground(territoryButton.getTerritory().getOwnerPlayer().getColor().getColor());
             } else {
                 territoryButton.setEnabled(false);
+                territoryButton.setBackground(territoryButton.getTerritory().getOwnerPlayer().getColor().getColor().darker());
             }
-        }
+        });
     }
 
     public void updateColors(List<Territory> territories) {
-        for (TerritoryButton territoryButton : this.territoriesButtons) {
-            if (territories.contains(territoryButton.getTerritory())) {
-                territoryButton.updateColor();
-            }
-        }
+        this.territoriesButtons
+                .stream()
+                .filter((territoryButton) -> (territories.contains(territoryButton.getTerritory())))
+                .forEach(TerritoryButton::updateColor);
     }
 
 }

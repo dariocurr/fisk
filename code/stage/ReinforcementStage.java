@@ -1,5 +1,6 @@
 package risk;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public class ReinforcementStage extends Stage {
             this.mediator.putTank(involvedTerritories.get(0));
             this.mediator.getFacade().clearInvolvedTerritories();
             if (this.checkEndStage()) {
-                this.mediator.nextStage();
+                //this.mediator.nextStage();
             }
         }
     }

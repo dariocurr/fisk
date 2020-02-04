@@ -207,8 +207,8 @@ public abstract class RiskMediator extends Observable {
      *
      * @param numberOfRolledDice numero di dadi tirati
      */
-    public void showDice(int numberOfRolledDice) {
-        this.facade.askDice(numberOfRolledDice, this.game.getAttackDice(), this.game.getDefenseDice());
+    public void showDice(Territory from, Territory to, int numberOfRolledDice) {
+        this.facade.askDice(from, to, numberOfRolledDice, this.game.getAttackDice(), this.game.getDefenseDice());
     }
 
 }

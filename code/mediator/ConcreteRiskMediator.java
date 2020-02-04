@@ -1,5 +1,6 @@
 package risk;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,11 +15,13 @@ public class ConcreteRiskMediator extends RiskMediator {
     protected List<Stage> stages;
     protected Stage currentStage;
     protected Boolean currentPlayerWinsTerritory;
+    protected Boolean tutorial;
 
     public ConcreteRiskMediator() {
         super();
         this.stages = new ArrayList<>();
         this.currentPlayerWinsTerritory = false;
+        this.tutorial = true;
     }
 
     protected static Set<String> initNamesSet() {
@@ -43,15 +46,24 @@ public class ConcreteRiskMediator extends RiskMediator {
         this.createVirtualPlayers(virtualPlayersStrategies);
         Collections.shuffle(this.players);
         this.initStages();
+        PreparationStage ps = new PreparationStage(this);
         this.releaseGoals();
         this.checkGoals();
         this.releaseInitialTanks();
         this.releaseTerritories();
         this.initTerritories();
         this.updateAllContinents();
-        this.facade.createRiskInterface();
-        this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.getFreeTanks().size(), "");
-        PreparationStage ps = new PreparationStage(this);
+        List<String> stagesStrings = new ArrayList<>();
+        stagesStrings.add(ps.toString());
+        this.stages.forEach((stage) -> {
+            stagesStrings.add(stage.toString());
+        });
+        List<SimpleEntry<String, RiskColor>> playersData = new ArrayList<>();
+        this.players.forEach((player) -> {
+            playersData.add(new SimpleEntry(player.getName(), player.getColor()));
+        });
+        this.facade.createRiskInterface(this.humanPlayer.getName(), this.humanPlayer.getColor().getColor(), playersData, stagesStrings);
+        this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), "", "");
         this.startPreparationStage();
     }
 
@@ -163,6 +175,11 @@ public class ConcreteRiskMediator extends RiskMediator {
     public void startPreparationStage() {
         this.facade.disableEndStage();
         this.facade.disableCards();
+        this.facade.showMessage("The preparation stage begins.\n"
+                + "If you want, look your goal in your panel (on the left).\n\n"
+                + "To start you must place " + this.humanPlayer.getFreeTanks().size() + " tank(s).\n"
+                + "To position the tanks, please click on the " + this.humanPlayer.getColor() + " illuminated buttons.\n"
+                + "To see how many tanks you have left, please look below!");
         this.stages.add(0, new PreparationStage(this));
         this.currentPlayer = this.players.get(this.players.size() - 1);
         this.nextPlayerPreparationStage();
@@ -172,6 +189,7 @@ public class ConcreteRiskMediator extends RiskMediator {
     public void nextPlayerPreparationStage() {
         if (this.isPreparationStageEnded()) {
             this.stages.remove(0);
+            this.facade.showMessage("The game starts!");
             this.startGame();
         } else {
             int indexCurrentPlayer = this.players.indexOf(this.currentPlayer);
@@ -179,8 +197,10 @@ public class ConcreteRiskMediator extends RiskMediator {
             this.currentPlayer = this.players.get(indexNextPlayer);
             this.currentStage = this.stages.get(0);
             this.currentStage.setAvailableTerritories();
-            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.getFreeTanks().size(), this.currentStage.toString());
+            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.currentPlayer.getName(), this.currentStage.toString());
             this.notifyObservers("It's the turn of " + this.currentPlayer.getName() + " (" + this.currentPlayer.getColor() + ")");
+            this.notifyObservers(this.currentPlayer.getName() + " (" + this.currentPlayer.getColor() + ")" + 
+                                " has to place " + this.currentPlayer.getFreeTanks().size() + " tank(s)");
             if (this.currentPlayer instanceof AIPlayer) {
                 this.playPreparationStageAIPlayer();
             }
@@ -227,11 +247,20 @@ public class ConcreteRiskMediator extends RiskMediator {
             this.currentStage = this.stages.get(0);
             this.currentPlayerWinsTerritory = false;
             this.currentStage.setAvailableTerritories();
-            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.getFreeTanks().size(), this.currentStage.toString());
+            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.currentPlayer.getName(), this.currentStage.toString());
             this.notifyObservers("It's the turn of " + this.currentPlayer.getName() + " (" + this.currentPlayer.getColor() + ")");
+            this.notifyObservers(this.currentPlayer.getName() + " (" + this.currentPlayer.getColor() + ")" + 
+                                " has to place " + this.currentPlayer.getFreeTanks().size() + " tank(s)");
             if (this.currentPlayer instanceof AIPlayer) {
+                this.facade.disableCards();
+                this.facade.disableEndStage();
                 this.playAIPlayer();
             } else {
+                String text = "It's your turn. Please place " + this.humanPlayer.freeTanks.size() + " tank(s).";
+                if(this.tutorial) {
+                    text += "\nTo position the tanks, please click on the " + this.humanPlayer.getColor() + " illuminated buttons.";
+                } 
+                this.facade.showMessage(text);
                 this.facade.enableCards();
                 if (this.currentPlayer.getFreeTanks().size() > 0) {
                     this.facade.disableEndStage();
@@ -250,7 +279,11 @@ public class ConcreteRiskMediator extends RiskMediator {
             if (this.currentStage instanceof MovingStage) {
                 if (this.currentPlayerWinsTerritory) {
                     if ((!this.game.getSymbolsDeck().isEmpty()) && (this.currentPlayer.getCards().size() < 7)) {
-                        this.currentPlayer.getCards().add(this.game.getSymbolsDeck().removeCard());
+                        SymbolCard card = this.game.getSymbolsDeck().removeCard();
+                        this.currentPlayer.getCards().add(card);
+                        if(this.currentPlayer.equals(this.humanPlayer)) {
+                            this.facade.showMessage(this.currentPlayer.toString() + " receives the card: " + card);
+                        }
                     }
                 }
                 this.nextPlayer();
@@ -258,12 +291,26 @@ public class ConcreteRiskMediator extends RiskMediator {
                 int indexCurrentStage = this.stages.indexOf(this.currentStage);
                 int indexNextStage = indexCurrentStage + 1;
                 this.currentStage = this.stages.get(indexNextStage);
-                if ((this.currentPlayer.equals(this.humanPlayer)) && (this.currentStage instanceof AttackStage)) {
-                    this.facade.disableCards();
-                    this.facade.enableEndStage();
-                }
                 this.currentStage.setAvailableTerritories();
-                this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.getFreeTanks().size(), this.currentStage.toString());
+                this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.currentPlayer.getName(), this.currentStage.toString());
+                if (this.currentPlayer.equals(this.humanPlayer)) {
+                    if(this.currentStage instanceof AttackStage) {
+                        this.facade.disableCards();
+                        this.facade.enableEndStage();
+                        if(this.tutorial) {
+                            this.facade.showMessage("The attack stage begins.\n"
+                                    + "In this stage you can go directly to the next phase by clicking the \"End Attack\" button\n"
+                                    + "or attack an enemy territory by clicking first on your territory, and then on an adjacent opponent's territory.");
+                        }
+                    } else if (this.currentStage instanceof MovingStage) {
+                        if(this.tutorial) {
+                            this.facade.showMessage("The moving stage begins. This is the last phase of your turn.\n"
+                                                     + "If you want you can move by clicking two of your adjacent territories,\n"
+                                                     + "otherwise you can click the \"End Moving\" button to pass the turn to the next player.");
+                            this.tutorial = false;
+                        }
+                    }
+                }
             }
         }
     }
@@ -296,6 +343,7 @@ public class ConcreteRiskMediator extends RiskMediator {
             involvedTerritories.clear();
             this.pause(1);
         }
+        this.nextStage();
         involvedTerritories = aiPlayer.attack();
         while (involvedTerritories != null && !this.isEnded) {
             this.currentStage.play(involvedTerritories);
@@ -352,7 +400,7 @@ public class ConcreteRiskMediator extends RiskMediator {
                 this.currentPlayer.getFreeTanks().add(this.game.getTanksPool(this.currentPlayer.getColor()).releaseTank());
             }
             if (this.currentPlayer.equals(this.humanPlayer)) {
-                this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.humanPlayer.freeTanks.size(), this.currentStage.toString());
+                this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.currentPlayer.getName(), this.currentStage.toString());
             }
             for (SymbolCard symbolCard : tris) {
                 this.game.getSymbolsDeck().addCard(symbolCard);
@@ -377,9 +425,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         involvedTerritories.add(territory);
         this.facade.updateLabelsTerritories(involvedTerritories);
         if (this.currentPlayer.equals(this.humanPlayer)) {
-            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(),
-                    this.humanPlayer.getFreeTanks().size(),
-                    this.currentStage.toString());
+            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.currentPlayer.getName(), this.currentStage.toString());
         }
     }
 
@@ -422,11 +468,11 @@ public class ConcreteRiskMediator extends RiskMediator {
         Arrays.sort(this.game.getAttackDice(), Collections.reverseOrder());
         Arrays.sort(this.game.getDefenseDice(), Collections.reverseOrder());
         int numberOfComparisons = Math.min(numberOfRollAttackedPlayer, numberOfRollAttackingPlayer);
-        /*
+        
         if ( from.getOwnerPlayer().equals(this.humanPlayer) || to.getOwnerPlayer().equals(this.humanPlayer)) {
-            this.showDice(numberOfComparisons);
+            this.showDice(from, to, numberOfComparisons);
         }
-         */
+        
         int[] result = this.compareDice(numberOfComparisons);
         this.removeTanks(from, result[0]);
         this.removeTanks(to, result[1]);
@@ -456,9 +502,12 @@ public class ConcreteRiskMediator extends RiskMediator {
 
     @Override
     public void changeOwnerTerritory(Territory territory) {
+        if(this.currentPlayer instanceof AIPlayer) {
+            this.facade.showMessage(this.currentPlayer.getName() + " wins " + territory.getName());
+        }
         Player attackedPlayer = territory.getOwnerPlayer();
         attackedPlayer.getTerritories().remove(territory);
-        this.checkLoosedContinent(territory);
+        this.checkLostContinent(territory);
         territory.setOwnerPlayer(this.currentPlayer);
         this.currentPlayer.getTerritories().add(territory);
         this.checkConqueredContinent(territory);
@@ -468,9 +517,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         this.facade.updateColorsTerritories(involvedTerritories);
         this.notifyObservers(this.currentPlayer + " wins " + territory.getName());
         if (this.currentPlayer.equals(this.humanPlayer) || attackedPlayer.equals(this.humanPlayer)) {
-            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(),
-                    this.humanPlayer.getFreeTanks().size(),
-                    this.currentStage.toString());
+            this.facade.updatePlayerData(this.humanPlayer.getTerritories().size(), this.currentPlayer.getName(), this.currentStage.toString());
         }
         if (!this.checkEnd()) {
             if (attackedPlayer.getTerritories().isEmpty()) {
@@ -523,7 +570,7 @@ public class ConcreteRiskMediator extends RiskMediator {
         }
     }
 
-    protected void checkLoosedContinent(Territory territory) {
+    protected void checkLostContinent(Territory territory) {
         Player attackedPlayer = territory.getOwnerPlayer();
         if (attackedPlayer.getContinents().contains(territory.getContinent())) {
             attackedPlayer.getContinents().remove(territory.getContinent());
@@ -533,6 +580,17 @@ public class ConcreteRiskMediator extends RiskMediator {
     @Override
     public void playHumanPlayer(List<Territory> involvedTerritories) {
         this.currentStage.play(involvedTerritories);
+        if(this.currentStage instanceof ReinforcementStage && this.humanPlayer.getFreeTanks().isEmpty()) {
+            this.facade.setAvailableTerritories(new ArrayList<>());
+            this.facade.enableEndStage();
+            this.facade.disableCards();
+            if(this.tutorial) {
+                this.facade.showMessage("Reinforcement ended, click \"End Reinforcement\" to skip to next stage");
+            }
+        } else if (this.currentStage instanceof AttackStage && this.facade.isContinuousAttack()) {
+            this.facade.setContinuousAttack(false);
+            this.playHumanPlayer(involvedTerritories);
+        }
     }
 
 }

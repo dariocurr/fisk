@@ -1,6 +1,7 @@
 package risk;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -20,6 +21,7 @@ public class LogPanel extends JScrollPane implements Observer {
         this.width = width;
         this.height = height;
         this.setPreferredSize(new Dimension(this.width, this.height));
+        LogPanel.TEXT_AREA.setFont(new Font("Calibri", Font.BOLD, 14));
     }
 
     /**

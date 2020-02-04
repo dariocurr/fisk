@@ -25,7 +25,6 @@ public class MovingStage extends TwoActionsStage {
             Territory to = involvedTerritories.get(1);
             this.mediator.moveTanks(from, to, this.getNumberOfTanksToMove(involvedTerritories));
             this.mediator.getFacade().clearInvolvedTerritories();
-            this.mediator.getFacade().enableEndStage();
             this.mediator.nextStage();
         } else if (involvedTerritories.size() == 1) {
             this.setAvailableTerritoriesAfterFirstAction(involvedTerritories.get(0));
