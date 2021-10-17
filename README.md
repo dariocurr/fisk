@@ -10,6 +10,7 @@ The board game Risk implemented in Java using several design patterns:
 8. Strategy
 9. Facade 
 
+
 ![Risk Board](image.png)
 
 ## Italian abstract
