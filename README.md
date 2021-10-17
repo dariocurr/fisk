@@ -1,5 +1,14 @@
 # fisk
-The board game Risk implemented in Java
+The board game Risk implemented in Java using several design patterns:
+1. Singleton
+2. Factory
+3. Builder
+4. Object Pool
+5. Observer
+6. Mediator
+7. State
+8. Strategy
+9. Facade 
 
 ![Risk Board](image.png)
 
