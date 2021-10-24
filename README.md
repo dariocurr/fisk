@@ -12,7 +12,7 @@ The board game Risk implemented in Java using several design patterns:
 8. Strategy
 9. Facade
 
-<img width="800" alt="Risk Board" src="img/board.png">
+<img width="700" alt="Risk Board" src="img/board.png">
 
 ## English abstract
 
@@ -24,9 +24,8 @@ code, reusable and modifiable. The video game allows a real player to compete
 with virtual players through a graphical interface created using the SWING
 library of JAVA.
 
-Per maggiori informazioni riguardo l'implementazione, dare un'occhiata al
-[report](/doc/italian_project_report.pdf) e al
-[diagramma delle classi UML](/img/diagrams/uml.svg)
+To better understand the implementation, please take a look at the
+[UML class diagram](/doc/uml.svg)
 
 ## Italian abstract
 
@@ -39,5 +38,6 @@ videogioco realizzato permette ad un giocatore reale di confrontarsi con dei
 giocatori virtuali attraverso un’interfaccia grafica realizzata utilizzando la
 libreria SWING di JAVA.
 
-To better understand the implementation, please take a look at the
-[UML class diagram](/img/diagrams/uml.svg)
+Per maggiori informazioni riguardo l'implementazione, dare un'occhiata al
+[report](/doc/italian_project_report.pdf) e al
+[diagramma delle classi UML](/doc/uml.svg)
