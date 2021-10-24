@@ -12,7 +12,7 @@ The board game Risk implemented in Java using several design patterns:
 8. Strategy
 9. Facade
 
-<img width="700" alt="Risk Board" src="img/board.png">
+<img width="700" alt="Risk Board" src="/img/board.png">
 
 ## English abstract
 
